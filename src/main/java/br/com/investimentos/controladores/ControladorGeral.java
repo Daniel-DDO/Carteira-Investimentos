@@ -4,11 +4,5 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class ControladorGeral {
-    @FXML
-    private Label welcomeText;
-
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
+    //Código para telas de transição, para otimizar a criação de controladores
 }

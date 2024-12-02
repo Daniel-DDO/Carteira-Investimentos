@@ -1,6 +1,6 @@
-package br.com.investimentos.basicas;
+package br.com.investimentos.usuarios;
 
-public class Conta {
+public abstract class Conta {
     private String nome;
     private String nomeUsuario;
     private String email;

@@ -1,8 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.investimentos.controladores.ControladorTelaInicial">
-
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.investimentos.controladores.ControladorTelaInicial">
+   <center>
+      <Pane prefHeight="386.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane alignment="CENTER" layoutX="311.0" layoutY="116.0" prefHeight="255.0" prefWidth="379.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="153.0" minHeight="10.0" prefHeight="86.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <GridPane alignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TextField fx:id="emailUsuarioField" prefHeight="36.0" prefWidth="380.0" promptText="Email ou nome de usuário:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                        <PasswordField fx:id="senhaField" prefHeight="36.0" prefWidth="380.0" promptText="Senha:" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </PasswordField>
+                        <CheckBox fx:id="souAdmBox" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="17.0" prefWidth="143.0" text="Sou administrador" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+                  <Button fx:id="entrarBotao" mnemonicParsing="false" onAction="#botaoEntrar" prefHeight="33.0" prefWidth="379.0" text="Entrar" wrapText="true" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Hyperlink fx:id="cadastrarClicar" alignment="CENTER" contentDisplay="CENTER" onAction="#clicarCadastrar" prefHeight="26.0" prefWidth="268.0" text="Primeira vez? Cadastre-se clicando aqui." textAlignment="CENTER" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+   </center>
+   <top>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Carteira Investimentos" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="50.0" />
+         </BorderPane.margin>
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Text>
+   </top>
+</BorderPane>

@@ -1,11 +1,10 @@
-package br.com.investimentos.basicas;
+package br.com.investimentos.usuarios;
 
-public class UsuarioAdministrador extends Conta {
+public class UsuarioComum extends Conta {
 
-    public UsuarioAdministrador() {
-    }
+    public UsuarioComum() {}
 
-    public UsuarioAdministrador(
+    public UsuarioComum(
             String nome, String nomeUsuario, String email, String senha,
             String telefone, String cpf
     ) {

@@ -12,4 +12,9 @@ public class UsuarioAdministrador extends Conta {
         super(nome, nomeUsuario, email, senha, telefone, cpf);
     }
 
+    public void criarAtivo() {}
+
+    public void editarAtivo() {}
+
+    public void removerAtivo() {}
 }

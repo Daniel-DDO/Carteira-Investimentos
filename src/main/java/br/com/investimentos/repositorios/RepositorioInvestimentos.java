@@ -1,4 +1,4 @@
-package br.com.investimentos.repositorio;
+package br.com.investimentos.repositorios;
 
 public class RepositorioInvestimentos {
 }

@@ -38,12 +38,12 @@
                         <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextField fx:id="emailUsuarioField" prefHeight="36.0" prefWidth="380.0" promptText="Email ou nome de usuário:">
+                        <TextField fx:id="emailUsuarioField" prefHeight="36.0" prefWidth="380.0" promptText="Email ou nome de usuário:" stylesheets="@design.css">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </TextField>
-                        <PasswordField fx:id="senhaField" prefHeight="36.0" prefWidth="380.0" promptText="Senha:" GridPane.rowIndex="1">
+                        <PasswordField fx:id="senhaField" prefHeight="36.0" prefWidth="380.0" promptText="Senha:" stylesheets="@design.css" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -51,7 +51,7 @@
                         <CheckBox fx:id="souAdmBox" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="17.0" prefWidth="143.0" text="Sou administrador" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <Button fx:id="entrarBotao" mnemonicParsing="false" onAction="#botaoEntrar" prefHeight="33.0" prefWidth="379.0" text="Entrar" wrapText="true" GridPane.rowIndex="1">
+                  <Button fx:id="entrarBotao" mnemonicParsing="false" onAction="#botaoEntrar" prefHeight="33.0" prefWidth="379.0" stylesheets="@design.css" text="Entrar" wrapText="true" GridPane.rowIndex="1">
                      <font>
                         <Font size="16.0" />
                      </font>

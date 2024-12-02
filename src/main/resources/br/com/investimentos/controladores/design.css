@@ -1,0 +1,103 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom, #001f3f, #003f7f);
+    -fx-font-family: 'Arial', sans-serif;
+    -fx-font-size: 14px;
+}
+
+.button {
+    -fx-background-color: linear-gradient(to bottom, #0074D9, #001f3f);
+    -fx-text-fill: white;
+    -fx-border-color: #00aaff;
+    -fx-border-width: 2px;
+    -fx-padding: 10 20;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 2, 2);
+    -fx-cursor: hand;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-transition: all 0.3s ease;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #00aaff, #005f9f);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 8, 0.3, 4, 4);
+}
+
+.button:pressed {
+    -fx-background-color: #005f9f;
+    -fx-effect: none;
+    -fx-translate-y: 2px;
+}
+
+.label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.text-field, .text-area {
+    -fx-background-color: #001f3f;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #0074D9;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5;
+}
+
+.text-field:focused, .text-area:focused {
+    -fx-border-color: #00aaff;
+    -fx-background-color: #003f7f;
+}
+
+.check-box {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5 10;
+}
+
+.check-box .box {
+    -fx-border-color: #00aaff;
+    -fx-border-width: 2px;
+    -fx-background-color: #003f7f;
+    -fx-background-radius: 4px;
+}
+
+.check-box:selected .box {
+    -fx-border-color: #00aaff;
+    -fx-background-color: #0074D9;
+}
+
+.chart {
+    -fx-background-color: #003f7f;
+    -fx-border-color: #00aaff;
+    -fx-border-radius: 10px;
+    -fx-padding: 10;
+}
+
+@keyframes fade-in {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.button, .label, .text-field, .text-area, .check-box {
+    animation: fade-in 0.5s ease-in-out;
+}
+
+.progress-bar {
+    -fx-accent: #00aaff;
+    -fx-background-color: #001f3f;
+}
+
+.table-view {
+    -fx-background-color: #003f7f;
+    -fx-border-color: #00aaff;
+    -fx-border-radius: 8px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #0074D9;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}

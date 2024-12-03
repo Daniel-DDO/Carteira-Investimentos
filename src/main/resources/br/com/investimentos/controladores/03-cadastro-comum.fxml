@@ -62,7 +62,7 @@
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="fieldCpf" layoutX="200.0" layoutY="301.0" prefHeight="37.0" prefWidth="618.0" promptText="CPF:" stylesheets="@design.css" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <TextField fx:id="fieldCpf" layoutX="200.0" layoutY="301.0" prefHeight="37.0" prefWidth="618.0" promptText="CPF (apenas números):" stylesheets="@design.css" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <font>
                         <Font size="14.0" />
                      </font>

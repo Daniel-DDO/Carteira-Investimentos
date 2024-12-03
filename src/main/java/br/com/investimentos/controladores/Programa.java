@@ -21,11 +21,12 @@ public class Programa extends Application {
         Programa.stage = stage;
         stage.setResizable(false);
         stage.setTitle("Carteira de Investimentos");
+        String localFxml = "/br/com/investimentos/controladores/";
 
-        Parent fxmlTelaInicial01 = FXMLLoader.load(getClass().getResource("01-tela-inicial.fxml"));
+        Parent fxmlTelaInicial01 = FXMLLoader.load(getClass().getResource(localFxml+"01-tela-inicial.fxml"));
         telaInicial01 = new Scene(fxmlTelaInicial01, 1000, 600);
 
-        Parent fxmlTelaCadastro02 = FXMLLoader.load(getClass().getResource("02-tela-cadastro.fxml"));
+        Parent fxmlTelaCadastro02 = FXMLLoader.load(getClass().getResource(localFxml+"02-tela-cadastro.fxml"));
         telaCadastro02 = new Scene(fxmlTelaCadastro02, 1000, 600);
 
         stage.setScene(telaInicial01);

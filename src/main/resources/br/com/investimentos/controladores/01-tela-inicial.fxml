@@ -48,7 +48,7 @@
                               <Font size="14.0" />
                            </font>
                         </PasswordField>
-                        <CheckBox fx:id="souAdmBox" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="17.0" prefWidth="143.0" text="Sou administrador" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2" />
+                        <CheckBox fx:id="souAdmBox" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="163.0" stylesheets="@design.css" text="Sou administrador" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                   <Button fx:id="entrarBotao" mnemonicParsing="false" onAction="#botaoEntrar" prefHeight="33.0" prefWidth="379.0" stylesheets="@design.css" text="Entrar" wrapText="true" GridPane.rowIndex="1">

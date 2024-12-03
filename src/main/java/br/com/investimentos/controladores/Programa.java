@@ -7,11 +7,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Apilcacao extends Application {
+public class Programa extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         String fxmlEndereco = "/resources/br/com/investimentos/cotroladores/";
-        FXMLLoader fxmlLoader = new FXMLLoader(Apilcacao.class.getResource("01-tela-inicial.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Programa.class.getResource("01-tela-inicial.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
         stage.setResizable(false);
         stage.setTitle("Carteira de Investimentos");

@@ -3,14 +3,73 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.investimentos.controladores.ControladorCadastro">
    <center>
-      <ScrollPane prefHeight="362.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />
+      <ScrollPane prefHeight="362.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+         <content>
+            <GridPane alignment="CENTER" prefHeight="393.0" prefWidth="983.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.0" minWidth="0.0" prefWidth="114.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="542.0" minWidth="10.0" prefWidth="542.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="fieldNomeCompleto" prefHeight="37.0" prefWidth="618.0" promptText="Nome completo:" stylesheets="@design.css" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="fieldNomeUser" layoutX="200.0" layoutY="20.0" prefHeight="37.0" prefWidth="618.0" promptText="Nome de usuário:" stylesheets="@design.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="fieldEmail" layoutX="200.0" layoutY="77.0" prefHeight="37.0" prefWidth="618.0" promptText="Email:" stylesheets="@design.css" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="fieldSenha" layoutX="200.0" layoutY="133.0" prefHeight="37.0" prefWidth="618.0" promptText="Senha:" stylesheets="@design.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="fieldConfSenha" layoutX="200.0" layoutY="189.0" prefHeight="37.0" prefWidth="618.0" promptText="Confirmar senha:" stylesheets="@design.css" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="fieldTelefone" layoutX="200.0" layoutY="245.0" prefHeight="37.0" prefWidth="618.0" promptText="Telefone:" stylesheets="@design.css" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="fieldCpf" layoutX="200.0" layoutY="301.0" prefHeight="37.0" prefWidth="618.0" promptText="CPF:" stylesheets="@design.css" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </GridPane>
+         </content></ScrollPane>
    </center>
    <top>
       <Pane prefHeight="140.0" prefWidth="1000.0" BorderPane.alignment="CENTER">

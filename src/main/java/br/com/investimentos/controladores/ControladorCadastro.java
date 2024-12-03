@@ -19,6 +19,6 @@ public class ControladorCadastro {
 
     @FXML
     public void voltarBotao(ActionEvent event) {
-
+        Programa.trocarTela(1); //voltar para a tela principal
     }
 }

@@ -28,5 +28,6 @@ public class ControladorTelaInicial {
 
     public void clicarCadastrar(ActionEvent actionEvent) {
         System.out.println("Clicou cadastrar");
+        Programa.trocarTela(2);
     }
 }

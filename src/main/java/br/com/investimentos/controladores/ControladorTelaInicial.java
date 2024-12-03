@@ -21,9 +21,13 @@ public class ControladorTelaInicial {
     @FXML
     private CheckBox souAdmBox;
 
-
     public void botaoEntrar(ActionEvent actionEvent) {
         System.out.println("Clicou entrar");
+        if (souAdmBox.isSelected()) {
+            //Deve buscar e logar como usuário adm
+        } else {
+            //Deve buscar e logar como usuário comum
+        }
     }
 
     public void clicarCadastrar(ActionEvent actionEvent) {

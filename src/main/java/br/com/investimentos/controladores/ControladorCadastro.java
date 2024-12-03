@@ -117,9 +117,20 @@ public class ControladorCadastro {
             contaUsuarioComum.setTelefone(telefone);
             contaUsuarioComum.setCpf(cpf);
 
+            repositorioContas.inserirConta(contaUsuarioComum);
+
             System.out.println("\n" + contaUsuarioComum.getNome() + "\n" + contaUsuarioComum.getNomeUsuario() + "\n" +
                     contaUsuarioComum.getEmail() + "\n" + contaUsuarioComum.getSenha() + "\n" +
-                    contaUsuarioComum.getTelefone() + "\n" + contaUsuarioComum.getCpf());
+                    contaUsuarioComum.getTelefone() + "\n" + contaUsuarioComum.getCpf()+ "\n");
+
+            System.out.println("Cadastro concluído com sucesso.");
+            fieldNomeCompleto.clear();
+            fieldNomeUser.clear();
+            fieldEmail.clear();
+            fieldSenha.clear();
+            fieldConfSenha.clear();
+            fieldTelefone.clear();
+            fieldCpf.clear();
         }
     }
 

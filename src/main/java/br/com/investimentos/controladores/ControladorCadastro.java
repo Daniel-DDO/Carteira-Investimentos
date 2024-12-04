@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class ControladorCadastro {
@@ -58,7 +59,7 @@ public class ControladorCadastro {
     private Button botaoVoltar03;
 
     @FXML
-    private TextField fieldConfSenha;
+    private PasswordField fieldConfSenha;
 
     @FXML
     private TextField fieldCpf;
@@ -73,7 +74,7 @@ public class ControladorCadastro {
     private TextField fieldNomeUser;
 
     @FXML
-    private TextField fieldSenha;
+    private PasswordField fieldSenha;
 
     @FXML
     private TextField fieldTelefone;
@@ -145,6 +146,13 @@ public class ControladorCadastro {
     @FXML
     public void voltarBotao03(ActionEvent event) {
         Programa.trocarTela(2);
+        fieldNomeCompleto.clear();
+        fieldNomeUser.clear();
+        fieldEmail.clear();
+        fieldSenha.clear();
+        fieldConfSenha.clear();
+        fieldTelefone.clear();
+        fieldCpf.clear();
     }
 
 

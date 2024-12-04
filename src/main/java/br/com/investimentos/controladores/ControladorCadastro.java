@@ -125,6 +125,8 @@ public class ControladorCadastro {
 
             repositorioContas.inserirConta(contaUsuarioComum);
 
+            ControladorGeral.alertaInformacao("Cadastro Concluído!", "Seu cadastro foi realizado com sucesso.");
+
             System.out.println("\n" + contaUsuarioComum.getNome() + "\n" + contaUsuarioComum.getNomeUsuario() + "\n" +
                     contaUsuarioComum.getEmail() + "\n" + contaUsuarioComum.getSenha() + "\n" +
                     contaUsuarioComum.getTelefone() + "\n" + contaUsuarioComum.getCpf()+ "\n");

@@ -14,4 +14,20 @@ public class ControladorGeral {
         alert.setContentText(texto);
         alert.show();
     }
+
+    public static void alertaInformacao(String titulo, String texto) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Carteira Investimentos");
+        alert.setHeaderText(titulo);
+        alert.setContentText(texto);
+        alert.show();
+    }
+
+    public static void alertaConfirmacao(String titulo, String texto) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Carteira Investimentos");
+        alert.setHeaderText(titulo);
+        alert.setContentText(texto);
+        alert.show();
+    }
 }

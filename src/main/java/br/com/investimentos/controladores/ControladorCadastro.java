@@ -92,21 +92,27 @@ public class ControladorCadastro {
 
         if (nome == null || nome.trim().isEmpty()) {
             System.err.println("O nome não pode ser vazio ou nulo.");
+            ControladorGeral.alertaErro("Erro", "O nome não pode ser vazio ou nulo.");
         }
         else if (nomeUsuario == null || nomeUsuario.trim().isEmpty()) {
             System.err.println("O nome usuário não pode ser vazio ou nulo.");
+            ControladorGeral.alertaErro("Erro", "O nome usuário não pode ser vazio ou nulo.");
         }
         else if (email == null || email.trim().isEmpty() || !email.contains("@")) {
             System.err.println("Insira um email válido.");
+            ControladorGeral.alertaErro("Erro", "Insira um email válido.");
         }
         else if (senha == null || senha.trim().isEmpty() || !senha.equals(confSenha) || senha.length() < 6) {
             System.err.println("Verifique se as senhas conferem. Elas devem ter ao menos 6 caracteres.");
+            ControladorGeral.alertaErro("Erro", "Verifique se as senhas conferem. Elas devem ter ao menos 6 caracteres.");
         }
         else if (telefone == null || telefone.trim().isEmpty() || telefone.length() < 8) {
             System.err.println("Verifique se o telefone está correto.");
+            ControladorGeral.alertaErro("Erro", "Verifique se o telefone está correto.");
         }
         else if (cpf == null || cpf.trim().isEmpty() || cpf.length() != 11) {
             System.err.println("Verifique se o CPF é válido.");
+            ControladorGeral.alertaErro("Erro", "Verifique se o CPF é válido.");
         }
         else {
             Conta contaUsuarioComum = new UsuarioComum();

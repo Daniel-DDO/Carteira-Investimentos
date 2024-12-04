@@ -146,13 +146,6 @@ public class ControladorCadastro {
     @FXML
     public void voltarBotao03(ActionEvent event) {
         Programa.trocarTela(2);
-        fieldNomeCompleto.clear();
-        fieldNomeUser.clear();
-        fieldEmail.clear();
-        fieldSenha.clear();
-        fieldConfSenha.clear();
-        fieldTelefone.clear();
-        fieldCpf.clear();
     }
 
 

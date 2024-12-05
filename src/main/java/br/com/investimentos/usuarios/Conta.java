@@ -1,12 +1,18 @@
 package br.com.investimentos.usuarios;
 
-public abstract class Conta {
+import java.io.Serial;
+import java.io.Serializable;
+
+public abstract class Conta implements Serializable {
     private String nome;
     private String nomeUsuario;
     private String email;
     private String senha;
     private String telefone;
     private String cpf;
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public Conta() {}
 

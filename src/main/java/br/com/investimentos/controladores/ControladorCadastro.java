@@ -140,6 +140,8 @@ public class ControladorCadastro {
             fieldConfSenha.clear();
             fieldTelefone.clear();
             fieldCpf.clear();
+
+            Programa.trocarTela(1);
         }
     }
 

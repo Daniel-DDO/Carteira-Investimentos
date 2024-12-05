@@ -7,7 +7,23 @@ import java.io.Serializable;
 
 public class RepositorioContas {
 
+    private No cabeca;
+
+    public RepositorioContas() {
+        this.cabeca = null;
+    }
+
     public void inserirConta(Conta novaConta) {
+        No novoNo = new No(novaConta);
+        if (cabeca == null) {
+            cabeca = novoNo; //quando a lista é vazia
+        } else {
+            No atual = cabeca;
+            while (atual.getProximo() != null) {
+                atual = atual.getProximo();
+            }
+            atual.setProximo(novoNo);
+        }
         ControladorArquivos.escreverNoArquivo(novaConta);
     }
 

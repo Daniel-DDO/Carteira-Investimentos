@@ -4,9 +4,10 @@ import br.com.investimentos.controladores.ControladorArquivos;
 import br.com.investimentos.usuarios.Conta;
 
 public class RepositorioContas {
-    private int tamanho = 1;
+    private static RepositorioContas repositorioContas;
+    private int tamanho = 100;
     private Conta[] contas = new Conta[tamanho];
-    private int posicao;
+    private int posicao = 0;
 
     public RepositorioContas() {
     }
@@ -69,5 +70,16 @@ public class RepositorioContas {
 
     public void setTamanho(int tamanho) {
         this.tamanho = tamanho;
+    }
+
+    public static RepositorioContas getRepositorioContas() {
+        if (repositorioContas  == null) {
+           repositorioContas = new RepositorioContas();
+        }
+        return repositorioContas;
+    }
+
+    public static void setRepositorioContas(RepositorioContas repositorioContas) {
+        RepositorioContas.repositorioContas = repositorioContas;
     }
 }

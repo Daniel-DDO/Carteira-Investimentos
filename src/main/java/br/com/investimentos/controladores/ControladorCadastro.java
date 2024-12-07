@@ -89,7 +89,7 @@ public class ControladorCadastro {
         String telefone = fieldTelefone.getText();
         String cpf = fieldCpf.getText();
 
-        RepositorioContas repositorioContas = new RepositorioContas();
+        RepositorioContas repositorioContas = RepositorioContas.getRepositorioContas();
 
         if (nome == null || nome.trim().isEmpty()) {
             System.err.println("O nome não pode ser vazio ou nulo.");
@@ -142,6 +142,8 @@ public class ControladorCadastro {
             fieldCpf.clear();
 
             Programa.trocarTela(1);
+            System.out.println("\nCONTAS CRIADAS\n");
+            repositorioContas.exibirContas(); //pra ver se tá criando no array
         }
     }
 

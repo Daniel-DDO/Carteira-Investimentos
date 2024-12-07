@@ -10,6 +10,15 @@ public class RepositorioContas {
     private int posicao = 0;
 
     public RepositorioContas() {
+        Conta[] contasCarregadas = ControladorArquivos.lerDoArquivo();
+        if (contasCarregadas != null) {
+            for (Conta conta : contasCarregadas) {
+                if (conta != null) {
+                    contas[posicao] = conta;
+                    posicao++;
+                }
+            }
+        }
     }
 
     public void inserirConta(Conta novaConta) {

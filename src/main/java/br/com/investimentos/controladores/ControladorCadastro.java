@@ -208,8 +208,18 @@ public class ControladorCadastro {
             ControladorGeral.alertaErro("Erro", "Digite um email válido.");
             System.err.println("Digite um email válido.");
         } else if (senha == null || senha.trim().isEmpty() || senha.length() < 6 || !senha.equals(confSenha)) {
-            ControladorGeral.alertaErro("Erro", "Verifique se as senhas conferem. A senha deve ter ao menos 6 dígitos.");
-            System.err.println("Verifique se as senhas conferem. A senha deve ter ao menos 6 dígitos.");
+            if (senha == null) {
+                ControladorGeral.alertaErro("Erro", "A senha não pode ser nula.");
+            } else if (senha.trim().isEmpty()) {
+                ControladorGeral.alertaErro("Erro", "A senha não pode ser vazia.");
+            } else if (senha.length() < 6) {
+                ControladorGeral.alertaErro("Erro", "A senha deve ter 6 dígitos ou mais.");
+            } else if (!senha.equals(confSenha)) {
+                ControladorGeral.alertaErro("Erro", "As senhas devem ser iguais.");
+            } else {
+                ControladorGeral.alertaErro("Erro", "Verifique se as senhas conferem. A senha deve ter ao menos 6 dígitos.");
+                System.err.println("Verifique se as senhas conferem. A senha deve ter ao menos 6 dígitos.");
+            }
         } else if (telefone == null || telefone.trim().isEmpty() || telefone.length() < 8) {
             ControladorGeral.alertaErro("Erro", "O telefone deve ter ao menos 8 dígitos.");
             System.err.println("O telefone deve ter ao menos 8 dígitos.");

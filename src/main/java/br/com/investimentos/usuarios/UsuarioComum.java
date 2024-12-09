@@ -7,13 +7,12 @@ import java.time.LocalDate;
 
 public class UsuarioComum extends Conta {
 
-    private Investimentos tipoInvestimento;
     private double orcamentoMensal;
-    private String objetivoInvestimento;
     private LocalDate tempoInvestimento;
     private double reservaEmergencia;
     private RiscosFinanceiros riscosFinanceiros;
     private double rendaFixa;
+    //private CarteiraUsuario[] carteiras;
 
     public UsuarioComum() {}
 
@@ -27,12 +26,10 @@ public class UsuarioComum extends Conta {
 
     public UsuarioComum(String nome, String nomeUsuario, String email, String senha,
                         String telefone, String cpf, Investimentos tipoInvestimento,
-                        double orcamentoMensal, String objetivoInvestimento, LocalDate tempoInvestimento,
+                        double orcamentoMensal, LocalDate tempoInvestimento,
                         double reservaEmergencia, RiscosFinanceiros riscosFinanceiros, double rendaFixa) {
         super(nome, nomeUsuario, email, senha, telefone, cpf);
-        this.tipoInvestimento = tipoInvestimento;
         this.orcamentoMensal = orcamentoMensal;
-        this.objetivoInvestimento = objetivoInvestimento;
         this.tempoInvestimento = tempoInvestimento;
         this.reservaEmergencia = reservaEmergencia;
         this.riscosFinanceiros = riscosFinanceiros;
@@ -43,28 +40,12 @@ public class UsuarioComum extends Conta {
 
     public void gerenciarCarteira() {}
 
-    public Investimentos getTipoInvestimento() {
-        return tipoInvestimento;
-    }
-
-    public void setTipoInvestimento(Investimentos tipoInvestimento) {
-        this.tipoInvestimento = tipoInvestimento;
-    }
-
     public double getOrcamentoMensal() {
         return orcamentoMensal;
     }
 
     public void setOrcamentoMensal(double orcamentoMensal) {
         this.orcamentoMensal = orcamentoMensal;
-    }
-
-    public String getObjetivoInvestimento() {
-        return objetivoInvestimento;
-    }
-
-    public void setObjetivoInvestimento(String objetivoInvestimento) {
-        this.objetivoInvestimento = objetivoInvestimento;
     }
 
     public LocalDate getTempoInvestimento() {

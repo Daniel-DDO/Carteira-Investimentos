@@ -2,6 +2,7 @@ package br.com.investimentos.controladores;
 
 import br.com.investimentos.repositorios.RepositorioContas;
 import br.com.investimentos.usuarios.Conta;
+import br.com.investimentos.usuarios.UsuarioAdministrador;
 import br.com.investimentos.usuarios.UsuarioComum;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -154,4 +155,85 @@ public class ControladorCadastro {
 
 
     //Tela cadastro de usuário adm
+
+    @FXML
+    private Button botaoConfirmar04;
+
+    @FXML
+    private Button botaoVoltar04;
+
+    @FXML
+    private PasswordField fieldConfSenhaAdm;
+
+    @FXML
+    private TextField fieldCpfAdm;
+
+    @FXML
+    private TextField fieldEmailAdm;
+
+    @FXML
+    private TextField fieldNomeCompletoAdm;
+
+    @FXML
+    private TextField fieldNomeUserAdm;
+
+    @FXML
+    private PasswordField fieldSenhaAdm;
+
+    @FXML
+    private TextField fieldTelefoneAdm;
+
+    @FXML
+    public void voltarBotao04(ActionEvent event) {
+        Programa.trocarTela(1);
+    }
+
+    @FXML
+    public void confirmarBotao04(ActionEvent event) {
+        String nome = fieldNomeCompletoAdm.getText();
+        String nomeUsuario = fieldNomeUserAdm.getText();
+        String email = fieldEmailAdm.getText();
+        String senha = fieldSenhaAdm.getText();
+        String confSenha = fieldConfSenhaAdm.getText();
+        String telefone = fieldTelefoneAdm.getText();
+        String cpf = fieldCpfAdm.getText();
+
+        if (nome == null || nome.trim().isEmpty()) {
+            ControladorGeral.alertaErro("Erro", "O nome não pode ser nulo ou vazio.");
+            System.err.println("O nome não pode ser nulo ou vazio.");
+        } else if (nomeUsuario == null || nomeUsuario.trim().isEmpty() || nomeUsuario.length() < 6) {
+            ControladorGeral.alertaErro("Erro", "O nome de usuário não pode ser vazio, nulo ou ter menos de 6 dígitos.");
+            System.err.println("O nome de usuário não pode ser vazio, nulo ou ter menos de 6 dígitos.");
+        } else if (email == null || email.trim().isEmpty() || !email.contains("@")) {
+            ControladorGeral.alertaErro("Erro", "Digite um email válido.");
+            System.err.println("Digite um email válido.");
+        } else if (senha == null || senha.trim().isEmpty() || senha.length() < 6 || !senha.equals(confSenha)) {
+            ControladorGeral.alertaErro("Erro", "Verifique se as senhas conferem. A senha deve ter ao menos 6 dígitos.");
+            System.err.println("Verifique se as senhas conferem. A senha deve ter ao menos 6 dígitos.");
+        } else if (telefone == null || telefone.trim().isEmpty() || telefone.length() < 8) {
+            ControladorGeral.alertaErro("Erro", "O telefone deve ter ao menos 8 dígitos.");
+            System.err.println("O telefone deve ter ao menos 8 dígitos.");
+        } else if (cpf == null || cpf.trim().isEmpty() || cpf.length() != 11) {
+            ControladorGeral.alertaErro("Erro", "Digite um CPF válido.");
+            System.err.println("Digite um CPF válido.");
+        } else {
+            Conta contaAdm = new UsuarioAdministrador();
+
+            contaAdm.setNome(nome);
+            contaAdm.setNomeUsuario(nomeUsuario);
+            contaAdm.setEmail(email);
+            contaAdm.setSenha(senha);
+            contaAdm.setTelefone(telefone);
+            contaAdm.setCpf(cpf);
+
+            RepositorioContas repositorioContas = new RepositorioContas();
+
+            repositorioContas.inserirConta(contaAdm);
+            System.out.println("Cadastro concluído com sucesso.");
+            ControladorGeral.alertaInformacao("Carteira Investimentos", "Cadastro concluído com sucesso!");
+
+            repositorioContas.exibirContas();
+            Programa.trocarTela(1);
+        }
+    }
 }

@@ -232,6 +232,14 @@ public class ControladorCadastro {
             System.out.println("Cadastro concluído com sucesso.");
             ControladorGeral.alertaInformacao("Carteira Investimentos", "Cadastro concluído com sucesso!");
 
+            fieldNomeCompletoAdm.clear();
+            fieldNomeUserAdm.clear();
+            fieldEmailAdm.clear();
+            fieldSenhaAdm.clear();
+            fieldConfSenhaAdm.clear();
+            fieldTelefoneAdm.clear();
+            fieldCpfAdm.clear();
+
             repositorioContas.exibirContas();
             Programa.trocarTela(1);
         }

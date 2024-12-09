@@ -35,5 +35,11 @@ public class UsuarioAdministrador extends Conta {
     public void setAtivosCadastrados(int ativosCadastrados) {
         this.ativosCadastrados = ativosCadastrados;
     }
+
+    @Override
+    public String toString() {
+        return "\nCONTA:\n"+"\nNome: "+getNome()+"\nNome usuário: "+getNomeUsuario()+"\nEmail: "+getEmail()+"\nSenha: "+getSenha()+
+                "\nTelefone: "+getTelefone()+"\nCpf: "+getCpf()+"\n";
+    }
 }
 

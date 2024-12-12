@@ -6,7 +6,6 @@ public class RiscosFinanceiros {
     private double probabilidade;
     private double impactoFinanceiro;
     private String descricao;
-    private String responsavel;
     private String status;
     private String prazoResolucao;
 
@@ -40,14 +39,6 @@ public class RiscosFinanceiros {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public String getResponsavel() {
-        return responsavel;
-    }
-
-    public void setResponsavel(String responsavel) {
-        this.responsavel = responsavel;
     }
 
     public String getStatus() {

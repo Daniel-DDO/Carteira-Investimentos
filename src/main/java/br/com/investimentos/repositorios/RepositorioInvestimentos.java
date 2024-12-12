@@ -16,6 +16,10 @@ public class RepositorioInvestimentos {
 
     }
 
+    public void removerInverstimento() {
+
+    }
+
     public static RepositorioInvestimentos getRepositorioInvestimentos() {
         return repositorioInvestimentos;
     }

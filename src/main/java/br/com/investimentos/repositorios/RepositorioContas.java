@@ -33,9 +33,14 @@ public class RepositorioContas {
     }
 
     public void buscarConta(Conta conta) {
+        boolean encontrado = false;
         for (int i = 0; i < tamanho; i++) {
-            if (conta == contas[i]) {
-                System.out.println("Conta encontrada.");
+            if (conta.equals(contas[i])) {
+                encontrado = true;
+                System.out.println(encontrado+"\n");
+            }
+            if (encontrado) {
+                break;
             }
         }
     }
@@ -45,9 +50,27 @@ public class RepositorioContas {
     }
 
     public void removerConta(Conta conta) {
-        buscarConta(conta);
+        boolean encontrado = false;
+        for (int i = 0; i < posicao; i++) {
+            if (conta.equals(contas[i])) {
+                encontrado = true;
 
+                for (int j = i; j < posicao - 1; j++) {
+                    contas[j] = contas[j + 1];
+                }
+                contas[posicao - 1] = null;
+                posicao--;
+
+                ControladorArquivos.removerDoArquivo(conta);
+                System.out.println("Conta removida.\n");
+                break;
+            }
+        }
+        if (!encontrado) {
+            System.out.println("Conta não encontrada.\n");
+        }
     }
+
 
     public void exibirContas() {
         for (int i = 0; i < tamanho; i++) {

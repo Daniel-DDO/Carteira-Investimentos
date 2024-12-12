@@ -66,6 +66,10 @@ public class ControladorArquivos {
         return null;
     }
 
+    public static void removerDoArquivo(Conta conta) {
+        Conta[] contas = lerDoArquivo();
+        //falta terminar de implementar
+    }
 
     public static int getTamanho() {
         return tamanho;
@@ -74,4 +78,6 @@ public class ControladorArquivos {
     public static void setTamanho(int tamanho) {
         ControladorArquivos.tamanho = tamanho;
     }
+
+
 }

@@ -38,7 +38,7 @@ public class UsuarioAdministrador extends Conta {
 
     @Override
     public String toString() {
-        return "\nCONTA:\n"+"\nNome: "+getNome()+"\nNome usuário: "+getNomeUsuario()+"\nEmail: "+getEmail()+"\nSenha: "+getSenha()+
+        return "CONTA:"+"\nNome: "+getNome()+"\nNome usuário: "+getNomeUsuario()+"\nEmail: "+getEmail()+"\nSenha: "+getSenha()+
                 "\nTelefone: "+getTelefone()+"\nCpf: "+getCpf()+"\n";
     }
 }

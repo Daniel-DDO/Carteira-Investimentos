@@ -1,6 +1,7 @@
 package br.com.investimentos.repositorios;
 
 import br.com.investimentos.controladores.ControladorArquivos;
+import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.usuarios.Conta;
 
 public class RepositorioContas {
@@ -78,6 +79,21 @@ public class RepositorioContas {
                 System.out.println(contas[i]);
             }
         }
+    }
+
+    public boolean buscarContaPorNomeUsuario(String nomeUsuario) throws ContaNaoExisteException {
+        boolean encontrado = false;
+        for (int i = 0; i < tamanho; i++) {
+            if (contas[i] != null) {
+                if (nomeUsuario.equals(contas[i].getNomeUsuario())) {
+                    encontrado = true;
+                }
+            }
+        }
+        if (!encontrado) {
+            throw new ContaNaoExisteException(nomeUsuario);
+        }
+        return encontrado;
     }
 
     public Conta[] getContas() {

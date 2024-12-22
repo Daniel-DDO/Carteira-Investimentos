@@ -96,6 +96,31 @@ public class RepositorioContas {
         return encontrado;
     }
 
+    public boolean buscarContaParaLogar(String usuarioOuEmail, String senha) {
+        boolean contaEncontrada = false;
+        if (usuarioOuEmail.contains("@")) {
+            //considerar o login pelo email e senha
+            for (int i = 0; i < tamanho; i++) {
+                if (contas[i] != null) {
+                    if (usuarioOuEmail.equals(contas[i].getEmail()) && senha.equals(contas[i].getSenha())) {
+                        contaEncontrada = true;
+                    }
+                }
+            }
+        } else {
+            //considerar o login por nomeUsuario e senha
+            for (int i = 0; i < tamanho; i++) {
+                if (contas[i] != null) {
+                    if (usuarioOuEmail.equals(contas[i].getNomeUsuario()) && senha.equals(contas[i].getSenha())) {
+                        contaEncontrada = true;
+                    }
+                }
+            }
+        }
+        System.out.println(contaEncontrada);
+        return contaEncontrada;
+    }
+
     public Conta[] getContas() {
         return contas;
     }

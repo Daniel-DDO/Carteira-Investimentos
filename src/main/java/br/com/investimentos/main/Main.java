@@ -6,6 +6,8 @@ import br.com.investimentos.usuarios.Conta;
 import br.com.investimentos.usuarios.UsuarioAdministrador;
 import br.com.investimentos.usuarios.UsuarioComum;
 
+import java.util.Scanner;
+
 import static javafx.application.Application.launch;
 
 public class Main extends Programa {
@@ -14,24 +16,55 @@ public class Main extends Programa {
         //launch();
 
         RepositorioContas repositorioContas = new RepositorioContas();
+        Conta usuarioComum = new UsuarioComum();
 
-        Conta usuarioComum1 = new UsuarioComum("José", "jose.silva",
-                "jose@email.com", "123456", "81987654321", "11122233344");
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
 
-        Conta usuarioAdm1 = new UsuarioAdministrador("Flávio", "flavio.junior",
-                "fjunior@email.com", "123456", "81981192347", "99988877755");
+        do {
+            System.out.println("1. Criar conta comum\n2. Criar conta adm\n3. Exibir contas\n4. Logar conta\n5. Sair");
+            opcao = scanner.nextInt();
 
-        repositorioContas.inserirConta(usuarioComum1);
-        repositorioContas.inserirConta(usuarioAdm1);
+            switch (opcao) {
+                case 1:
+                    System.out.print("CRIANDO CONTA COMUM\nNome: ");
+                    usuarioComum.setNome(scanner.nextLine());
+                    scanner.nextLine();
+                    System.out.print("Nome usuário: ");
+                    usuarioComum.setNomeUsuario(scanner.nextLine());
+                    System.out.print("Email: ");
+                    usuarioComum.setEmail(scanner.nextLine());
+                    System.out.print("Senha: ");
+                    usuarioComum.setSenha(scanner.nextLine());
+                    System.out.print("CPF: ");
+                    usuarioComum.setCpf(scanner.nextLine());
+                    System.out.print("Telefone: ");
+                    usuarioComum.setTelefone(scanner.nextLine());
 
-        repositorioContas.exibirContas();
+                    repositorioContas.inserirConta(usuarioComum);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    repositorioContas.exibirContas();
+                    break;
+                case 4:
+                    String usuarioOuEmail;
+                    String senha;
+                    System.out.print("LOGIN\nNome usuário ou email: ");
+                    usuarioOuEmail = scanner.nextLine();
+                    while (usuarioOuEmail.isEmpty() || usuarioOuEmail == null) {
+                        System.err.print("Nome usuário ou email: ");
+                        usuarioOuEmail = scanner.nextLine();
+                    }
+                    System.out.print("Senha: ");
+                    senha = scanner.nextLine();
 
-        repositorioContas.buscarConta(usuarioAdm1);
-
-        repositorioContas.removerConta(usuarioAdm1);
-
-        repositorioContas.buscarConta(usuarioAdm1);
-
-        repositorioContas.exibirContas();
+                    repositorioContas.buscarContaParaLogar(usuarioOuEmail, senha);
+                    break;
+                default:
+                    break;
+            }
+        } while (opcao != 5);
     }
 }

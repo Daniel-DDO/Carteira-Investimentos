@@ -5,13 +5,14 @@ public class UsuarioAdministrador extends Conta {
     private int ativosCadastrados;
 
     public UsuarioAdministrador() {
+        this.setTipoConta(TipoConta.ADM);
     }
 
     public UsuarioAdministrador(
             String nome, String nomeUsuario, String email, String senha,
             String telefone, String cpf
     ) {
-        super(nome, nomeUsuario, email, senha, telefone, cpf);
+        super(nome, nomeUsuario, email, senha, telefone, cpf, TipoConta.ADM);
     }
 
     public void criarAtivo() {}
@@ -39,7 +40,7 @@ public class UsuarioAdministrador extends Conta {
     @Override
     public String toString() {
         return "CONTA ADM:"+"\nNome: "+getNome()+"\nNome usuário: "+getNomeUsuario()+"\nEmail: "+getEmail()+"\nSenha: "+getSenha()+
-                "\nTelefone: "+getTelefone()+"\nCpf: "+getCpf()+"\n";
+                "\nTelefone: "+getTelefone()+"\nCpf: "+getCpf()+"\nTipo Conta: "+getTipoConta()+"\n";
     }
 }
 

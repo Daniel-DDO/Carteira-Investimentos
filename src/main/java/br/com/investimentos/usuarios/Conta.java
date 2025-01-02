@@ -10,6 +10,7 @@ public abstract class Conta implements Serializable {
     private String senha;
     private String telefone;
     private String cpf;
+    private TipoConta tipoConta;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -17,13 +18,14 @@ public abstract class Conta implements Serializable {
     public Conta() {}
 
     public Conta(String nome, String nomeUsuario, String email, String senha,
-                 String telefone, String cpf) {
+                 String telefone, String cpf, TipoConta tipoConta) {
         this.nome = nome;
         this.nomeUsuario = nomeUsuario;
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
         this.cpf = cpf;
+        this.tipoConta = tipoConta;
     }
 
     public String getNome() {
@@ -72,5 +74,13 @@ public abstract class Conta implements Serializable {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public TipoConta getTipoConta() {
+        return tipoConta;
+    }
+
+    public void setTipoConta(TipoConta tipoConta) {
+        this.tipoConta = tipoConta;
     }
 }

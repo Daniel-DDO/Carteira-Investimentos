@@ -52,25 +52,6 @@ public class ControladorArquivos {
         }
     }
 
-    public static Conta buscarConta(String entrada) {
-        Conta[] contas = lerDoArquivo();
-        if (contas == null) {
-            return null;
-        }
-
-        for (Conta conta : contas) {
-            if (conta != null && (conta.getEmail().equals(entrada) || conta.getNomeUsuario().equals(entrada))) {
-                return conta;
-            }
-        }
-        return null;
-    }
-
-    public static void removerDoArquivo(Conta conta) {
-        Conta[] contas = lerDoArquivo();
-        //falta terminar de implementar
-    }
-
     public static int getTamanho() {
         return tamanho;
     }

@@ -14,13 +14,15 @@ public class UsuarioComum extends Conta {
     private double rendaFixa;
     //private CarteiraUsuario[] carteiras;
 
-    public UsuarioComum() {}
+    public UsuarioComum() {
+        this.setTipoConta(TipoConta.COMUM);
+    }
 
     public UsuarioComum(
             String nome, String nomeUsuario, String email, String senha,
             String telefone, String cpf
     ) {
-        super(nome, nomeUsuario, email, senha, telefone, cpf);
+        super(nome, nomeUsuario, email, senha, telefone, cpf, TipoConta.COMUM);
 
     }
 
@@ -28,7 +30,7 @@ public class UsuarioComum extends Conta {
                         String telefone, String cpf, Investimentos tipoInvestimento,
                         double orcamentoMensal, LocalDate tempoInvestimento,
                         double reservaEmergencia, RiscosFinanceiros riscosFinanceiros, double rendaFixa) {
-        super(nome, nomeUsuario, email, senha, telefone, cpf);
+        super(nome, nomeUsuario, email, senha, telefone, cpf, TipoConta.COMUM);
         this.orcamentoMensal = orcamentoMensal;
         this.tempoInvestimento = tempoInvestimento;
         this.reservaEmergencia = reservaEmergencia;
@@ -83,6 +85,6 @@ public class UsuarioComum extends Conta {
     @Override
     public String toString() {
         return "CONTA COMUM:\n" + "Nome: "+getNome()+"\nNome Usuário: "+getNomeUsuario()+"\nEmail: "+getEmail()+
-                "\nSenha: "+getSenha()+"\nTelefone: "+getTelefone()+"\nCpf: "+getCpf()+"\n";
+                "\nSenha: "+getSenha()+"\nTelefone: "+getTelefone()+"\nCpf: "+getCpf()+"\nTipo Conta: "+getTipoConta()+"\n";
     }
 }

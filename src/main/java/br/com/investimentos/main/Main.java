@@ -1,8 +1,10 @@
 package br.com.investimentos.main;
 
 import br.com.investimentos.controladores.*;
+import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.repositorios.RepositorioContas;
 import br.com.investimentos.usuarios.Conta;
+import br.com.investimentos.usuarios.TipoConta;
 import br.com.investimentos.usuarios.UsuarioAdministrador;
 import br.com.investimentos.usuarios.UsuarioComum;
 
@@ -18,7 +20,7 @@ public class Main extends Programa {
         Conta usuarioComum = new UsuarioComum();
         Conta usuarioAdm = new UsuarioAdministrador();
 
-        //launch();
+        launch();
 
         Scanner scanner = new Scanner(System.in);
         int opcao;
@@ -68,6 +70,16 @@ public class Main extends Programa {
                 case 4:
                     String usuarioOuEmail;
                     String senha;
+                    Conta conta;
+                    int tipo;
+                    System.out.println("Digite 1 para ADMINISTRADOR e qualquer número para conta COMUM.");
+                    tipo = scanner.nextInt();
+                    if (tipo == 1) {
+                        conta = usuarioAdm;
+                    } else {
+                        conta = usuarioComum;
+                    }
+
                     System.out.print("LOGIN\nNome usuário ou email: ");
                     usuarioOuEmail = scanner.nextLine();
                     while (usuarioOuEmail.isEmpty() || usuarioOuEmail == null) {
@@ -76,8 +88,11 @@ public class Main extends Programa {
                     }
                     System.out.print("Senha: ");
                     senha = scanner.nextLine();
-
-                    repositorioContas.buscarContaParaLogar(usuarioOuEmail, senha);
+                    try {
+                        repositorioContas.buscarContaParaLogar(usuarioOuEmail, senha, conta);
+                    } catch (ContaNaoExisteException contaNaoExisteException) {
+                        contaNaoExisteException.printStackTrace();
+                    }
                     break;
                 case 5:
                     System.out.println("Encerrando...");
@@ -86,5 +101,6 @@ public class Main extends Programa {
                     break;
             }
         } while (opcao != 5);
+
     }
 }

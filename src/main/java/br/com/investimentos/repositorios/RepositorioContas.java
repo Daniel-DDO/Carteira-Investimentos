@@ -3,6 +3,9 @@ package br.com.investimentos.repositorios;
 import br.com.investimentos.controladores.ControladorArquivos;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.usuarios.Conta;
+import br.com.investimentos.usuarios.TipoConta;
+import br.com.investimentos.usuarios.UsuarioAdministrador;
+import br.com.investimentos.usuarios.UsuarioComum;
 
 public class RepositorioContas {
     private static RepositorioContas instancia;
@@ -62,7 +65,7 @@ public class RepositorioContas {
                 contas[posicao - 1] = null;
                 posicao--;
 
-                ControladorArquivos.removerDoArquivo(conta);
+                //ControladorArquivos.removerDoArquivo(conta);
                 System.out.println("Conta removida.\n");
                 break;
             }
@@ -96,28 +99,51 @@ public class RepositorioContas {
         return encontrado;
     }
 
-    public boolean buscarContaParaLogar(String usuarioOuEmail, String senha) {
+    public boolean buscarContaParaLogar(String usuarioOuEmail, String senha, Conta conta) throws ContaNaoExisteException {
         boolean contaEncontrada = false;
         if (usuarioOuEmail.contains("@")) {
             //considerar o login pelo email e senha
-            for (int i = 0; i < tamanho; i++) {
-                if (contas[i] != null) {
-                    if (usuarioOuEmail.equals(contas[i].getEmail()) && senha.equals(contas[i].getSenha())) {
-                        contaEncontrada = true;
+            if (conta.getTipoConta() == TipoConta.ADM) {
+                for (int i = 0; i < tamanho; i++) {
+                    if (contas[i] != null) {
+                        if (usuarioOuEmail.equals(contas[i].getEmail()) && senha.equals(contas[i].getSenha())) {
+                            contaEncontrada = true;
+                        }
+                    }
+                }
+            } else if (conta.getTipoConta() == TipoConta.COMUM) {
+                for (int i = 0; i < tamanho; i++) {
+                    if (contas[i] != null) {
+                        if (usuarioOuEmail.equals(contas[i].getEmail()) && senha.equals(contas[i].getSenha())) {
+                            contaEncontrada = true;
+                        }
                     }
                 }
             }
+
         } else {
             //considerar o login por nomeUsuario e senha
             for (int i = 0; i < tamanho; i++) {
-                if (contas[i] != null) {
-                    if (usuarioOuEmail.equals(contas[i].getNomeUsuario()) && senha.equals(contas[i].getSenha())) {
-                        contaEncontrada = true;
+                if (conta.getTipoConta() == TipoConta.ADM) {
+                    if (contas[i] != null) {
+                        if (usuarioOuEmail.equals(contas[i].getNomeUsuario()) && senha.equals(contas[i].getSenha())) {
+                            contaEncontrada = true;
+                        }
+                    }
+                } else if (conta.getTipoConta() == TipoConta.COMUM) {
+                    if (contas[i] != null) {
+                        if (usuarioOuEmail.equals(contas[i].getNomeUsuario()) && senha.equals(contas[i].getSenha())) {
+                            contaEncontrada = true;
+                        }
                     }
                 }
             }
         }
-        System.out.println(contaEncontrada);
+        if (!contaEncontrada) {
+            throw new ContaNaoExisteException();
+        } else {
+            System.out.println(contaEncontrada);
+        }
         return contaEncontrada;
     }
 

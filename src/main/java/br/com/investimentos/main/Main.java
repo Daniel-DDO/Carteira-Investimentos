@@ -16,11 +16,13 @@ public class Main extends Programa {
     public static void main(String[] args) {
         System.out.println("Carteira de Investimentos");
 
+        launch();
+
+        //Daqui pra frente tudo é apenas para depuração e testes
+
         RepositorioContas repositorioContas = RepositorioContas.getInstancia();
         Conta usuarioComum = new UsuarioComum();
         Conta usuarioAdm = new UsuarioAdministrador();
-
-        launch();
 
         Scanner scanner = new Scanner(System.in);
         int opcao;
@@ -70,14 +72,14 @@ public class Main extends Programa {
                 case 4:
                     String usuarioOuEmail;
                     String senha;
-                    Conta conta;
+                    TipoConta tipoConta;
                     int tipo;
                     System.out.println("Digite 1 para ADMINISTRADOR e qualquer número para conta COMUM.");
                     tipo = scanner.nextInt();
                     if (tipo == 1) {
-                        conta = usuarioAdm;
+                        tipoConta = TipoConta.ADM;
                     } else {
-                        conta = usuarioComum;
+                        tipoConta = TipoConta.COMUM;
                     }
 
                     System.out.print("LOGIN\nNome usuário ou email: ");
@@ -89,7 +91,7 @@ public class Main extends Programa {
                     System.out.print("Senha: ");
                     senha = scanner.nextLine();
                     try {
-                        repositorioContas.buscarContaParaLogar(usuarioOuEmail, senha, conta);
+                        repositorioContas.buscarContaParaLogar(usuarioOuEmail, senha, tipoConta);
                     } catch (ContaNaoExisteException contaNaoExisteException) {
                         contaNaoExisteException.printStackTrace();
                     }
@@ -98,6 +100,7 @@ public class Main extends Programa {
                     System.out.println("Encerrando...");
                     break;
                 default:
+                    System.err.println("Opção inválida, tente novamente.");
                     break;
             }
         } while (opcao != 5);

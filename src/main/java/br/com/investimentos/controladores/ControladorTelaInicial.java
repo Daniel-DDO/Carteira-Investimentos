@@ -27,19 +27,25 @@ public class ControladorTelaInicial {
 
     public void botaoEntrar(ActionEvent actionEvent) {
         System.out.println("Clicou entrar");
-        Conta conta = new Conta() {};
+        TipoConta tipoConta;
         String emailUsuario = emailUsuarioField.getText();
         String senha = senhaField.getText();
+
+        if (souAdmBox.isSelected()) {
+            tipoConta = TipoConta.ADM;
+        } else {
+            tipoConta = TipoConta.COMUM;
+        }
 
         RepositorioContas repositorioContas = RepositorioContas.getInstancia();
 
         try {
             if (souAdmBox.isSelected()) {
                 //Deve buscar e logar como usuário adm
-                repositorioContas.buscarContaParaLogar(emailUsuario, senha, conta);
+                repositorioContas.buscarContaParaLogar(emailUsuario, senha, tipoConta);
             } else {
                 //Deve buscar e logar como usuário comum
-                repositorioContas.buscarContaParaLogar(emailUsuario, senha, conta);
+                repositorioContas.buscarContaParaLogar(emailUsuario, senha, tipoConta);
             }
         } catch (ContaNaoExisteException contaNaoExisteException) {
             contaNaoExisteException.printStackTrace();

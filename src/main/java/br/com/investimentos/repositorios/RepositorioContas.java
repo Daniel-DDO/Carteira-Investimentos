@@ -99,42 +99,23 @@ public class RepositorioContas {
         return encontrado;
     }
 
-    public boolean buscarContaParaLogar(String usuarioOuEmail, String senha, Conta conta) throws ContaNaoExisteException {
+    public boolean buscarContaParaLogar(String usuarioOuEmail, String senha, TipoConta tipoConta) throws ContaNaoExisteException {
         boolean contaEncontrada = false;
         if (usuarioOuEmail.contains("@")) {
             //considerar o login pelo email e senha
-            if (conta.getTipoConta() == TipoConta.ADM) {
-                for (int i = 0; i < tamanho; i++) {
-                    if (contas[i] != null) {
-                        if (usuarioOuEmail.equals(contas[i].getEmail()) && senha.equals(contas[i].getSenha())) {
-                            contaEncontrada = true;
-                        }
-                    }
-                }
-            } else if (conta.getTipoConta() == TipoConta.COMUM) {
-                for (int i = 0; i < tamanho; i++) {
-                    if (contas[i] != null) {
-                        if (usuarioOuEmail.equals(contas[i].getEmail()) && senha.equals(contas[i].getSenha())) {
-                            contaEncontrada = true;
-                        }
+            for (int i = 0; i < tamanho; i++) {
+                if (contas[i] != null && contas[i].getTipoConta().equals(tipoConta)) {
+                    if (usuarioOuEmail.equals(contas[i].getEmail()) && senha.equals(contas[i].getSenha())) {
+                        contaEncontrada = true;
                     }
                 }
             }
-
         } else {
-            //considerar o login por nomeUsuario e senha
+            //considerar o login pelo nomeUsuario e senha
             for (int i = 0; i < tamanho; i++) {
-                if (conta.getTipoConta() == TipoConta.ADM) {
-                    if (contas[i] != null) {
-                        if (usuarioOuEmail.equals(contas[i].getNomeUsuario()) && senha.equals(contas[i].getSenha())) {
-                            contaEncontrada = true;
-                        }
-                    }
-                } else if (conta.getTipoConta() == TipoConta.COMUM) {
-                    if (contas[i] != null) {
-                        if (usuarioOuEmail.equals(contas[i].getNomeUsuario()) && senha.equals(contas[i].getSenha())) {
-                            contaEncontrada = true;
-                        }
+                if (contas[i] != null && contas[i].getTipoConta().equals(tipoConta)) {
+                    if (usuarioOuEmail.equals(contas[i].getNomeUsuario()) && senha.equals(contas[i].getSenha())) {
+                        contaEncontrada = true;
                     }
                 }
             }

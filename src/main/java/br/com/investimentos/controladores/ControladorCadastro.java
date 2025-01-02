@@ -90,8 +90,6 @@ public class ControladorCadastro {
         String telefone = fieldTelefone.getText();
         String cpf = fieldCpf.getText();
 
-        RepositorioContas repositorioContas = RepositorioContas.getRepositorioContas();
-
         if (nome == null || nome.trim().isEmpty()) {
             System.err.println("O nome não pode ser vazio ou nulo.");
             ControladorGeral.alertaErro("Erro", "O nome não pode ser vazio ou nulo.");
@@ -125,6 +123,7 @@ public class ControladorCadastro {
             contaUsuarioComum.setTelefone(telefone);
             contaUsuarioComum.setCpf(cpf);
 
+            RepositorioContas repositorioContas = RepositorioContas.getInstancia();
             repositorioContas.inserirConta(contaUsuarioComum);
 
             ControladorGeral.alertaInformacao("Cadastro Concluído!", "Seu cadastro foi realizado com sucesso.");
@@ -236,9 +235,9 @@ public class ControladorCadastro {
             contaAdm.setTelefone(telefone);
             contaAdm.setCpf(cpf);
 
-            RepositorioContas repositorioContas = new RepositorioContas();
-
+            RepositorioContas repositorioContas = RepositorioContas.getInstancia();
             repositorioContas.inserirConta(contaAdm);
+
             System.out.println("Cadastro concluído com sucesso.");
             ControladorGeral.alertaInformacao("Carteira Investimentos", "Cadastro concluído com sucesso!");
 

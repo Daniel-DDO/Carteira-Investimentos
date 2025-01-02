@@ -5,12 +5,12 @@ import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.usuarios.Conta;
 
 public class RepositorioContas {
-    private static RepositorioContas repositorioContas;
+    private static RepositorioContas instancia;
     private int tamanho = 100;
     private Conta[] contas = new Conta[tamanho];
     private int posicao = 0;
 
-    public RepositorioContas() {
+    private RepositorioContas() {
         Conta[] contasCarregadas = ControladorArquivos.lerDoArquivo();
         if (contasCarregadas != null) {
             for (Conta conta : contasCarregadas) {
@@ -145,14 +145,14 @@ public class RepositorioContas {
         this.tamanho = tamanho;
     }
 
-    public static RepositorioContas getRepositorioContas() {
-        if (repositorioContas  == null) {
-           repositorioContas = new RepositorioContas();
+    public static RepositorioContas getInstancia() {
+        if (instancia == null) {
+           instancia = new RepositorioContas();
         }
-        return repositorioContas;
+        return instancia;
     }
 
-    public static void setRepositorioContas(RepositorioContas repositorioContas) {
-        RepositorioContas.repositorioContas = repositorioContas;
+    public static void setInstancia(RepositorioContas instancia) {
+        RepositorioContas.instancia = instancia;
     }
 }

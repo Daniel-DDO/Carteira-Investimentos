@@ -82,7 +82,7 @@ public class UsuarioComum extends Conta {
 
     @Override
     public String toString() {
-        return "CONTA:\n" + "Nome: "+getNome()+"\nNome Usuário: "+getNomeUsuario()+"\nEmail: "+getEmail()+
+        return "CONTA COMUM:\n" + "Nome: "+getNome()+"\nNome Usuário: "+getNomeUsuario()+"\nEmail: "+getEmail()+
                 "\nSenha: "+getSenha()+"\nTelefone: "+getTelefone()+"\nCpf: "+getCpf()+"\n";
     }
 }

@@ -13,23 +13,25 @@ import static javafx.application.Application.launch;
 public class Main extends Programa {
     public static void main(String[] args) {
         System.out.println("Carteira de Investimentos");
-        //launch();
 
-        RepositorioContas repositorioContas = new RepositorioContas();
+        RepositorioContas repositorioContas = RepositorioContas.getInstancia();
         Conta usuarioComum = new UsuarioComum();
+        Conta usuarioAdm = new UsuarioAdministrador();
+
+        //launch();
 
         Scanner scanner = new Scanner(System.in);
         int opcao;
 
         do {
-            System.out.println("1. Criar conta comum\n2. Criar conta adm\n3. Exibir contas\n4. Logar conta\n5. Sair");
+            System.out.println("\n1. Criar conta comum\n2. Criar conta adm\n3. Exibir contas\n4. Logar conta\n5. Sair");
             opcao = scanner.nextInt();
 
             switch (opcao) {
                 case 1:
                     System.out.print("CRIANDO CONTA COMUM\nNome: ");
-                    usuarioComum.setNome(scanner.nextLine());
                     scanner.nextLine();
+                    usuarioComum.setNome(scanner.nextLine());
                     System.out.print("Nome usuário: ");
                     usuarioComum.setNomeUsuario(scanner.nextLine());
                     System.out.print("Email: ");
@@ -44,6 +46,21 @@ public class Main extends Programa {
                     repositorioContas.inserirConta(usuarioComum);
                     break;
                 case 2:
+                    System.out.print("CRIANDO CONTA ADM\nNome: ");
+                    scanner.nextLine();
+                    usuarioAdm.setNome(scanner.nextLine());
+                    System.out.print("Nome usuário: ");
+                    usuarioAdm.setNomeUsuario(scanner.nextLine());
+                    System.out.print("Email: ");
+                    usuarioAdm.setEmail(scanner.nextLine());
+                    System.out.print("Senha: ");
+                    usuarioAdm.setSenha(scanner.nextLine());
+                    System.out.print("CPF: ");
+                    usuarioAdm.setCpf(scanner.nextLine());
+                    System.out.print("Telefone: ");
+                    usuarioAdm.setTelefone(scanner.nextLine());
+
+                    repositorioContas.inserirConta(usuarioAdm);
                     break;
                 case 3:
                     repositorioContas.exibirContas();
@@ -61,6 +78,9 @@ public class Main extends Programa {
                     senha = scanner.nextLine();
 
                     repositorioContas.buscarContaParaLogar(usuarioOuEmail, senha);
+                    break;
+                case 5:
+                    System.out.println("Encerrando...");
                     break;
                 default:
                     break;

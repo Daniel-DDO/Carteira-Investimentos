@@ -184,7 +184,7 @@ public class ControladorCadastro {
 
     @FXML
     public void voltarBotao04(ActionEvent event) {
-        Programa.trocarTela(1);
+        Programa.trocarTela(2);
     }
 
     @FXML

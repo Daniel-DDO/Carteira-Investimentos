@@ -17,7 +17,8 @@ public class Programa extends Application {
     private static Scene telaCadastro02;
     private static Scene cadastroComum;
     private static Scene cadastroAdmin;
-    private static Scene inicialComum;
+    private static Scene principalComum;
+    private static Scene principalAdm;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -38,8 +39,11 @@ public class Programa extends Application {
         Parent fxmlTelaCadastro04 = FXMLLoader.load(getClass().getResource(localFxml+"04-cadastro-adm.fxml"));
         cadastroAdmin = new Scene(fxmlTelaCadastro04, 1000, 600);
 
-        Parent fxmlTelaInicialComum = FXMLLoader.load(getClass().getResource(localFxml+"04-cadastro-adm.fxml"));
-        inicialComum = new Scene(fxmlTelaInicialComum, 1000, 600);
+        Parent fxmlTelaPrincipalComum = FXMLLoader.load(getClass().getResource(localFxml+"05-principal-comum.fxml"));
+        principalComum = new Scene(fxmlTelaPrincipalComum, 1000, 600);
+
+        Parent fxmlTelaPrincipalAdm = FXMLLoader.load(getClass().getResource(localFxml+"06-principal-adm.fxml"));
+        principalAdm = new Scene(fxmlTelaPrincipalAdm, 1000, 600);
 
         stage.setScene(telaInicial01);
         stage.show();
@@ -60,7 +64,10 @@ public class Programa extends Application {
                 stage.setScene(cadastroAdmin);
                 break;
             case 5:
-                stage.setScene(inicialComum);
+                stage.setScene(principalComum);
+                break;
+            case 6:
+                stage.setScene(principalAdm);
                 break;
         }
     }

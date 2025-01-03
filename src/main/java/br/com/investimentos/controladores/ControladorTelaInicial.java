@@ -43,9 +43,11 @@ public class ControladorTelaInicial {
             if (souAdmBox.isSelected()) {
                 //Deve buscar e logar como usuário adm
                 repositorioContas.buscarContaParaLogar(emailUsuario, senha, tipoConta);
+                Programa.trocarTela(6);
             } else {
                 //Deve buscar e logar como usuário comum
                 repositorioContas.buscarContaParaLogar(emailUsuario, senha, tipoConta);
+                Programa.trocarTela(5);
             }
         } catch (ContaNaoExisteException contaNaoExisteException) {
             contaNaoExisteException.printStackTrace();

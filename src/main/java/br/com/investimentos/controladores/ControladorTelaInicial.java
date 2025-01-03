@@ -50,6 +50,11 @@ public class ControladorTelaInicial {
                 Programa.trocarTela(5);
             }
         } catch (ContaNaoExisteException contaNaoExisteException) {
+            if (emailUsuario.isEmpty() || senha.isEmpty()) {
+                ControladorGeral.alertaErro("Erro", "Algum campo está vazio. Insira e tente fazer o login.");
+            } else {
+                ControladorGeral.alertaErro("Erro", "A conta não existe. Verifique as informações.");
+            }
             contaNaoExisteException.printStackTrace();
         }
 

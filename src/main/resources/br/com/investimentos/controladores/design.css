@@ -61,6 +61,34 @@
 }
 
 
+.medio-button {
+    -fx-background-color: #005f9f;
+    -fx-text-fill: white;
+    -fx-border-color: #007fbb;
+    -fx-border-width: 1.5px;
+    -fx-padding: 8 16;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-size: 17px;
+    -fx-font-family: 'Arial', sans-serif;
+    -fx-min-width: 100px;
+    -fx-min-height: 30px;
+    -fx-alignment: center;
+    -fx-transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.medio-button:hover {
+    -fx-background-color: #007fbb;
+    -fx-border-color: #005f9f;
+}
+
+.medio-button:pressed {
+    -fx-background-color: #003f7f;
+    -fx-border-color: #003f6b;
+    -fx-effect: none;
+}
+
 .label {
     -fx-text-fill: #e0f0ff;
     -fx-font-size: 15px;

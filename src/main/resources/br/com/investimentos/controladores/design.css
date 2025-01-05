@@ -4,6 +4,23 @@
     -fx-font-size: 14px;
 }
 
+.background1 {
+    -fx-background-color: #005f9f;
+    -fx-text-fill: white;
+    -fx-border-color: #007fbb;
+    -fx-border-width: 1.5px;
+    -fx-padding: 8 16;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Arial', sans-serif;
+    -fx-min-width: 100px;
+    -fx-min-height: 30px;
+    -fx-alignment: center;
+    -fx-transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
 .button {
     -fx-background-color: #005f9f;
     -fx-text-fill: white;

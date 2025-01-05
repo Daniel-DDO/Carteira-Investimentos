@@ -19,6 +19,12 @@ public class Programa extends Application {
     private static Scene cadastroAdmin;
     private static Scene principalComum;
     private static Scene principalAdm;
+    private static Scene simularInvestimentosTela;
+    private static Scene minhasCarteirasTela;
+    private static Scene projecoesRentabilidadeTela;
+    private static Scene fundosImobiliariosTela;
+    private static Scene rendaTela;
+    private static Scene perfilComumTela;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -45,6 +51,24 @@ public class Programa extends Application {
         Parent fxmlTelaPrincipalAdm = FXMLLoader.load(getClass().getResource(localFxml+"06-principal-adm.fxml"));
         principalAdm = new Scene(fxmlTelaPrincipalAdm, 1000, 600);
 
+        Parent fxmlTelaSimularInvestimentos = FXMLLoader.load(getClass().getResource(localFxml+"05-1-simular-investimentos.fxml"));
+        simularInvestimentosTela = new Scene(fxmlTelaSimularInvestimentos, 1000, 600);
+
+        Parent fxmlTelaMinhasCarteiras = FXMLLoader.load(getClass().getResource(localFxml+"05-2-minhas-carteiras.fxml"));
+        minhasCarteirasTela = new Scene(fxmlTelaMinhasCarteiras, 1000, 600);
+
+        Parent fxmlTelaProjecoesRentabilidade = FXMLLoader.load(getClass().getResource(localFxml+"05-3-projecoes-rentabilidade.fxml"));
+        projecoesRentabilidadeTela = new Scene(fxmlTelaProjecoesRentabilidade, 1000, 600);
+
+        Parent fxmlTelaFundosImobiliarios = FXMLLoader.load(getClass().getResource(localFxml+"05-4-fundos-imobiliarios.fxml"));
+        fundosImobiliariosTela = new Scene(fxmlTelaFundosImobiliarios, 1000, 600);
+
+        Parent fxmlTelaRenda = FXMLLoader.load(getClass().getResource(localFxml+"05-5-renda.fxml"));
+        rendaTela = new Scene(fxmlTelaRenda, 1000, 600);
+
+        Parent fxmlTelaPerfilComum = FXMLLoader.load(getClass().getResource(localFxml+"05-6-perfil-comum.fxml"));
+        perfilComumTela = new Scene(fxmlTelaPerfilComum, 1000, 600);
+
         stage.setScene(telaInicial01);
         stage.show();
     }
@@ -68,6 +92,24 @@ public class Programa extends Application {
                 break;
             case 6:
                 stage.setScene(principalAdm);
+                break;
+            case 7:
+                stage.setScene(simularInvestimentosTela);
+                break;
+            case 8:
+                stage.setScene(minhasCarteirasTela);
+                break;
+            case 9:
+                stage.setScene(projecoesRentabilidadeTela);
+                break;
+            case 10:
+                stage.setScene(fundosImobiliariosTela);
+                break;
+            case 11:
+                stage.setScene(rendaTela);
+                break;
+            case 12:
+                stage.setScene(perfilComumTela);
                 break;
         }
     }

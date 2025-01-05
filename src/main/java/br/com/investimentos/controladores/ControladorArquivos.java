@@ -40,6 +40,35 @@ public class ControladorArquivos {
 
     }
 
+    public static void escreverCarteira(CarteiraUsuario carteira) {
+        CarteiraUsuario[] carteiras = lerCarteira();
+
+        if (carteiras == null) {
+            carteiras = new CarteiraUsuario[tamanho];
+        }
+
+
+        int posicaoLivre = -1;
+        for (int i = 0; i < carteiras.length; i++) {
+            if (carteiras[i] == null) {
+                posicaoLivre = i;
+                break;
+            }
+        }
+
+        if (posicaoLivre != -1) {
+            carteiras[posicaoLivre] = carteira;
+
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CARTEIRAS_ARQUIVO))) {
+                oos.writeObject(carteira);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Array das carteiras está cheio.");
+        }
+    }
+
     public static Conta[] lerDoArquivo() {
         File arquivo = new File(CONTAS_ARQUIVO);
         if (!arquivo.exists()) {
@@ -77,32 +106,5 @@ public class ControladorArquivos {
     }
 
 
-    public static void escreverCarteira(CarteiraUsuario carteira) {
-        CarteiraUsuario[] carteiras = lerCarteira();
 
-        if (carteiras == null) {
-            carteiras = new CarteiraUsuario[tamanho];
-        }
-
-
-        int posicaoLivre = -1;
-        for (int i = 0; i < carteiras.length; i++) {
-            if (carteiras[i] == null) {
-                posicaoLivre = i;
-                break;
-            }
-        }
-
-        if (posicaoLivre != -1) {
-            carteiras[posicaoLivre] = carteira;
-
-            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CARTEIRAS_ARQUIVO))) {
-                oos.writeObject(carteira);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.err.println("Array das carteiras está cheio.");
-        }
-    }
 }

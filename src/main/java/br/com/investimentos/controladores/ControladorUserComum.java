@@ -42,31 +42,31 @@ public class ControladorUserComum {
 
     @FXML
     void fundosImobiliariosBotao(ActionEvent event) {
-
+        Programa.trocarTela(10);
     }
 
     @FXML
     void meuPerfilBotao(ActionEvent event) {
-
+        Programa.trocarTela(12);
     }
 
     @FXML
     void minhasCarteirasBotao(ActionEvent event) {
-
+        Programa.trocarTela(8);
     }
 
     @FXML
     void projecoesRentabBotao(ActionEvent event) {
-
+        Programa.trocarTela(9);
     }
 
     @FXML
     void rendaBotao(ActionEvent event) {
-
+        Programa.trocarTela(11);
     }
 
     @FXML
     void simularInvestimentosBotao(ActionEvent event) {
-
+        Programa.trocarTela(7);
     }
 }

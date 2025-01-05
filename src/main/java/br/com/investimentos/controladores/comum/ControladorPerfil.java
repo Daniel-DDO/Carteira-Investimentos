@@ -18,7 +18,7 @@ public class ControladorPerfil {
     private Button botaoVoltar05;
 
     @FXML
-    private Label informacoesConta;
+    public Label informacoesContaComum;
 
     @FXML
     void confirmarBotao05(ActionEvent event) {
@@ -34,4 +34,5 @@ public class ControladorPerfil {
     void excluirContaBotao(ActionEvent event) {
 
     }
+
 }

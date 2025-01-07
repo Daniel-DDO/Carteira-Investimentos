@@ -79,45 +79,61 @@ public class Programa extends Application {
         stage.show();
     }
 
-    public static void trocarTela(int novaTela) {
+    public static void trocarTela(int novaTela, Object objeto) {
         switch (novaTela) {
             case 1:
                 stage.setScene(telaInicial01);
+                informarMudancaTela(1, objeto);
                 break;
             case 2:
                 stage.setScene(telaCadastro02);
+                informarMudancaTela(2, objeto);
                 break;
             case 3:
                 stage.setScene(cadastroComum);
+                informarMudancaTela(3, objeto);
                 break;
             case 4:
                 stage.setScene(cadastroAdmin);
+                informarMudancaTela(4, objeto);
                 break;
             case 5:
                 stage.setScene(principalComum);
+                informarMudancaTela(5, objeto);
                 break;
             case 6:
                 stage.setScene(principalAdm);
+                informarMudancaTela(6, objeto);
                 break;
             case 7:
                 stage.setScene(simularInvestimentosTela);
+                informarMudancaTela(7, objeto);
                 break;
             case 8:
                 stage.setScene(minhasCarteirasTela);
+                informarMudancaTela(8, objeto);
                 break;
             case 9:
                 stage.setScene(projecoesRentabilidadeTela);
+                informarMudancaTela(9, objeto);
                 break;
             case 10:
                 stage.setScene(fundosImobiliariosTela);
+                informarMudancaTela(10, objeto);
                 break;
             case 11:
                 stage.setScene(rendaTela);
+                informarMudancaTela(11, objeto);
                 break;
             case 12:
                 stage.setScene(perfilComumTela);
+                informarMudancaTela(12, objeto);
                 break;
         }
+    }
+
+    public static void trocarTela(int novaTela) {
+        trocarTela(novaTela, null);
     }
 
     public static void inserirTextoLabel(Label label, String texto) {
@@ -127,6 +143,39 @@ public class Programa extends Application {
     public static ControladorPerfil getControladorPerfil() {
         return controladorPerfil;
     }
+
+    //Passar dados na troca de tela
+
+    private static int maxTelas = 120;
+    private static int posicao = 0;
+    private static MudancaTela[] mudancaTelas = new MudancaTela[maxTelas];
+
+    private static void addTela(MudancaTela tela) {
+        if (posicao < maxTelas) {
+            mudancaTelas[posicao] = tela;
+            posicao++;
+        } else {
+            //Atingiu o máximo de telas
+        }
+    }
+
+    public static interface MudancaTela {
+        void mudancaTela(int novaTela, Object objeto);
+    }
+
+    public static void adicionarMudancaTela(MudancaTela novaTela) {
+        addTela(novaTela);
+    }
+
+    private static void informarMudancaTela(int novaTela, Object objeto) {
+        for (MudancaTela m : mudancaTelas) {
+            if (m != null) {
+                m.mudancaTela(novaTela, objeto);
+            }
+        }
+    }
+
+    //fim
 
     public static void main(String[] args) {
         launch();

@@ -117,13 +117,7 @@ public class ControladorCadastro {
         else {
             RepositorioContas.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
 
-            Conta contaUsuarioComum = new UsuarioComum();
-            contaUsuarioComum.setNome(nome);
-            contaUsuarioComum.setNomeUsuario(nomeUsuario);
-            contaUsuarioComum.setEmail(email);
-            contaUsuarioComum.setSenha(senha);
-            contaUsuarioComum.setTelefone(telefone);
-            contaUsuarioComum.setCpf(cpf);
+            Conta contaUsuarioComum = new UsuarioComum(nome, nomeUsuario, email, senha, telefone, cpf);
 
             RepositorioContas repositorioContas = RepositorioContas.getInstancia();
             repositorioContas.inserirConta(contaUsuarioComum);
@@ -230,14 +224,7 @@ public class ControladorCadastro {
         } else {
             RepositorioContas.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
 
-            Conta contaAdm = new UsuarioAdministrador();
-
-            contaAdm.setNome(nome);
-            contaAdm.setNomeUsuario(nomeUsuario);
-            contaAdm.setEmail(email);
-            contaAdm.setSenha(senha);
-            contaAdm.setTelefone(telefone);
-            contaAdm.setCpf(cpf);
+            Conta contaAdm = new UsuarioAdministrador(nome, nomeUsuario, email, senha, telefone, cpf);
 
             RepositorioContas repositorioContas = RepositorioContas.getInstancia();
             repositorioContas.inserirConta(contaAdm);

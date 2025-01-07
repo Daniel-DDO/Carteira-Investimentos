@@ -1,5 +1,6 @@
 package br.com.investimentos.controladores;
 
+import br.com.investimentos.controladores.comum.ControladorPerfil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,6 +27,8 @@ public class Programa extends Application {
     private static Scene fundosImobiliariosTela;
     private static Scene rendaTela;
     private static Scene perfilComumTela;
+
+    private static ControladorPerfil controladorPerfil;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -67,8 +70,10 @@ public class Programa extends Application {
         Parent fxmlTelaRenda = FXMLLoader.load(getClass().getResource(localFxml+"05-5-renda.fxml"));
         rendaTela = new Scene(fxmlTelaRenda, 1000, 600);
 
-        Parent fxmlTelaPerfilComum = FXMLLoader.load(getClass().getResource(localFxml+"05-6-perfil-comum.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(localFxml+"05-6-perfil-comum.fxml"));
+        Parent fxmlTelaPerfilComum = loader.load();
         perfilComumTela = new Scene(fxmlTelaPerfilComum, 1000, 600);
+        controladorPerfil = loader.getController();
 
         stage.setScene(telaInicial01);
         stage.show();
@@ -115,9 +120,12 @@ public class Programa extends Application {
         }
     }
 
-    public static Label inserirTextoLabel(Label label, String texto) {
+    public static void inserirTextoLabel(Label label, String texto) {
         label.setText(texto);
-        return label;
+    }
+
+    public static ControladorPerfil getControladorPerfil() {
+        return controladorPerfil;
     }
 
     public static void main(String[] args) {

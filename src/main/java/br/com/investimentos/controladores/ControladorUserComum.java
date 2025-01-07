@@ -49,6 +49,7 @@ public class ControladorUserComum {
     @FXML
     void meuPerfilBotao(ActionEvent event) {
         Programa.trocarTela(12);
+        Programa.inserirTextoLabel(Programa.getControladorPerfil().informacoesContaComum, "Teste do DDO");
     }
 
     @FXML

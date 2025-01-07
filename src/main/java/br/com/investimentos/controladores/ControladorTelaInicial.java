@@ -4,6 +4,8 @@ import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.repositorios.RepositorioContas;
 import br.com.investimentos.usuarios.Conta;
 import br.com.investimentos.usuarios.TipoConta;
+import br.com.investimentos.usuarios.UsuarioAdministrador;
+import br.com.investimentos.usuarios.UsuarioComum;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -40,14 +42,24 @@ public class ControladorTelaInicial {
         RepositorioContas repositorioContas = RepositorioContas.getInstancia();
 
         try {
+            Conta contaLogada = repositorioContas.obterContaParaLogar(emailUsuario, senha, tipoConta);
+
             if (souAdmBox.isSelected()) {
-                //Deve buscar e logar como usuário adm
-                repositorioContas.buscarContaParaLogar(emailUsuario, senha, tipoConta);
-                Programa.trocarTela(6);
+                if (contaLogada instanceof UsuarioAdministrador) {
+                    UsuarioLogado.getInstancia().setUsuarioAdministrador((UsuarioAdministrador) contaLogada);
+                    System.out.println("Usuário administrador logado: " + contaLogada.getNome());
+                    Programa.trocarTela(6);
+                } else {
+                    throw new ContaNaoExisteException("A conta encontrada não é de tipo administrador.");
+                }
             } else {
-                //Deve buscar e logar como usuário comum
-                repositorioContas.buscarContaParaLogar(emailUsuario, senha, tipoConta);
-                Programa.trocarTela(5);
+                if (contaLogada instanceof UsuarioComum) {
+                    UsuarioLogado.getInstancia().setUsuarioComum((UsuarioComum) contaLogada);
+                    System.out.println("Usuário comum logado: " + contaLogada.getNome());
+                    Programa.trocarTela(5);
+                } else {
+                    throw new ContaNaoExisteException("A conta encontrada não é de tipo usuário comum.");
+                }
             }
         } catch (ContaNaoExisteException contaNaoExisteException) {
             if (emailUsuario.isEmpty() || senha.isEmpty()) {
@@ -57,7 +69,6 @@ public class ControladorTelaInicial {
             }
             contaNaoExisteException.printStackTrace();
         }
-
     }
 
     public void clicarCadastrar(ActionEvent actionEvent) {

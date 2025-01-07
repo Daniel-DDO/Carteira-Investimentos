@@ -128,6 +128,24 @@ public class RepositorioContas {
         return contaEncontrada;
     }
 
+    public Conta obterContaParaLogar(String usuarioOuEmail, String senha, TipoConta tipoConta) throws ContaNaoExisteException {
+        for (int i = 0; i < tamanho; i++) {
+            if (contas[i] != null && contas[i].getTipoConta().equals(tipoConta)) {
+                if (usuarioOuEmail.contains("@")) {
+                    if (usuarioOuEmail.equals(contas[i].getEmail()) && senha.equals(contas[i].getSenha())) {
+                        return contas[i];
+                    }
+                } else {
+                    if (usuarioOuEmail.equals(contas[i].getNomeUsuario()) && senha.equals(contas[i].getSenha())) {
+                        return contas[i];
+                    }
+                }
+            }
+        }
+        throw new ContaNaoExisteException();
+    }
+
+
     public Conta[] getContas() {
         return contas;
     }

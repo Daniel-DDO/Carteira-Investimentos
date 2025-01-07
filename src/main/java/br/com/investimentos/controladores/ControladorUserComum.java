@@ -1,6 +1,8 @@
 package br.com.investimentos.controladores;
 
 import br.com.investimentos.controladores.comum.ControladorPerfil;
+import br.com.investimentos.usuarios.TipoConta;
+import br.com.investimentos.usuarios.UsuarioComum;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -49,7 +51,15 @@ public class ControladorUserComum {
     @FXML
     void meuPerfilBotao(ActionEvent event) {
         Programa.trocarTela(12);
-        Programa.inserirTextoLabel(Programa.getControladorPerfil().informacoesContaComum, "Teste do DDO");
+
+        UsuarioLogado sessao = UsuarioLogado.getInstancia();
+        UsuarioComum usuario = sessao.getUsuarioComum();
+
+        if (usuario != null) {
+            Programa.inserirTextoLabel(Programa.getControladorPerfil().informacoesContaComum, usuario.toString());
+        } else {
+            Programa.inserirTextoLabel(Programa.getControladorPerfil().informacoesContaComum, "Nenhum usuário está logado.");
+        }
     }
 
     @FXML

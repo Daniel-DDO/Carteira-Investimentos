@@ -1,6 +1,8 @@
 package br.com.investimentos.controladores.comum;
 
 import br.com.investimentos.controladores.Programa;
+import br.com.investimentos.controladores.UsuarioLogado;
+import br.com.investimentos.usuarios.TipoConta;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,5 +36,6 @@ public class ControladorPerfil {
     void excluirContaBotao(ActionEvent event) {
 
     }
+
 
 }

@@ -32,4 +32,10 @@ public class UsuarioLogado {
     public void setUsuarioAdministrador(UsuarioAdministrador usuarioAdministrador) {
         this.usuarioAdministrador = usuarioAdministrador;
     }
+
+    public void limparSessao() {
+        this.usuarioComum = null;
+        this.usuarioAdministrador = null;
+        System.out.println("Sessão limpa! Usuário deslogado.");
+    }
 }

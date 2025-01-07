@@ -84,6 +84,7 @@ public class Programa extends Application {
             case 1:
                 stage.setScene(telaInicial01);
                 informarMudancaTela(1, objeto);
+                UsuarioLogado.getInstancia().limparSessao();
                 break;
             case 2:
                 stage.setScene(telaCadastro02);

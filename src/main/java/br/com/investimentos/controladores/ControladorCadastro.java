@@ -115,6 +115,8 @@ public class ControladorCadastro {
             ControladorGeral.alertaErro("Erro", "Verifique se o CPF é válido.");
         }
         else {
+            RepositorioContas.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
+
             Conta contaUsuarioComum = new UsuarioComum();
             contaUsuarioComum.setNome(nome);
             contaUsuarioComum.setNomeUsuario(nomeUsuario);
@@ -226,6 +228,8 @@ public class ControladorCadastro {
             ControladorGeral.alertaErro("Erro", "Digite um CPF válido.");
             System.err.println("Digite um CPF válido.");
         } else {
+            RepositorioContas.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
+
             Conta contaAdm = new UsuarioAdministrador();
 
             contaAdm.setNome(nome);

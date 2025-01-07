@@ -1,6 +1,8 @@
 package br.com.investimentos.repositorios;
 
 import br.com.investimentos.controladores.ControladorArquivos;
+import br.com.investimentos.controladores.ControladorGeral;
+import br.com.investimentos.excecoes.ContaJaExisteExcepction;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.usuarios.Conta;
 import br.com.investimentos.usuarios.TipoConta;
@@ -145,6 +147,19 @@ public class RepositorioContas {
         throw new ContaNaoExisteException();
     }
 
+    public void verificarInformacoes(String nomeUsuario, String email, String cpf) throws ContaJaExisteExcepction {
+        for (int i = 0; i < tamanho; i++) {
+            if (contas[i] != null) {
+                if (contas[i].getNomeUsuario().equals(nomeUsuario)) {
+                    throw new ContaJaExisteExcepction(nomeUsuario);
+                } else if (contas[i].getEmail().equals(email)) {
+                    throw new ContaJaExisteExcepction(nomeUsuario, email);
+                } else if (contas[i].getCpf().equals(cpf)) {
+                    throw new ContaJaExisteExcepction(nomeUsuario, email, cpf);
+                }
+            }
+        }
+    }
 
     public Conta[] getContas() {
         return contas;

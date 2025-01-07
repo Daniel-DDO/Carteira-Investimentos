@@ -94,17 +94,27 @@ public class ControladorCadastro {
             System.err.println("O nome não pode ser vazio ou nulo.");
             ControladorGeral.alertaErro("Erro", "O nome não pode ser vazio ou nulo.");
         }
-        else if (nomeUsuario == null || nomeUsuario.trim().isEmpty()) {
+        else if (nomeUsuario == null || nomeUsuario.trim().isEmpty() || nomeUsuario.length() < 6) {
             System.err.println("O nome usuário não pode ser vazio ou nulo.");
-            ControladorGeral.alertaErro("Erro", "O nome usuário não pode ser vazio ou nulo.");
+            ControladorGeral.alertaErro("Erro", "O nome usuário não pode ser vazio, nulo ou ter menos de 6 dígitos.");
         }
-        else if (email == null || email.trim().isEmpty() || !email.contains("@")) {
+        else if (email == null || email.trim().isEmpty() || !email.contains("@") || !email.contains(".com")) {
             System.err.println("Insira um email válido.");
             ControladorGeral.alertaErro("Erro", "Insira um email válido.");
         }
         else if (senha == null || senha.trim().isEmpty() || !senha.equals(confSenha) || senha.length() < 6) {
-            System.err.println("Verifique se as senhas conferem. Elas devem ter ao menos 6 caracteres.");
-            ControladorGeral.alertaErro("Erro", "Verifique se as senhas conferem. Elas devem ter ao menos 6 caracteres.");
+            if (senha == null) {
+                ControladorGeral.alertaErro("Erro", "A senha não pode ser nula.");
+            } else if (senha.trim().isEmpty()) {
+                ControladorGeral.alertaErro("Erro", "A senha não pode ser vazia.");
+            } else if (senha.length() < 6) {
+                ControladorGeral.alertaErro("Erro", "A senha deve ter 6 dígitos ou mais.");
+            } else if (!senha.equals(confSenha)) {
+                ControladorGeral.alertaErro("Erro", "As senhas devem ser iguais.");
+            } else {
+                ControladorGeral.alertaErro("Erro", "Verifique se as senhas conferem. A senha deve ter ao menos 6 dígitos.");
+                System.err.println("Verifique se as senhas conferem. A senha deve ter ao menos 6 dígitos.");
+            }
         }
         else if (telefone == null || telefone.trim().isEmpty() || telefone.length() < 8) {
             System.err.println("Verifique se o telefone está correto.");
@@ -199,7 +209,7 @@ public class ControladorCadastro {
         } else if (nomeUsuario == null || nomeUsuario.trim().isEmpty() || nomeUsuario.length() < 6) {
             ControladorGeral.alertaErro("Erro", "O nome de usuário não pode ser vazio, nulo ou ter menos de 6 dígitos.");
             System.err.println("O nome de usuário não pode ser vazio, nulo ou ter menos de 6 dígitos.");
-        } else if (email == null || email.trim().isEmpty() || !email.contains("@")) {
+        } else if (email == null || email.trim().isEmpty() || !email.contains("@") || !email.contains(".com")) {
             ControladorGeral.alertaErro("Erro", "Digite um email válido.");
             System.err.println("Digite um email válido.");
         } else if (senha == null || senha.trim().isEmpty() || senha.length() < 6 || !senha.equals(confSenha)) {

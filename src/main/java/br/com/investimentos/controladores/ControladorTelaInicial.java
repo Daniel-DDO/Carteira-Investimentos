@@ -61,6 +61,8 @@ public class ControladorTelaInicial {
                     throw new ContaNaoExisteException("A conta encontrada não é de tipo usuário comum.");
                 }
             }
+            emailUsuarioField.clear();
+            senhaField.clear();
         } catch (ContaNaoExisteException contaNaoExisteException) {
             if (emailUsuario.isEmpty() || senha.isEmpty()) {
                 ControladorGeral.alertaErro("Erro", "Algum campo está vazio. Insira e tente fazer o login.");

@@ -69,6 +69,24 @@ public class ControladorArquivos {
         }
     }
 
+    public static void atualizarContas(Conta[] contas) {
+        Conta[] contasAtualizadas = new Conta[contas.length];
+        int posicaoLivre = 0;
+
+        for (int i = 0; i < contas.length; i++) {
+            if (contas[i] != null) {
+                contasAtualizadas[posicaoLivre] = contas[i];
+                posicaoLivre++;
+            }
+        }
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CONTAS_ARQUIVO))) {
+            oos.writeObject(contasAtualizadas);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Conta[] lerDoArquivo() {
         File arquivo = new File(CONTAS_ARQUIVO);
         if (!arquivo.exists()) {

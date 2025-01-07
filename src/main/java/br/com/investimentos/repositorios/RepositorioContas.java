@@ -1,13 +1,10 @@
 package br.com.investimentos.repositorios;
 
 import br.com.investimentos.controladores.ControladorArquivos;
-import br.com.investimentos.controladores.ControladorGeral;
 import br.com.investimentos.excecoes.ContaJaExisteExcepction;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.usuarios.Conta;
 import br.com.investimentos.usuarios.TipoConta;
-import br.com.investimentos.usuarios.UsuarioAdministrador;
-import br.com.investimentos.usuarios.UsuarioComum;
 
 public class RepositorioContas {
     private static RepositorioContas instancia;
@@ -159,6 +156,20 @@ public class RepositorioContas {
                 }
             }
         }
+    }
+
+    public void excluirConta(Conta conta) {
+        for (int i = 0; i < tamanho; i++) {
+            if (contas[i] != null) {
+                if (contas[i].equals(conta)) {
+                    contas[i] = contas[posicao-1];
+                    contas[posicao-1] = null;
+                    posicao--;
+                    break;
+                }
+            }
+        }
+        ControladorArquivos.atualizarContas(contas);
     }
 
     public Conta[] getContas() {

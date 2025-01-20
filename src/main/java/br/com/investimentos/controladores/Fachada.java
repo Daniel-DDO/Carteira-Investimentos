@@ -10,6 +10,7 @@ public class Fachada {
         return instancia;
     }
 
+    /*
     private Controle controle;
 
     public void inserirCarteira() {
@@ -19,4 +20,5 @@ public class Fachada {
     public void removerCarteira() {
         controle.removerCarteira();
     }
+    */
 }

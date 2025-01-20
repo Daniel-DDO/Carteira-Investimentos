@@ -27,6 +27,7 @@ public class Programa extends Application {
     private static Scene fundosImobiliariosTela;
     private static Scene rendaTela;
     private static Scene perfilComumTela;
+    private static Scene criarCarteiraTela;
 
     private static ControladorPerfil controladorPerfil;
 
@@ -74,6 +75,9 @@ public class Programa extends Application {
         Parent fxmlTelaPerfilComum = loader.load();
         perfilComumTela = new Scene(fxmlTelaPerfilComum, 1000, 600);
         controladorPerfil = loader.getController();
+
+        Parent fxmlCriarCarteira = FXMLLoader.load(getClass().getResource(localFxml+"05-2-1-criar-carteira.fxml"));
+        criarCarteiraTela = new Scene(fxmlCriarCarteira, 1000, 600);
 
         stage.setScene(telaInicial01);
         stage.show();
@@ -130,6 +134,9 @@ public class Programa extends Application {
                 stage.setScene(perfilComumTela);
                 informarMudancaTela(12, objeto);
                 break;
+            case 13:
+                stage.setScene(criarCarteiraTela);
+                informarMudancaTela(13, objeto);
         }
     }
 
@@ -147,7 +154,7 @@ public class Programa extends Application {
 
     //Passar dados na troca de tela
 
-    private static int maxTelas = 120;
+    private static int maxTelas = 150;
     private static int posicao = 0;
     private static MudancaTela[] mudancaTelas = new MudancaTela[maxTelas];
 

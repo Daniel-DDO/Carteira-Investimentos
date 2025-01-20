@@ -5,26 +5,35 @@ import br.com.investimentos.financas.Investimentos;
 import java.time.LocalDate;
 
 public class CarteiraUsuario {
-    private int carteiraID;
-    private int nomeCarteira;
+    private long carteiraID;
+    private String nomeCarteira;
     private double saldoDisponivel;
     private Investimentos[] investimentos;
     private LocalDate dataCriacao;
     private String objetivoInvestimento;
+    private TipoInvestidor tipoInvestidor;
 
-    public int getCarteiraID() {
+    public CarteiraUsuario(String nomeCarteira, double saldoDisponivel, LocalDate dataCriacao, String objetivoInvestimento, TipoInvestidor tipoInvestidor) {
+        this.nomeCarteira = nomeCarteira;
+        this.saldoDisponivel = saldoDisponivel;
+        this.dataCriacao = dataCriacao;
+        this.objetivoInvestimento = objetivoInvestimento;
+        this.tipoInvestidor = tipoInvestidor;
+    }
+
+    public long getCarteiraID() {
         return carteiraID;
     }
 
-    public void setCarteiraID(int carteiraID) {
+    public void setCarteiraID(long carteiraID) {
         this.carteiraID = carteiraID;
     }
 
-    public int getNomeCarteira() {
+    public String getNomeCarteira() {
         return nomeCarteira;
     }
 
-    public void setNomeCarteira(int nomeCarteira) {
+    public void setNomeCarteira(String nomeCarteira) {
         this.nomeCarteira = nomeCarteira;
     }
 
@@ -58,5 +67,13 @@ public class CarteiraUsuario {
 
     public void setObjetivoInvestimento(String objetivoInvestimento) {
         this.objetivoInvestimento = objetivoInvestimento;
+    }
+
+    public TipoInvestidor getTipoInvestidor() {
+        return tipoInvestidor;
+    }
+
+    public void setTipoInvestidor(TipoInvestidor tipoInvestidor) {
+        this.tipoInvestidor = tipoInvestidor;
     }
 }

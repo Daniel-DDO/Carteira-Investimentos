@@ -1,8 +1,8 @@
-package br.com.investimentos.controladores.comum;
+package br.com.investimentos.controladores.gui.comum;
 
-import br.com.investimentos.controladores.ControladorGeral;
-import br.com.investimentos.controladores.Programa;
-import br.com.investimentos.controladores.UsuarioLogado;
+import br.com.investimentos.controladores.gui.ControladorGeral;
+import br.com.investimentos.controladores.gui.Programa;
+import br.com.investimentos.controladores.gui.UsuarioLogado;
 import br.com.investimentos.repositorios.RepositorioContas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

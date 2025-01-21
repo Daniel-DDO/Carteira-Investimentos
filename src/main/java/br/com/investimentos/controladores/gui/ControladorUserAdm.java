@@ -1,4 +1,4 @@
-package br.com.investimentos.controladores;
+package br.com.investimentos.controladores.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

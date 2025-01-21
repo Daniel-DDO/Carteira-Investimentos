@@ -1,8 +1,6 @@
-package br.com.investimentos.controladores;
+package br.com.investimentos.controladores.gui;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 
 public class ControladorGeral {
     //Código para telas de transição, para otimizar a criação de controladores

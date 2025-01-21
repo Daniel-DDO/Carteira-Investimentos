@@ -1,6 +1,6 @@
 package br.com.investimentos.main;
 
-import br.com.investimentos.controladores.*;
+import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.repositorios.RepositorioContas;
 import br.com.investimentos.usuarios.ContaUsuario;

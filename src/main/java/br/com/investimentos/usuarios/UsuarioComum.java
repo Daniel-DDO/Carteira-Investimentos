@@ -12,7 +12,6 @@ public class UsuarioComum extends ContaUsuario {
     private double reservaEmergencia;
     private RiscosFinanceiros riscosFinanceiros;
     private double rendaFixa;
-    //private CarteiraUsuario[] carteiras;
 
     public UsuarioComum() {
         this.setTipoConta(EnumTipoConta.COMUM);

@@ -1,7 +1,7 @@
-package br.com.investimentos.controladores.comum;
+package br.com.investimentos.controladores.gui.comum;
 
-import br.com.investimentos.controladores.ControladorGeral;
-import br.com.investimentos.controladores.Programa;
+import br.com.investimentos.controladores.gui.ControladorGeral;
+import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.repositorios.RepositorioCarteiras;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import br.com.investimentos.usuarios.EnumTipoInvestidor;
@@ -101,9 +101,9 @@ public class ControladorCarteiras {
         } else {
 
             LocalDate localDate = LocalDate.now();
-            CarteiraUsuario carteiraUsuario = new CarteiraUsuario(nomeCarteira, saldoInicial, localDate, objetivoCarteira, enumTipoInvestidor);
+            //CarteiraUsuario carteiraUsuario = new CarteiraUsuario(nomeCarteira, saldoInicial, localDate, objetivoCarteira, enumTipoInvestidor);
 
-            RepositorioCarteiras.getInstancia().adicionarCarteira(carteiraUsuario);
+            //RepositorioCarteiras.getInstancia().adicionarCarteira(carteiraUsuario);
 
             ControladorGeral.alertaInformacao("Carteira criada!", "Parabéns, sua carteira foi criada com sucesso.");
         }

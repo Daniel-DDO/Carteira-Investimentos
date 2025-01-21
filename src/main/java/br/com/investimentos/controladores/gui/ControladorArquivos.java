@@ -1,4 +1,4 @@
-package br.com.investimentos.controladores;
+package br.com.investimentos.controladores.gui;
 
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import br.com.investimentos.usuarios.ContaUsuario;

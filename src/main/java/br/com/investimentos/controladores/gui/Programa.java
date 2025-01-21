@@ -1,6 +1,6 @@
-package br.com.investimentos.controladores;
+package br.com.investimentos.controladores.gui;
 
-import br.com.investimentos.controladores.comum.ControladorPerfil;
+import br.com.investimentos.controladores.gui.comum.ControladorPerfil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

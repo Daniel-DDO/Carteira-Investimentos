@@ -1,6 +1,6 @@
 package br.com.investimentos.excecoes;
 
-import br.com.investimentos.controladores.ControladorGeral;
+import br.com.investimentos.controladores.gui.ControladorGeral;
 
 public class ContaJaExisteExcepction extends RuntimeException {
     public ContaJaExisteExcepction() {

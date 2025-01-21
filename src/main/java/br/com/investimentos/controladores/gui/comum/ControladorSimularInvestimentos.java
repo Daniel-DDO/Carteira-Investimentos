@@ -1,6 +1,6 @@
-package br.com.investimentos.controladores.comum;
+package br.com.investimentos.controladores.gui.comum;
 
-import br.com.investimentos.controladores.Programa;
+import br.com.investimentos.controladores.gui.Programa;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -1,10 +1,7 @@
 package br.com.investimentos.repositorios;
 
-import br.com.investimentos.controladores.gui.ControladorArquivos;
-import br.com.investimentos.excecoes.ContaJaExisteExcepction;
-import br.com.investimentos.excecoes.ContaNaoExisteException;
+import br.com.investimentos.controladores.ControladorArquivos;
 import br.com.investimentos.usuarios.ContaUsuario;
-import br.com.investimentos.usuarios.EnumTipoConta;
 
 public class RepositorioContaUsuario {
     private static RepositorioContaUsuario instancia;

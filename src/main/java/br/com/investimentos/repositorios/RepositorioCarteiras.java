@@ -1,6 +1,6 @@
 package br.com.investimentos.repositorios;
 
-import br.com.investimentos.controladores.gui.ControladorArquivos;
+import br.com.investimentos.controladores.ControladorArquivos;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 
 public class RepositorioCarteiras {

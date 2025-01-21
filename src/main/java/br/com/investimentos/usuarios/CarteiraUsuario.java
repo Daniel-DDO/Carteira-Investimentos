@@ -2,9 +2,11 @@ package br.com.investimentos.usuarios;
 
 import br.com.investimentos.financas.Investimentos;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class CarteiraUsuario {
+public class CarteiraUsuario implements Serializable {
     private long carteiraID;
     private String nomeCarteira;
     private double saldoDisponivel;
@@ -13,6 +15,9 @@ public class CarteiraUsuario {
     private String objetivoInvestimento;
     private EnumTipoInvestidor enumTipoInvestidor;
     private UsuarioComum usuario;
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public CarteiraUsuario(String nomeCarteira, double saldoDisponivel, LocalDate dataCriacao, String objetivoInvestimento, EnumTipoInvestidor enumTipoInvestidor, UsuarioComum usuario) {
         this.nomeCarteira = nomeCarteira;

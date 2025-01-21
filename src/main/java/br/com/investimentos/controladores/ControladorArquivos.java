@@ -1,4 +1,4 @@
-package br.com.investimentos.controladores.gui;
+package br.com.investimentos.controladores;
 
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import br.com.investimentos.usuarios.ContaUsuario;
@@ -47,7 +47,6 @@ public class ControladorArquivos {
             carteiras = new CarteiraUsuario[tamanho];
         }
 
-
         int posicaoLivre = -1;
         for (int i = 0; i < carteiras.length; i++) {
             if (carteiras[i] == null) {
@@ -60,7 +59,7 @@ public class ControladorArquivos {
             carteiras[posicaoLivre] = carteira;
 
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CARTEIRAS_ARQUIVO))) {
-                oos.writeObject(carteira);
+                oos.writeObject(carteiras);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -68,6 +67,7 @@ public class ControladorArquivos {
             System.err.println("Array das carteiras está cheio.");
         }
     }
+
 
     public static void atualizarContas(ContaUsuario[] contaUsuarios) {
         ContaUsuario[] contasAtualizadas = new ContaUsuario[contaUsuarios.length];
@@ -108,12 +108,18 @@ public class ControladorArquivos {
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(carteiraArquivo))) {
-            return (CarteiraUsuario[]) ois.readObject();
+            Object obj = ois.readObject();
+            if (obj instanceof CarteiraUsuario[]) {
+                return (CarteiraUsuario[]) obj;
+            } else {
+                return new CarteiraUsuario[tamanho];
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return new CarteiraUsuario[tamanho];
         }
     }
+
 
     public static int getTamanho() {
         return tamanho;

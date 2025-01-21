@@ -94,4 +94,10 @@ public class CarteiraUsuario {
     public void setUsuario(UsuarioComum usuario) {
         this.usuario = usuario;
     }
+
+    @Override
+    public String toString() {
+        return "CARTEIRA:\nID carteira: "+carteiraID+"\nNome carteira: "+nomeCarteira+"\nSaldo: "+saldoDisponivel+"\nData criação: "+
+                dataCriacao+"\nObjetivo: "+objetivoInvestimento+"\nTipo investidor: "+enumTipoInvestidor+"\nUsuário: "+usuario+"\n";
+    }
 }

@@ -5,7 +5,7 @@ import br.com.investimentos.usuarios.CarteiraUsuario;
 
 public class RepositorioCarteiras {
     private static RepositorioCarteiras instancia;
-    private int tamanho = 100; //quantidade máxima de carteiras
+    private int tamanho = 1000; //quantidade máxima de carteiras
     private CarteiraUsuario[] carteiras = new CarteiraUsuario[tamanho];
     private int posicao = 0;
 
@@ -31,7 +31,20 @@ public class RepositorioCarteiras {
         }
     }
 
+    public void buscarCarteira(CarteiraUsuario carteira) {
+        for (int i = 0; i < tamanho; i++) {
+            if (carteiras[i] != null) {
+                if (carteiras[i].equals(carteira)) {
+                    //encontrado
+                }
+            }
+        }
+    }
+
     public static RepositorioCarteiras getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioCarteiras();
+        }
         return instancia;
     }
 
@@ -62,4 +75,6 @@ public class RepositorioCarteiras {
     public void setPosicao(int posicao) {
         this.posicao = posicao;
     }
+
+
 }

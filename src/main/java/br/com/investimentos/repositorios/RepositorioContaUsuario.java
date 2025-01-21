@@ -6,13 +6,13 @@ import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.usuarios.ContaUsuario;
 import br.com.investimentos.usuarios.EnumTipoConta;
 
-public class RepositorioContas {
-    private static RepositorioContas instancia;
+public class RepositorioContaUsuario {
+    private static RepositorioContaUsuario instancia;
     private int tamanho = 100;
     private ContaUsuario[] contaUsuarios = new ContaUsuario[tamanho];
     private int posicao = 0;
 
-    private RepositorioContas() {
+    private RepositorioContaUsuario() {
         ContaUsuario[] contasCarregadas = ControladorArquivos.lerDoArquivo();
         if (contasCarregadas != null) {
             for (ContaUsuario contaUsuario : contasCarregadas) {
@@ -144,20 +144,6 @@ public class RepositorioContas {
         throw new ContaNaoExisteException();
     }
 
-    public void verificarInformacoes(String nomeUsuario, String email, String cpf) throws ContaJaExisteExcepction {
-        for (int i = 0; i < tamanho; i++) {
-            if (contaUsuarios[i] != null) {
-                if (contaUsuarios[i].getNomeUsuario().equals(nomeUsuario)) {
-                    throw new ContaJaExisteExcepction(nomeUsuario);
-                } else if (contaUsuarios[i].getEmail().equals(email)) {
-                    throw new ContaJaExisteExcepction(nomeUsuario, email);
-                } else if (contaUsuarios[i].getCpf().equals(cpf)) {
-                    throw new ContaJaExisteExcepction(nomeUsuario, email, cpf);
-                }
-            }
-        }
-    }
-
     public void excluirConta(ContaUsuario contaUsuario) {
         for (int i = 0; i < tamanho; i++) {
             if (contaUsuarios[i] != null) {
@@ -196,14 +182,14 @@ public class RepositorioContas {
         this.tamanho = tamanho;
     }
 
-    public static RepositorioContas getInstancia() {
+    public static RepositorioContaUsuario getInstancia() {
         if (instancia == null) {
-           instancia = new RepositorioContas();
+           instancia = new RepositorioContaUsuario();
         }
         return instancia;
     }
 
-    public static void setInstancia(RepositorioContas instancia) {
-        RepositorioContas.instancia = instancia;
+    public static void setInstancia(RepositorioContaUsuario instancia) {
+        RepositorioContaUsuario.instancia = instancia;
     }
 }

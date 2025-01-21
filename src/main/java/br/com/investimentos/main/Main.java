@@ -2,7 +2,7 @@ package br.com.investimentos.main;
 
 import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
-import br.com.investimentos.repositorios.RepositorioContas;
+import br.com.investimentos.repositorios.RepositorioContaUsuario;
 import br.com.investimentos.usuarios.ContaUsuario;
 import br.com.investimentos.usuarios.EnumTipoConta;
 import br.com.investimentos.usuarios.UsuarioAdministrador;
@@ -20,7 +20,7 @@ public class Main extends Programa {
 
         //Daqui pra frente tudo é apenas para depuração e testes
 
-        RepositorioContas repositorioContas = RepositorioContas.getInstancia();
+        RepositorioContaUsuario repositorioContaUsuario = RepositorioContaUsuario.getInstancia();
         ContaUsuario usuarioComum = new UsuarioComum();
         ContaUsuario usuarioAdm = new UsuarioAdministrador();
 
@@ -47,7 +47,7 @@ public class Main extends Programa {
                     System.out.print("Telefone: ");
                     usuarioComum.setTelefone(scanner.nextLine());
 
-                    repositorioContas.inserirConta(usuarioComum);
+                    repositorioContaUsuario.inserirConta(usuarioComum);
                     break;
                 case 2:
                     System.out.print("CRIANDO CONTA ADM\nNome: ");
@@ -64,10 +64,10 @@ public class Main extends Programa {
                     System.out.print("Telefone: ");
                     usuarioAdm.setTelefone(scanner.nextLine());
 
-                    repositorioContas.inserirConta(usuarioAdm);
+                    repositorioContaUsuario.inserirConta(usuarioAdm);
                     break;
                 case 3:
-                    repositorioContas.exibirContas();
+                    repositorioContaUsuario.exibirContas();
                     break;
                 case 4:
                     String usuarioOuEmail;
@@ -91,7 +91,7 @@ public class Main extends Programa {
                     System.out.print("Senha: ");
                     senha = scanner.nextLine();
                     try {
-                        repositorioContas.buscarContaParaLogar(usuarioOuEmail, senha, enumTipoConta);
+                        repositorioContaUsuario.buscarContaParaLogar(usuarioOuEmail, senha, enumTipoConta);
                     } catch (ContaNaoExisteException contaNaoExisteException) {
                         contaNaoExisteException.printStackTrace();
                     }

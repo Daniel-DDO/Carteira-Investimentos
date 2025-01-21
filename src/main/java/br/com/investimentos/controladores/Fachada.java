@@ -1,4 +1,4 @@
-package br.com.investimentos.controladores.gui;
+package br.com.investimentos.controladores;
 
 public class Fachada {
     private static Fachada instancia;

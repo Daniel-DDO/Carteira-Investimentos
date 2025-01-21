@@ -1,6 +1,7 @@
 package br.com.investimentos.controladores.gui;
 
-import br.com.investimentos.repositorios.RepositorioContas;
+import br.com.investimentos.controladores.ControladorContaUsuario;
+import br.com.investimentos.repositorios.RepositorioContaUsuario;
 import br.com.investimentos.usuarios.ContaUsuario;
 import br.com.investimentos.usuarios.UsuarioAdministrador;
 import br.com.investimentos.usuarios.UsuarioComum;
@@ -125,12 +126,12 @@ public class ControladorCadastro {
             ControladorGeral.alertaErro("Erro", "Verifique se o CPF é válido.");
         }
         else {
-            RepositorioContas.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
+            ControladorContaUsuario.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
 
             ContaUsuario contaUsuarioUsuarioComum = new UsuarioComum(nome, nomeUsuario, email, senha, telefone, cpf);
 
-            RepositorioContas repositorioContas = RepositorioContas.getInstancia();
-            repositorioContas.inserirConta(contaUsuarioUsuarioComum);
+            RepositorioContaUsuario repositorioContaUsuario = RepositorioContaUsuario.getInstancia();
+            repositorioContaUsuario.inserirConta(contaUsuarioUsuarioComum);
 
             ControladorGeral.alertaInformacao("Cadastro Concluído!", "Seu cadastro foi realizado com sucesso.");
 
@@ -149,7 +150,7 @@ public class ControladorCadastro {
 
             Programa.trocarTela(1);
             System.out.println("\nCONTAS CRIADAS\n");
-            repositorioContas.exibirContas(); //pra ver se tá criando no array
+            repositorioContaUsuario.exibirContas(); //pra ver se tá criando no array
         }
     }
 
@@ -232,12 +233,12 @@ public class ControladorCadastro {
             ControladorGeral.alertaErro("Erro", "Digite um CPF válido.");
             System.err.println("Digite um CPF válido.");
         } else {
-            RepositorioContas.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
+            ControladorContaUsuario.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
 
             ContaUsuario contaUsuarioAdm = new UsuarioAdministrador(nome, nomeUsuario, email, senha, telefone, cpf);
 
-            RepositorioContas repositorioContas = RepositorioContas.getInstancia();
-            repositorioContas.inserirConta(contaUsuarioAdm);
+            RepositorioContaUsuario repositorioContaUsuario = RepositorioContaUsuario.getInstancia();
+            repositorioContaUsuario.inserirConta(contaUsuarioAdm);
 
             System.out.println("Cadastro concluído com sucesso.");
             ControladorGeral.alertaInformacao("Carteira Investimentos", "Cadastro concluído com sucesso!");
@@ -250,7 +251,7 @@ public class ControladorCadastro {
             fieldTelefoneAdm.clear();
             fieldCpfAdm.clear();
 
-            repositorioContas.exibirContas();
+            repositorioContaUsuario.exibirContas();
             Programa.trocarTela(1);
         }
     }

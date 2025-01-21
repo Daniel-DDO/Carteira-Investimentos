@@ -2,8 +2,8 @@ package br.com.investimentos.controladores.gui.comum;
 
 import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.controladores.gui.Programa;
-import br.com.investimentos.controladores.gui.UsuarioLogado;
-import br.com.investimentos.repositorios.RepositorioContas;
+import br.com.investimentos.controladores.UsuarioLogado;
+import br.com.investimentos.repositorios.RepositorioContaUsuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -36,7 +36,7 @@ public class ControladorPerfil {
     @FXML
     void excluirContaBotao(ActionEvent event) {
         ControladorGeral.alertaConfirmacao("Conta excluída", "A sua conta foi excluída e tudo associado a ela também foi deletado.");
-        RepositorioContas.getInstancia().excluirConta(UsuarioLogado.getInstancia().getUsuarioComum());
+        RepositorioContaUsuario.getInstancia().excluirConta(UsuarioLogado.getInstancia().getUsuarioComum());
         Programa.trocarTela(1);
     }
 

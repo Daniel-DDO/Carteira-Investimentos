@@ -1,5 +1,5 @@
 package br.com.investimentos.usuarios;
 
-public enum TipoConta {
+public enum EnumTipoConta {
     ADM, COMUM
 }

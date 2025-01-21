@@ -4,7 +4,7 @@ import br.com.investimentos.controladores.ControladorGeral;
 import br.com.investimentos.controladores.Programa;
 import br.com.investimentos.repositorios.RepositorioCarteiras;
 import br.com.investimentos.usuarios.CarteiraUsuario;
-import br.com.investimentos.usuarios.TipoInvestidor;
+import br.com.investimentos.usuarios.EnumTipoInvestidor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,14 +12,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class ControladorCarteiras {
 
     @FXML
     public void initialize() {
         if (tipoInvestidorComboBox != null) {
-            tipoInvestidorComboBox.getItems().addAll(TipoInvestidor.values());
+            tipoInvestidorComboBox.getItems().addAll(EnumTipoInvestidor.values());
         }
     }
 
@@ -82,14 +81,14 @@ public class ControladorCarteiras {
     private TextField saldoInicialField;
 
     @FXML
-    private ComboBox<TipoInvestidor> tipoInvestidorComboBox;
+    private ComboBox<EnumTipoInvestidor> tipoInvestidorComboBox;
 
 
     public void criarNovaCarteira() {
         String nomeCarteira = nomeCarteiraField.getText();
         String objetivoCarteira = objetivoCarteiraField.getText();
         double saldoInicial = Double.parseDouble(saldoInicialField.getText());
-        TipoInvestidor tipoInvestidor = tipoInvestidorComboBox.getValue();
+        EnumTipoInvestidor enumTipoInvestidor = tipoInvestidorComboBox.getValue();
 
         if (nomeCarteira.length() < 5) {
             ControladorGeral.alertaErro("Erro", "O nome da carteira deve conter 5 ou mais caracteres.");
@@ -97,12 +96,12 @@ public class ControladorCarteiras {
             ControladorGeral.alertaErro("Erro", "Os objetivos da carteira devem conter 10 ou mais caracteres.");
         } else if (saldoInicial < 0) {
             ControladorGeral.alertaErro("Erro", "O saldo inicial não pode ser negativo.");
-        } else if (tipoInvestidor == null) {
-            tipoInvestidor = TipoInvestidor.MODERADO;
+        } else if (enumTipoInvestidor == null) {
+            enumTipoInvestidor = EnumTipoInvestidor.MODERADO;
         } else {
 
             LocalDate localDate = LocalDate.now();
-            CarteiraUsuario carteiraUsuario = new CarteiraUsuario(nomeCarteira, saldoInicial, localDate, objetivoCarteira, tipoInvestidor);
+            CarteiraUsuario carteiraUsuario = new CarteiraUsuario(nomeCarteira, saldoInicial, localDate, objetivoCarteira, enumTipoInvestidor);
 
             RepositorioCarteiras.getInstancia().adicionarCarteira(carteiraUsuario);
 

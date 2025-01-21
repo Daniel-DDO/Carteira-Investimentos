@@ -3,8 +3,8 @@ package br.com.investimentos.main;
 import br.com.investimentos.controladores.*;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.repositorios.RepositorioContas;
-import br.com.investimentos.usuarios.Conta;
-import br.com.investimentos.usuarios.TipoConta;
+import br.com.investimentos.usuarios.ContaUsuario;
+import br.com.investimentos.usuarios.EnumTipoConta;
 import br.com.investimentos.usuarios.UsuarioAdministrador;
 import br.com.investimentos.usuarios.UsuarioComum;
 
@@ -21,8 +21,8 @@ public class Main extends Programa {
         //Daqui pra frente tudo é apenas para depuração e testes
 
         RepositorioContas repositorioContas = RepositorioContas.getInstancia();
-        Conta usuarioComum = new UsuarioComum();
-        Conta usuarioAdm = new UsuarioAdministrador();
+        ContaUsuario usuarioComum = new UsuarioComum();
+        ContaUsuario usuarioAdm = new UsuarioAdministrador();
 
         Scanner scanner = new Scanner(System.in);
         int opcao;
@@ -72,14 +72,14 @@ public class Main extends Programa {
                 case 4:
                     String usuarioOuEmail;
                     String senha;
-                    TipoConta tipoConta;
+                    EnumTipoConta enumTipoConta;
                     int tipo;
                     System.out.println("Digite 1 para ADMINISTRADOR e qualquer número para conta COMUM.");
                     tipo = scanner.nextInt();
                     if (tipo == 1) {
-                        tipoConta = TipoConta.ADM;
+                        enumTipoConta = EnumTipoConta.ADM;
                     } else {
-                        tipoConta = TipoConta.COMUM;
+                        enumTipoConta = EnumTipoConta.COMUM;
                     }
 
                     System.out.print("LOGIN\nNome usuário ou email: ");
@@ -91,7 +91,7 @@ public class Main extends Programa {
                     System.out.print("Senha: ");
                     senha = scanner.nextLine();
                     try {
-                        repositorioContas.buscarContaParaLogar(usuarioOuEmail, senha, tipoConta);
+                        repositorioContas.buscarContaParaLogar(usuarioOuEmail, senha, enumTipoConta);
                     } catch (ContaNaoExisteException contaNaoExisteException) {
                         contaNaoExisteException.printStackTrace();
                     }

@@ -13,7 +13,7 @@ Além disso, o sistema deve oferecer funcionalidades para gerar relatórios com 
 
 ### Gerenciamento de Entidades
 - **REQ01**: Gerenciamento de administradores, que podem cadastrar, editar ou remover ativos financeiros do sistema.
-- **REQ02**: Gerenciamento de usuários, que podem criar contas, realizar login, visualizar e gerenciar suas carteiras de investimentos.
+- **REQ02**: Gerenciamento de usuários, que podem criar contaUsuarios, realizar login, visualizar e gerenciar suas carteiras de investimentos.
 - **REQ03**: Gerenciamento da carteira de investimentos do usuário, permitindo a inclusão, edição e remoção de ativos.
 
 ### Operações de Investimentos

@@ -3,29 +3,29 @@ package br.com.investimentos.usuarios;
 import java.io.Serial;
 import java.io.Serializable;
 
-public abstract class Conta implements Serializable {
+public abstract class ContaUsuario implements Serializable {
     private String nome;
     private String nomeUsuario;
     private String email;
     private String senha;
     private String telefone;
     private String cpf;
-    private TipoConta tipoConta;
+    private EnumTipoConta enumTipoConta;
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public Conta() {}
+    public ContaUsuario() {}
 
-    public Conta(String nome, String nomeUsuario, String email, String senha,
-                 String telefone, String cpf, TipoConta tipoConta) {
+    public ContaUsuario(String nome, String nomeUsuario, String email, String senha,
+                        String telefone, String cpf, EnumTipoConta enumTipoConta) {
         this.nome = nome;
         this.nomeUsuario = nomeUsuario;
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
         this.cpf = cpf;
-        this.tipoConta = tipoConta;
+        this.enumTipoConta = enumTipoConta;
     }
 
     public String getNome() {
@@ -76,11 +76,11 @@ public abstract class Conta implements Serializable {
         this.cpf = cpf;
     }
 
-    public TipoConta getTipoConta() {
-        return tipoConta;
+    public EnumTipoConta getTipoConta() {
+        return enumTipoConta;
     }
 
-    public void setTipoConta(TipoConta tipoConta) {
-        this.tipoConta = tipoConta;
+    public void setTipoConta(EnumTipoConta enumTipoConta) {
+        this.enumTipoConta = enumTipoConta;
     }
 }

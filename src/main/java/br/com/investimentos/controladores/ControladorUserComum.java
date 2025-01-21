@@ -1,7 +1,5 @@
 package br.com.investimentos.controladores;
 
-import br.com.investimentos.controladores.comum.ControladorPerfil;
-import br.com.investimentos.usuarios.TipoConta;
 import br.com.investimentos.usuarios.UsuarioComum;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

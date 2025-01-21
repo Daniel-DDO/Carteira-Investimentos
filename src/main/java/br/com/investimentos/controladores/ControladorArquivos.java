@@ -1,7 +1,7 @@
 package br.com.investimentos.controladores;
 
 import br.com.investimentos.usuarios.CarteiraUsuario;
-import br.com.investimentos.usuarios.Conta;
+import br.com.investimentos.usuarios.ContaUsuario;
 
 import java.io.*;
 
@@ -11,26 +11,26 @@ public class ControladorArquivos {
     private static final String CARTEIRAS_ARQUIVO = "Carteiras.dat";
     private static int tamanho = 100;
 
-    public static void escreverNoArquivo(Conta conta) {
-        Conta[] contas = lerDoArquivo();
+    public static void escreverNoArquivo(ContaUsuario contaUsuario) {
+        ContaUsuario[] contaUsuarios = lerDoArquivo();
 
-        if (contas == null) {
-            contas = new Conta[tamanho];
+        if (contaUsuarios == null) {
+            contaUsuarios = new ContaUsuario[tamanho];
         }
 
         int posicaoLivre = -1;
-        for (int i = 0; i < contas.length; i++) {
-            if (contas[i] == null) {
+        for (int i = 0; i < contaUsuarios.length; i++) {
+            if (contaUsuarios[i] == null) {
                 posicaoLivre = i;
                 break;
             }
         }
 
         if (posicaoLivre != -1) {
-            contas[posicaoLivre] = conta;
+            contaUsuarios[posicaoLivre] = contaUsuario;
 
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CONTAS_ARQUIVO))) {
-                oos.writeObject(contas);
+                oos.writeObject(contaUsuarios);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -69,13 +69,13 @@ public class ControladorArquivos {
         }
     }
 
-    public static void atualizarContas(Conta[] contas) {
-        Conta[] contasAtualizadas = new Conta[contas.length];
+    public static void atualizarContas(ContaUsuario[] contaUsuarios) {
+        ContaUsuario[] contasAtualizadas = new ContaUsuario[contaUsuarios.length];
         int posicaoLivre = 0;
 
-        for (int i = 0; i < contas.length; i++) {
-            if (contas[i] != null) {
-                contasAtualizadas[posicaoLivre] = contas[i];
+        for (int i = 0; i < contaUsuarios.length; i++) {
+            if (contaUsuarios[i] != null) {
+                contasAtualizadas[posicaoLivre] = contaUsuarios[i];
                 posicaoLivre++;
             }
         }
@@ -87,17 +87,17 @@ public class ControladorArquivos {
         }
     }
 
-    public static Conta[] lerDoArquivo() {
+    public static ContaUsuario[] lerDoArquivo() {
         File arquivo = new File(CONTAS_ARQUIVO);
         if (!arquivo.exists()) {
-            return new Conta[tamanho];
+            return new ContaUsuario[tamanho];
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
-            return (Conta[]) ois.readObject();
+            return (ContaUsuario[]) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            return new Conta[tamanho];
+            return new ContaUsuario[tamanho];
         }
     }
 

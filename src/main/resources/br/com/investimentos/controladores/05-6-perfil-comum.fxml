@@ -14,7 +14,7 @@
          <content>
             <Pane prefHeight="391.0" prefWidth="998.0" styleClass="background1" stylesheets="@design.css">
                <children>
-                  <Button fx:id="botaoExcluirConta" layoutX="365.0" layoutY="327.0" mnemonicParsing="false" onAction="#excluirContaBotao" prefHeight="52.0" prefWidth="269.0" styleClass="medio-button" stylesheets="@design.css" text="Excluir minha conta">
+                  <Button fx:id="botaoExcluirConta" layoutX="365.0" layoutY="327.0" mnemonicParsing="false" onAction="#excluirContaBotao" prefHeight="52.0" prefWidth="269.0" styleClass="medio-button" stylesheets="@design.css" text="Excluir minha contaUsuario">
                      <font>
                         <Font size="13.0" />
                      </font>

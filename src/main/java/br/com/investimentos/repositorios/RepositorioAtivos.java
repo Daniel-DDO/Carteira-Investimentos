@@ -2,9 +2,9 @@ package br.com.investimentos.repositorios;
 
 import br.com.investimentos.financas.Investimentos;
 
-public class RepositorioInvestimentos {
+public class RepositorioAtivos {
 
-    private static RepositorioInvestimentos repositorioInvestimentos;
+    private static RepositorioAtivos repositorioAtivos;
     private int tamanho = 100;
     private Investimentos[] investimentos = new Investimentos[tamanho];
 
@@ -20,12 +20,12 @@ public class RepositorioInvestimentos {
 
     }
 
-    public static RepositorioInvestimentos getRepositorioInvestimentos() {
-        return repositorioInvestimentos;
+    public static RepositorioAtivos getRepositorioInvestimentos() {
+        return repositorioAtivos;
     }
 
-    public static void setRepositorioInvestimentos(RepositorioInvestimentos repositorioInvestimentos) {
-        RepositorioInvestimentos.repositorioInvestimentos = repositorioInvestimentos;
+    public static void setRepositorioInvestimentos(RepositorioAtivos repositorioAtivos) {
+        RepositorioAtivos.repositorioAtivos = repositorioAtivos;
     }
 
     public int getTamanho() {

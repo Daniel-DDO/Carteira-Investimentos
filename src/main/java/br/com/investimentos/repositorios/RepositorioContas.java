@@ -3,42 +3,42 @@ package br.com.investimentos.repositorios;
 import br.com.investimentos.controladores.ControladorArquivos;
 import br.com.investimentos.excecoes.ContaJaExisteExcepction;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
-import br.com.investimentos.usuarios.Conta;
-import br.com.investimentos.usuarios.TipoConta;
+import br.com.investimentos.usuarios.ContaUsuario;
+import br.com.investimentos.usuarios.EnumTipoConta;
 
 public class RepositorioContas {
     private static RepositorioContas instancia;
     private int tamanho = 100;
-    private Conta[] contas = new Conta[tamanho];
+    private ContaUsuario[] contaUsuarios = new ContaUsuario[tamanho];
     private int posicao = 0;
 
     private RepositorioContas() {
-        Conta[] contasCarregadas = ControladorArquivos.lerDoArquivo();
+        ContaUsuario[] contasCarregadas = ControladorArquivos.lerDoArquivo();
         if (contasCarregadas != null) {
-            for (Conta conta : contasCarregadas) {
-                if (conta != null) {
-                    contas[posicao] = conta;
+            for (ContaUsuario contaUsuario : contasCarregadas) {
+                if (contaUsuario != null) {
+                    contaUsuarios[posicao] = contaUsuario;
                     posicao++;
                 }
             }
         }
     }
 
-    public void inserirConta(Conta novaConta) {
+    public void inserirConta(ContaUsuario novaContaUsuario) {
         if (posicao < tamanho) {
-            contas[posicao] = novaConta;
+            contaUsuarios[posicao] = novaContaUsuario;
             posicao++;
-            ControladorArquivos.escreverNoArquivo(novaConta);
+            ControladorArquivos.escreverNoArquivo(novaContaUsuario);
         } else {
             System.err.println("Array de contas está cheio.");
         }
 
     }
 
-    public void buscarConta(Conta conta) {
+    public void buscarConta(ContaUsuario contaUsuario) {
         boolean encontrado = false;
         for (int i = 0; i < tamanho; i++) {
-            if (conta.equals(contas[i])) {
+            if (contaUsuario.equals(contaUsuarios[i])) {
                 encontrado = true;
                 System.out.println(encontrado+"\n");
             }
@@ -48,20 +48,20 @@ public class RepositorioContas {
         }
     }
 
-    public void atualizarConta(Conta conta) {
+    public void atualizarConta(ContaUsuario contaUsuario) {
 
     }
 
-    public void removerConta(Conta conta) {
+    public void removerConta(ContaUsuario contaUsuario) {
         boolean encontrado = false;
         for (int i = 0; i < posicao; i++) {
-            if (conta.equals(contas[i])) {
+            if (contaUsuario.equals(contaUsuarios[i])) {
                 encontrado = true;
 
                 for (int j = i; j < posicao - 1; j++) {
-                    contas[j] = contas[j + 1];
+                    contaUsuarios[j] = contaUsuarios[j + 1];
                 }
-                contas[posicao - 1] = null;
+                contaUsuarios[posicao - 1] = null;
                 posicao--;
 
                 //ControladorArquivos.removerDoArquivo(conta);
@@ -77,8 +77,8 @@ public class RepositorioContas {
 
     public void exibirContas() {
         for (int i = 0; i < tamanho; i++) {
-            if (contas[i] != null) {
-                System.out.println(contas[i]);
+            if (contaUsuarios[i] != null) {
+                System.out.println(contaUsuarios[i]);
             }
         }
     }
@@ -86,8 +86,8 @@ public class RepositorioContas {
     public boolean buscarContaPorNomeUsuario(String nomeUsuario) throws ContaNaoExisteException {
         boolean encontrado = false;
         for (int i = 0; i < tamanho; i++) {
-            if (contas[i] != null) {
-                if (nomeUsuario.equals(contas[i].getNomeUsuario())) {
+            if (contaUsuarios[i] != null) {
+                if (nomeUsuario.equals(contaUsuarios[i].getNomeUsuario())) {
                     encontrado = true;
                 }
             }
@@ -98,13 +98,13 @@ public class RepositorioContas {
         return encontrado;
     }
 
-    public boolean buscarContaParaLogar(String usuarioOuEmail, String senha, TipoConta tipoConta) throws ContaNaoExisteException {
+    public boolean buscarContaParaLogar(String usuarioOuEmail, String senha, EnumTipoConta enumTipoConta) throws ContaNaoExisteException {
         boolean contaEncontrada = false;
         if (usuarioOuEmail.contains("@")) {
             //considerar o login pelo email e senha
             for (int i = 0; i < tamanho; i++) {
-                if (contas[i] != null && contas[i].getTipoConta().equals(tipoConta)) {
-                    if (usuarioOuEmail.equals(contas[i].getEmail()) && senha.equals(contas[i].getSenha())) {
+                if (contaUsuarios[i] != null && contaUsuarios[i].getTipoConta().equals(enumTipoConta)) {
+                    if (usuarioOuEmail.equals(contaUsuarios[i].getEmail()) && senha.equals(contaUsuarios[i].getSenha())) {
                         contaEncontrada = true;
                     }
                 }
@@ -112,8 +112,8 @@ public class RepositorioContas {
         } else {
             //considerar o login pelo nomeUsuario e senha
             for (int i = 0; i < tamanho; i++) {
-                if (contas[i] != null && contas[i].getTipoConta().equals(tipoConta)) {
-                    if (usuarioOuEmail.equals(contas[i].getNomeUsuario()) && senha.equals(contas[i].getSenha())) {
+                if (contaUsuarios[i] != null && contaUsuarios[i].getTipoConta().equals(enumTipoConta)) {
+                    if (usuarioOuEmail.equals(contaUsuarios[i].getNomeUsuario()) && senha.equals(contaUsuarios[i].getSenha())) {
                         contaEncontrada = true;
                     }
                 }
@@ -127,16 +127,16 @@ public class RepositorioContas {
         return contaEncontrada;
     }
 
-    public Conta obterContaParaLogar(String usuarioOuEmail, String senha, TipoConta tipoConta) throws ContaNaoExisteException {
+    public ContaUsuario obterContaParaLogar(String usuarioOuEmail, String senha, EnumTipoConta enumTipoConta) throws ContaNaoExisteException {
         for (int i = 0; i < tamanho; i++) {
-            if (contas[i] != null && contas[i].getTipoConta().equals(tipoConta)) {
+            if (contaUsuarios[i] != null && contaUsuarios[i].getTipoConta().equals(enumTipoConta)) {
                 if (usuarioOuEmail.contains("@")) {
-                    if (usuarioOuEmail.equals(contas[i].getEmail()) && senha.equals(contas[i].getSenha())) {
-                        return contas[i];
+                    if (usuarioOuEmail.equals(contaUsuarios[i].getEmail()) && senha.equals(contaUsuarios[i].getSenha())) {
+                        return contaUsuarios[i];
                     }
                 } else {
-                    if (usuarioOuEmail.equals(contas[i].getNomeUsuario()) && senha.equals(contas[i].getSenha())) {
-                        return contas[i];
+                    if (usuarioOuEmail.equals(contaUsuarios[i].getNomeUsuario()) && senha.equals(contaUsuarios[i].getSenha())) {
+                        return contaUsuarios[i];
                     }
                 }
             }
@@ -146,38 +146,38 @@ public class RepositorioContas {
 
     public void verificarInformacoes(String nomeUsuario, String email, String cpf) throws ContaJaExisteExcepction {
         for (int i = 0; i < tamanho; i++) {
-            if (contas[i] != null) {
-                if (contas[i].getNomeUsuario().equals(nomeUsuario)) {
+            if (contaUsuarios[i] != null) {
+                if (contaUsuarios[i].getNomeUsuario().equals(nomeUsuario)) {
                     throw new ContaJaExisteExcepction(nomeUsuario);
-                } else if (contas[i].getEmail().equals(email)) {
+                } else if (contaUsuarios[i].getEmail().equals(email)) {
                     throw new ContaJaExisteExcepction(nomeUsuario, email);
-                } else if (contas[i].getCpf().equals(cpf)) {
+                } else if (contaUsuarios[i].getCpf().equals(cpf)) {
                     throw new ContaJaExisteExcepction(nomeUsuario, email, cpf);
                 }
             }
         }
     }
 
-    public void excluirConta(Conta conta) {
+    public void excluirConta(ContaUsuario contaUsuario) {
         for (int i = 0; i < tamanho; i++) {
-            if (contas[i] != null) {
-                if (contas[i].equals(conta)) {
-                    contas[i] = contas[posicao-1];
-                    contas[posicao-1] = null;
+            if (contaUsuarios[i] != null) {
+                if (contaUsuarios[i].equals(contaUsuario)) {
+                    contaUsuarios[i] = contaUsuarios[posicao-1];
+                    contaUsuarios[posicao-1] = null;
                     posicao--;
                     break;
                 }
             }
         }
-        ControladorArquivos.atualizarContas(contas);
+        ControladorArquivos.atualizarContas(contaUsuarios);
     }
 
-    public Conta[] getContas() {
-        return contas;
+    public ContaUsuario[] getContas() {
+        return contaUsuarios;
     }
 
-    public void setContas(Conta[] contas) {
-        this.contas = contas;
+    public void setContas(ContaUsuario[] contaUsuarios) {
+        this.contaUsuarios = contaUsuarios;
     }
 
     public int getPosicao() {

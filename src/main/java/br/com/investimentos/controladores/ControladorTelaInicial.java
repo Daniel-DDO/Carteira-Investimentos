@@ -2,8 +2,8 @@ package br.com.investimentos.controladores;
 
 import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.repositorios.RepositorioContas;
-import br.com.investimentos.usuarios.Conta;
-import br.com.investimentos.usuarios.TipoConta;
+import br.com.investimentos.usuarios.ContaUsuario;
+import br.com.investimentos.usuarios.EnumTipoConta;
 import br.com.investimentos.usuarios.UsuarioAdministrador;
 import br.com.investimentos.usuarios.UsuarioComum;
 import javafx.event.ActionEvent;
@@ -29,33 +29,33 @@ public class ControladorTelaInicial {
 
     public void botaoEntrar(ActionEvent actionEvent) {
         System.out.println("Clicou entrar");
-        TipoConta tipoConta;
+        EnumTipoConta enumTipoConta;
         String emailUsuario = emailUsuarioField.getText();
         String senha = senhaField.getText();
 
         if (souAdmBox.isSelected()) {
-            tipoConta = TipoConta.ADM;
+            enumTipoConta = EnumTipoConta.ADM;
         } else {
-            tipoConta = TipoConta.COMUM;
+            enumTipoConta = EnumTipoConta.COMUM;
         }
 
         RepositorioContas repositorioContas = RepositorioContas.getInstancia();
 
         try {
-            Conta contaLogada = repositorioContas.obterContaParaLogar(emailUsuario, senha, tipoConta);
+            ContaUsuario contaUsuarioLogada = repositorioContas.obterContaParaLogar(emailUsuario, senha, enumTipoConta);
 
             if (souAdmBox.isSelected()) {
-                if (contaLogada instanceof UsuarioAdministrador) {
-                    UsuarioLogado.getInstancia().setUsuarioAdministrador((UsuarioAdministrador) contaLogada);
-                    System.out.println("Usuário administrador logado: " + contaLogada.getNome());
+                if (contaUsuarioLogada instanceof UsuarioAdministrador) {
+                    UsuarioLogado.getInstancia().setUsuarioAdministrador((UsuarioAdministrador) contaUsuarioLogada);
+                    System.out.println("Usuário administrador logado: " + contaUsuarioLogada.getNome());
                     Programa.trocarTela(6);
                 } else {
                     throw new ContaNaoExisteException("A conta encontrada não é de tipo administrador.");
                 }
             } else {
-                if (contaLogada instanceof UsuarioComum) {
-                    UsuarioLogado.getInstancia().setUsuarioComum((UsuarioComum) contaLogada);
-                    System.out.println("Usuário comum logado: " + contaLogada.getNome());
+                if (contaUsuarioLogada instanceof UsuarioComum) {
+                    UsuarioLogado.getInstancia().setUsuarioComum((UsuarioComum) contaUsuarioLogada);
+                    System.out.println("Usuário comum logado: " + contaUsuarioLogada.getNome());
                     Programa.trocarTela(5);
                 } else {
                     throw new ContaNaoExisteException("A conta encontrada não é de tipo usuário comum.");

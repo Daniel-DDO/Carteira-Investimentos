@@ -5,7 +5,7 @@ import br.com.investimentos.financas.RiscosFinanceiros;
 
 import java.time.LocalDate;
 
-public class UsuarioComum extends Conta {
+public class UsuarioComum extends ContaUsuario {
 
     private double orcamentoMensal;
     private LocalDate tempoInvestimento;
@@ -15,14 +15,14 @@ public class UsuarioComum extends Conta {
     //private CarteiraUsuario[] carteiras;
 
     public UsuarioComum() {
-        this.setTipoConta(TipoConta.COMUM);
+        this.setTipoConta(EnumTipoConta.COMUM);
     }
 
     public UsuarioComum(
             String nome, String nomeUsuario, String email, String senha,
             String telefone, String cpf
     ) {
-        super(nome, nomeUsuario, email, senha, telefone, cpf, TipoConta.COMUM);
+        super(nome, nomeUsuario, email, senha, telefone, cpf, EnumTipoConta.COMUM);
 
     }
 
@@ -30,7 +30,7 @@ public class UsuarioComum extends Conta {
                         String telefone, String cpf, Investimentos tipoInvestimento,
                         double orcamentoMensal, LocalDate tempoInvestimento,
                         double reservaEmergencia, RiscosFinanceiros riscosFinanceiros, double rendaFixa) {
-        super(nome, nomeUsuario, email, senha, telefone, cpf, TipoConta.COMUM);
+        super(nome, nomeUsuario, email, senha, telefone, cpf, EnumTipoConta.COMUM);
         this.orcamentoMensal = orcamentoMensal;
         this.tempoInvestimento = tempoInvestimento;
         this.reservaEmergencia = reservaEmergencia;

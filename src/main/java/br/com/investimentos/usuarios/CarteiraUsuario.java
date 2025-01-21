@@ -11,14 +11,14 @@ public class CarteiraUsuario {
     private Investimentos[] investimentos;
     private LocalDate dataCriacao;
     private String objetivoInvestimento;
-    private TipoInvestidor tipoInvestidor;
+    private EnumTipoInvestidor enumTipoInvestidor;
 
-    public CarteiraUsuario(String nomeCarteira, double saldoDisponivel, LocalDate dataCriacao, String objetivoInvestimento, TipoInvestidor tipoInvestidor) {
+    public CarteiraUsuario(String nomeCarteira, double saldoDisponivel, LocalDate dataCriacao, String objetivoInvestimento, EnumTipoInvestidor enumTipoInvestidor) {
         this.nomeCarteira = nomeCarteira;
         this.saldoDisponivel = saldoDisponivel;
         this.dataCriacao = dataCriacao;
         this.objetivoInvestimento = objetivoInvestimento;
-        this.tipoInvestidor = tipoInvestidor;
+        this.enumTipoInvestidor = enumTipoInvestidor;
     }
 
     public long getCarteiraID() {
@@ -69,11 +69,11 @@ public class CarteiraUsuario {
         this.objetivoInvestimento = objetivoInvestimento;
     }
 
-    public TipoInvestidor getTipoInvestidor() {
-        return tipoInvestidor;
+    public EnumTipoInvestidor getTipoInvestidor() {
+        return enumTipoInvestidor;
     }
 
-    public void setTipoInvestidor(TipoInvestidor tipoInvestidor) {
-        this.tipoInvestidor = tipoInvestidor;
+    public void setTipoInvestidor(EnumTipoInvestidor enumTipoInvestidor) {
+        this.enumTipoInvestidor = enumTipoInvestidor;
     }
 }

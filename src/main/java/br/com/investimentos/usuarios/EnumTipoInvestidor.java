@@ -1,6 +1,6 @@
 package br.com.investimentos.usuarios;
 
-public enum TipoInvestidor {
+public enum EnumTipoInvestidor {
     CONSERVADOR, MODERADO, AGRESSIVO;
 
     @Override

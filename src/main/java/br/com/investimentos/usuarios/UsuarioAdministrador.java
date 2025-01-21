@@ -1,18 +1,18 @@
 package br.com.investimentos.usuarios;
 
-public class UsuarioAdministrador extends Conta {
+public class UsuarioAdministrador extends ContaUsuario {
     private String setor;
     private int ativosCadastrados;
 
     public UsuarioAdministrador() {
-        this.setTipoConta(TipoConta.ADM);
+        this.setTipoConta(EnumTipoConta.ADM);
     }
 
     public UsuarioAdministrador(
             String nome, String nomeUsuario, String email, String senha,
             String telefone, String cpf
     ) {
-        super(nome, nomeUsuario, email, senha, telefone, cpf, TipoConta.ADM);
+        super(nome, nomeUsuario, email, senha, telefone, cpf, EnumTipoConta.ADM);
     }
 
     public void criarAtivo() {}

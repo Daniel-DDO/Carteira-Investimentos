@@ -1,7 +1,7 @@
 package br.com.investimentos.controladores;
 
 import br.com.investimentos.repositorios.RepositorioContas;
-import br.com.investimentos.usuarios.Conta;
+import br.com.investimentos.usuarios.ContaUsuario;
 import br.com.investimentos.usuarios.UsuarioAdministrador;
 import br.com.investimentos.usuarios.UsuarioComum;
 import javafx.event.ActionEvent;
@@ -127,16 +127,16 @@ public class ControladorCadastro {
         else {
             RepositorioContas.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
 
-            Conta contaUsuarioComum = new UsuarioComum(nome, nomeUsuario, email, senha, telefone, cpf);
+            ContaUsuario contaUsuarioUsuarioComum = new UsuarioComum(nome, nomeUsuario, email, senha, telefone, cpf);
 
             RepositorioContas repositorioContas = RepositorioContas.getInstancia();
-            repositorioContas.inserirConta(contaUsuarioComum);
+            repositorioContas.inserirConta(contaUsuarioUsuarioComum);
 
             ControladorGeral.alertaInformacao("Cadastro Concluído!", "Seu cadastro foi realizado com sucesso.");
 
-            System.out.println("\n" + contaUsuarioComum.getNome() + "\n" + contaUsuarioComum.getNomeUsuario() + "\n" +
-                    contaUsuarioComum.getEmail() + "\n" + contaUsuarioComum.getSenha() + "\n" +
-                    contaUsuarioComum.getTelefone() + "\n" + contaUsuarioComum.getCpf()+ "\n");
+            System.out.println("\n" + contaUsuarioUsuarioComum.getNome() + "\n" + contaUsuarioUsuarioComum.getNomeUsuario() + "\n" +
+                    contaUsuarioUsuarioComum.getEmail() + "\n" + contaUsuarioUsuarioComum.getSenha() + "\n" +
+                    contaUsuarioUsuarioComum.getTelefone() + "\n" + contaUsuarioUsuarioComum.getCpf()+ "\n");
 
             System.out.println("Cadastro concluído com sucesso.");
             fieldNomeCompleto.clear();
@@ -234,10 +234,10 @@ public class ControladorCadastro {
         } else {
             RepositorioContas.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
 
-            Conta contaAdm = new UsuarioAdministrador(nome, nomeUsuario, email, senha, telefone, cpf);
+            ContaUsuario contaUsuarioAdm = new UsuarioAdministrador(nome, nomeUsuario, email, senha, telefone, cpf);
 
             RepositorioContas repositorioContas = RepositorioContas.getInstancia();
-            repositorioContas.inserirConta(contaAdm);
+            repositorioContas.inserirConta(contaUsuarioAdm);
 
             System.out.println("Cadastro concluído com sucesso.");
             ControladorGeral.alertaInformacao("Carteira Investimentos", "Cadastro concluído com sucesso!");

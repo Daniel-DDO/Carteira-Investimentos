@@ -1,5 +1,6 @@
 package br.com.investimentos.controladores.gui;
 
+import br.com.investimentos.controladores.ControladorContaUsuario;
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.repositorios.RepositorioContaUsuario;
@@ -43,7 +44,7 @@ public class ControladorTelaInicial {
         RepositorioContaUsuario repositorioContaUsuario = RepositorioContaUsuario.getInstancia();
 
         try {
-            ContaUsuario contaUsuarioLogada = repositorioContaUsuario.obterContaParaLogar(emailUsuario, senha, enumTipoConta);
+            ContaUsuario contaUsuarioLogada = ControladorContaUsuario.getInstancia().obterContaParaLogar(emailUsuario, senha, enumTipoConta);
 
             if (souAdmBox.isSelected()) {
                 if (contaUsuarioLogada instanceof UsuarioAdministrador) {

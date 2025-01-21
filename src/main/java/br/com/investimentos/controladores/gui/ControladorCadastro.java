@@ -150,7 +150,7 @@ public class ControladorCadastro {
 
             Programa.trocarTela(1);
             System.out.println("\nCONTAS CRIADAS\n");
-            repositorioContaUsuario.exibirContas(); //pra ver se tá criando no array
+            ControladorContaUsuario.getInstancia().exibirContas(); //pra ver se tá criando no array
         }
     }
 
@@ -251,7 +251,7 @@ public class ControladorCadastro {
             fieldTelefoneAdm.clear();
             fieldCpfAdm.clear();
 
-            repositorioContaUsuario.exibirContas();
+            ControladorContaUsuario.getInstancia().exibirContas();
             Programa.trocarTela(1);
         }
     }

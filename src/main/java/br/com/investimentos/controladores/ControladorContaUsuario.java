@@ -1,8 +1,10 @@
 package br.com.investimentos.controladores;
 
 import br.com.investimentos.excecoes.ContaJaExisteExcepction;
+import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.repositorios.RepositorioContaUsuario;
 import br.com.investimentos.usuarios.ContaUsuario;
+import br.com.investimentos.usuarios.EnumTipoConta;
 
 public class ControladorContaUsuario {
 
@@ -31,6 +33,66 @@ public class ControladorContaUsuario {
         }
     }
 
+    public boolean buscarContaParaLogar(String usuarioOuEmail, String senha, EnumTipoConta enumTipoConta) throws ContaNaoExisteException {
+        ContaUsuario[] contaUsuarios = RepositorioContaUsuario.getInstancia().getContas();
+        int tamanho = RepositorioContaUsuario.getInstancia().getTamanho();
 
+        boolean contaEncontrada = false;
+        if (usuarioOuEmail.contains("@")) {
+            //considerar o login pelo email e senha
+            for (int i = 0; i < tamanho; i++) {
+                if (contaUsuarios[i] != null && contaUsuarios[i].getTipoConta().equals(enumTipoConta)) {
+                    if (usuarioOuEmail.equals(contaUsuarios[i].getEmail()) && senha.equals(contaUsuarios[i].getSenha())) {
+                        contaEncontrada = true;
+                    }
+                }
+            }
+        } else {
+            //considerar o login pelo nomeUsuario e senha
+            for (int i = 0; i < tamanho; i++) {
+                if (contaUsuarios[i] != null && contaUsuarios[i].getTipoConta().equals(enumTipoConta)) {
+                    if (usuarioOuEmail.equals(contaUsuarios[i].getNomeUsuario()) && senha.equals(contaUsuarios[i].getSenha())) {
+                        contaEncontrada = true;
+                    }
+                }
+            }
+        }
+        if (!contaEncontrada) {
+            throw new ContaNaoExisteException();
+        } else {
+            System.out.println(contaEncontrada);
+        }
+        return contaEncontrada;
+    }
 
+    public ContaUsuario obterContaParaLogar(String usuarioOuEmail, String senha, EnumTipoConta enumTipoConta) throws ContaNaoExisteException {
+        ContaUsuario[] contaUsuarios = RepositorioContaUsuario.getInstancia().getContas();
+        int tamanho = RepositorioContaUsuario.getInstancia().getTamanho();
+
+        for (int i = 0; i < tamanho; i++) {
+            if (contaUsuarios[i] != null && contaUsuarios[i].getTipoConta().equals(enumTipoConta)) {
+                if (usuarioOuEmail.contains("@")) {
+                    if (usuarioOuEmail.equals(contaUsuarios[i].getEmail()) && senha.equals(contaUsuarios[i].getSenha())) {
+                        return contaUsuarios[i];
+                    }
+                } else {
+                    if (usuarioOuEmail.equals(contaUsuarios[i].getNomeUsuario()) && senha.equals(contaUsuarios[i].getSenha())) {
+                        return contaUsuarios[i];
+                    }
+                }
+            }
+        }
+        throw new ContaNaoExisteException();
+    }
+
+    public void exibirContas() {
+        ContaUsuario[] contaUsuarios = RepositorioContaUsuario.getInstancia().getContas();
+        int tamanho = RepositorioContaUsuario.getInstancia().getTamanho();
+
+        for (int i = 0; i < tamanho; i++) {
+            if (contaUsuarios[i] != null) {
+                System.out.println(contaUsuarios[i]);
+            }
+        }
+    }
 }

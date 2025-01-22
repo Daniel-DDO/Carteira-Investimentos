@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
@@ -62,7 +63,7 @@ public class ControladorCarteiras {
 
     @FXML
     void confirmarBotao052(ActionEvent event) {
-
+        //selecionarCarteiraCbox(event);
     }
 
 
@@ -119,6 +120,5 @@ public class ControladorCarteiras {
     void voltarBotao052(ActionEvent event) {
         Programa.trocarTela(8);
     }
-
 
 }

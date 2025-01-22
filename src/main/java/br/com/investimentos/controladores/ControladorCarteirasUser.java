@@ -26,7 +26,7 @@ public class ControladorCarteirasUser {
         exibirTodasCarteiras();
     }
 
-    public void exibirCarteirasDoUser(UsuarioComum usuario) {
+    public CarteiraUsuario[] exibirCarteirasDoUser(UsuarioComum usuario) {
         CarteiraUsuario[] carteiras = RepositorioCarteiras.getInstancia().getCarteiras();
 
         for (int i = 0; i < RepositorioCarteiras.getInstancia().getTamanho(); i++) {
@@ -34,6 +34,7 @@ public class ControladorCarteirasUser {
                 System.out.println(carteiras[i]);
             }
         }
+        return carteiras;
     }
 
     public void exibirTodasCarteiras() {

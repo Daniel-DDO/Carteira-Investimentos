@@ -1,5 +1,6 @@
 package br.com.investimentos.main;
 
+import br.com.investimentos.controladores.ControladorCarteirasUser;
 import br.com.investimentos.controladores.ControladorContaUsuario;
 import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
@@ -20,6 +21,8 @@ public class Main extends Programa {
         launch();
 
         //Daqui pra frente tudo é apenas para depuração e testes
+
+        ControladorCarteirasUser.getInstancia().exibirTodasCarteiras();
 
         RepositorioContaUsuario repositorioContaUsuario = RepositorioContaUsuario.getInstancia();
         ContaUsuario usuarioComum = new UsuarioComum();

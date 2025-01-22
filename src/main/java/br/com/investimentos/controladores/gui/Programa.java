@@ -29,6 +29,7 @@ public class Programa extends Application {
     private static Scene rendaTela;
     private static Scene perfilComumTela;
     private static Scene criarCarteiraTela;
+    private static Scene visualizarCarteirasTela;
 
     private static ControladorPerfil controladorPerfil;
 
@@ -79,6 +80,9 @@ public class Programa extends Application {
 
         Parent fxmlCriarCarteira = FXMLLoader.load(getClass().getResource(localFxml+"05-2-1-criar-carteira.fxml"));
         criarCarteiraTela = new Scene(fxmlCriarCarteira, 1000, 600);
+
+        Parent fxmlVisualizarCarteiras = FXMLLoader.load(getClass().getResource(localFxml+"05-2-2-visualizar-carteiras.fxml"));
+        visualizarCarteirasTela = new Scene(fxmlVisualizarCarteiras, 1000, 600);
 
         stage.setScene(telaInicial01);
         stage.show();
@@ -138,6 +142,11 @@ public class Programa extends Application {
             case 13:
                 stage.setScene(criarCarteiraTela);
                 informarMudancaTela(13, objeto);
+                break;
+            case 14:
+                stage.setScene(visualizarCarteirasTela);
+                informarMudancaTela(14, objeto);
+                break;
         }
     }
 

@@ -56,7 +56,8 @@ public class ControladorCarteiras {
 
     @FXML
     void botaoVisualizarCarteiras(ActionEvent event) {
-
+        ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
+        Programa.trocarTela(14);
     }
 
     @FXML

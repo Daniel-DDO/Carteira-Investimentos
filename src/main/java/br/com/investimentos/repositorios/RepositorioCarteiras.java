@@ -11,7 +11,7 @@ public class RepositorioCarteiras {
 
     private RepositorioCarteiras() {
         CarteiraUsuario[] carteirasCarregadas = ControladorArquivos.lerCarteira();
-        if (carteirasCarregadas == null) {
+        if (carteirasCarregadas != null) {
             for (CarteiraUsuario carteiraUsuario : carteirasCarregadas) {
                 if (carteiraUsuario != null) {
                     carteiras[posicao] = carteiraUsuario;

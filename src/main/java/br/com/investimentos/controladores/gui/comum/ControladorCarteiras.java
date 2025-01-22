@@ -7,6 +7,7 @@ import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.repositorios.RepositorioCarteiras;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import br.com.investimentos.usuarios.EnumTipoInvestidor;
+import br.com.investimentos.usuarios.UsuarioComum;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +18,15 @@ import javafx.scene.control.TextField;
 import java.time.LocalDate;
 
 public class ControladorCarteiras {
+
+    private static ControladorCarteiras instancia;
+
+    public static ControladorCarteiras getInstancia() {
+        if (instancia == null) {
+            instancia = new ControladorCarteiras();
+        }
+        return instancia;
+    }
 
     @FXML
     public void initialize() {
@@ -63,7 +73,7 @@ public class ControladorCarteiras {
 
     @FXML
     void confirmarBotao052(ActionEvent event) {
-        //selecionarCarteiraCbox(event);
+        visualizarCarteirasCbox();
     }
 
 
@@ -119,6 +129,42 @@ public class ControladorCarteiras {
     @FXML
     void voltarBotao052(ActionEvent event) {
         Programa.trocarTela(8);
+    }
+
+
+    //Tela 05-2-2
+
+    public void listarCarteirasCbox() {
+        if (cboxSelecionarCarteira != null) {
+            cboxSelecionarCarteira.getItems().addAll(ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum()));
+        }
+    }
+
+    public void visualizarCarteirasCbox() {
+        CarteiraUsuario[] carteiraUsuarios = ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
+
+        for (CarteiraUsuario carteiraUsuario : carteiraUsuarios) {
+            if (carteiraUsuario != null) {
+                System.out.println(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario());
+                System.out.println(carteiraUsuario.getUsuario().getNomeUsuario());
+                System.out.println(carteiraUsuario.getUsuario().getNomeUsuario().equals(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario())+"\n");
+
+                System.out.println("Rodou");
+                cboxSelecionarCarteira.getItems().add(carteiraUsuario);
+            }
+        }
+    }
+
+    @FXML
+    private ComboBox<CarteiraUsuario> cboxSelecionarCarteira;
+
+    @FXML
+    private Label infoCarteiraSelecionadaLabel;
+
+
+    @FXML
+    void selecionarCarteiraCbox(ActionEvent event) {
+        infoCarteiraSelecionadaLabel.setText("Selecionado");
     }
 
 }

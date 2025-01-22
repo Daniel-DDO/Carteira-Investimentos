@@ -22,8 +22,6 @@ public class Main extends Programa {
 
         //Daqui pra frente tudo é apenas para depuração e testes
 
-        ControladorCarteirasUser.getInstancia().exibirTodasCarteiras();
-
         RepositorioContaUsuario repositorioContaUsuario = RepositorioContaUsuario.getInstancia();
         ContaUsuario usuarioComum = new UsuarioComum();
         ContaUsuario usuarioAdm = new UsuarioAdministrador();

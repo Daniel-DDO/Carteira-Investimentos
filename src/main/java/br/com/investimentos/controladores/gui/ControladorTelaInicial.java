@@ -2,6 +2,7 @@ package br.com.investimentos.controladores.gui;
 
 import br.com.investimentos.controladores.ControladorContaUsuario;
 import br.com.investimentos.controladores.UsuarioLogado;
+import br.com.investimentos.controladores.gui.comum.ControladorCarteiras;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.repositorios.RepositorioContaUsuario;
 import br.com.investimentos.usuarios.ContaUsuario;
@@ -59,6 +60,7 @@ public class ControladorTelaInicial {
                     UsuarioLogado.getInstancia().setUsuarioComum((UsuarioComum) contaUsuarioLogada);
                     System.out.println("Usuário comum logado: " + contaUsuarioLogada.getNome());
                     Programa.trocarTela(5);
+                    configurarPosLogin();
                 } else {
                     throw new ContaNaoExisteException("A conta encontrada não é de tipo usuário comum.");
                 }
@@ -78,5 +80,9 @@ public class ControladorTelaInicial {
     public void clicarCadastrar(ActionEvent actionEvent) {
         System.out.println("Clicou cadastrar");
         Programa.trocarTela(2);
+    }
+
+    public void configurarPosLogin() {
+        ControladorCarteiras.getInstancia().visualizarCarteirasCbox();
     }
 }

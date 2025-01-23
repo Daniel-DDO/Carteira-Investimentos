@@ -30,8 +30,10 @@ public class ControladorCarteirasUser {
         CarteiraUsuario[] carteiras = RepositorioCarteiras.getInstancia().getCarteiras();
 
         for (int i = 0; i < RepositorioCarteiras.getInstancia().getTamanho(); i++) {
-            if (carteiras[i] != null && carteiras[i].getUsuario().getNomeUsuario().equals(usuario.getNomeUsuario())) {
-                System.out.println(carteiras[i]);
+            if (carteiras[i] != null) {
+                if (carteiras[i].getUsuario().getNomeUsuario().equals(usuario.getNomeUsuario())) {
+                    System.out.println(carteiras[i]);
+                }
             }
         }
         return carteiras;

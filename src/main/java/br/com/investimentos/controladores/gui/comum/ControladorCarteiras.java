@@ -142,16 +142,22 @@ public class ControladorCarteiras {
 
     public void visualizarCarteirasCbox() {
         CarteiraUsuario[] carteiraUsuarios = ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
+        boolean temCarteira = false;
 
-        for (CarteiraUsuario carteiraUsuario : carteiraUsuarios) {
-            if (carteiraUsuario != null) {
-                System.out.println(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario());
-                System.out.println(carteiraUsuario.getUsuario().getNomeUsuario());
-                System.out.println(carteiraUsuario.getUsuario().getNomeUsuario().equals(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario())+"\n");
+        for (int i = 0; i < RepositorioCarteiras.getInstancia().getTamanho(); i++) {
+            if (carteiraUsuarios[i] != null) {
+                if (carteiraUsuarios[i].getUsuario().getNomeUsuario().equals(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario())) {
+                    System.out.println(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario());
+                    System.out.println(carteiraUsuarios[i].getUsuario().getNomeUsuario());
+                    temCarteira = true;
 
-                System.out.println("Rodou");
-                cboxSelecionarCarteira.getItems().add(carteiraUsuario);
+                    listarCarteirasCbox();
+                }
             }
+        }
+
+        if (!temCarteira) {
+            System.out.println(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario()+" não tem carteiras.");
         }
     }
 
@@ -160,7 +166,6 @@ public class ControladorCarteiras {
 
     @FXML
     private Label infoCarteiraSelecionadaLabel;
-
 
     @FXML
     void selecionarCarteiraCbox(ActionEvent event) {

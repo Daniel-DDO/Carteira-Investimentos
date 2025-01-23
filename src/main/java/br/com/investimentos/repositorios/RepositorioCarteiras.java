@@ -41,6 +41,18 @@ public class RepositorioCarteiras {
         }
     }
 
+    public void excluirCarteira(CarteiraUsuario carteiraUsuario) {
+        for (int i = 0; i < tamanho; i++) {
+            if (carteiras[i] != null && carteiras[i].equals(carteiraUsuario)) {
+                carteiras[i] = carteiras[posicao-1];
+                carteiras[posicao-1] = null;
+                posicao--;
+                break;
+            }
+        }
+    }
+
+
     public static RepositorioCarteiras getInstancia() {
         if (instancia == null) {
             instancia = new RepositorioCarteiras();

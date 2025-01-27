@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class ControladorCarteiras {
 
@@ -141,14 +142,23 @@ public class ControladorCarteiras {
     }
 
     public void visualizarCarteirasCbox() {
-        CarteiraUsuario[] carteiraUsuarios = ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
+        ArrayList<CarteiraUsuario> carteiraUsuarios = ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
+
         boolean temCarteira = false;
 
-        for (int i = 0; i < RepositorioCarteiras.getInstancia().getTamanho(); i++) {
-            if (carteiraUsuarios[i] != null) {
-                if (carteiraUsuarios[i].getUsuario().getNomeUsuario().equals(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario())) {
+        for (int i = 0; i < carteiraUsuarios.size(); i++) {
+            if (carteiraUsuarios.get(i) != null) {
+                if (carteiraUsuarios.get(i).getUsuario().getNomeUsuario().equals(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario())) {
                     System.out.println(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario());
-                    System.out.println(carteiraUsuarios[i].getUsuario().getNomeUsuario());
+                    System.out.println(carteiraUsuarios.get(i).getUsuario().getNomeUsuario());
+
+                    for (int a = 0; a < carteiraUsuarios.size(); a++) {
+                        if (carteiraUsuarios.get(a) != null) {
+                            if (carteiraUsuarios.get(a).getUsuario().getNomeUsuario().equals(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario())) {
+                                System.out.println(carteiraUsuarios.get(a));
+                            }
+                        }
+                    }
                     temCarteira = true;
 
                     listarCarteirasCbox();
@@ -172,4 +182,10 @@ public class ControladorCarteiras {
         infoCarteiraSelecionadaLabel.setText("Selecionado");
     }
 
+    @FXML
+    public void voltarBotao0522(ActionEvent actionEvent) {
+        cboxSelecionarCarteira.getItems().clear();
+        cboxSelecionarCarteira.setPromptText("Selecione uma carteira");
+        voltarBotao052(actionEvent);
+    }
 }

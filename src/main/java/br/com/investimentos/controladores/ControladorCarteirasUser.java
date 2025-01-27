@@ -7,6 +7,7 @@ import br.com.investimentos.usuarios.EnumTipoInvestidor;
 import br.com.investimentos.usuarios.UsuarioComum;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class ControladorCarteirasUser {
 
@@ -26,17 +27,20 @@ public class ControladorCarteirasUser {
         exibirTodasCarteiras();
     }
 
-    public CarteiraUsuario[] exibirCarteirasDoUser(UsuarioComum usuario) {
+    public ArrayList<CarteiraUsuario> exibirCarteirasDoUser(UsuarioComum usuario) {
         CarteiraUsuario[] carteiras = RepositorioCarteiras.getInstancia().getCarteiras();
+        ArrayList<CarteiraUsuario> carteirastemp = new ArrayList<CarteiraUsuario>();
 
         for (int i = 0; i < RepositorioCarteiras.getInstancia().getTamanho(); i++) {
             if (carteiras[i] != null) {
                 if (carteiras[i].getUsuario().getNomeUsuario().equals(usuario.getNomeUsuario())) {
                     System.out.println(carteiras[i]);
+                    carteirastemp.add(carteiras[i]);
+
                 }
             }
         }
-        return carteiras;
+        return carteirastemp;
     }
 
     public void exibirTodasCarteiras() {

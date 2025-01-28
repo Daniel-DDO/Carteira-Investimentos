@@ -28,6 +28,14 @@ public class CarteiraUsuario implements Serializable {
         this.usuario = usuario;
     }
 
+    public void depositarDinheiro(double valorDeposito) {
+        this.saldoDisponivel = saldoDisponivel + valorDeposito;
+    }
+
+    public void comprarAtivos() {
+
+    }
+
     public long getCarteiraID() {
         return carteiraID;
     }

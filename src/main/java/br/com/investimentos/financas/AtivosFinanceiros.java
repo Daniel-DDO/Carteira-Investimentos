@@ -15,6 +15,23 @@ public class AtivosFinanceiros {
     private String moeda;
     private LocalDate dataInicial;
 
+    public AtivosFinanceiros() {
+
+    }
+
+    public AtivosFinanceiros(String nomeAtivo, String tipoAtivo, String codigo, double valorAtual, double valorNominal, double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial) {
+        this.nomeAtivo = nomeAtivo;
+        this.tipoAtivo = tipoAtivo;
+        this.codigo = codigo;
+        this.valorAtual = valorAtual;
+        this.valorNominal = valorNominal;
+        this.rentabilidade = rentabilidade;
+        this.risco = risco;
+        this.liquidez = liquidez;
+        this.moeda = moeda;
+        this.dataInicial = dataInicial;
+    }
+
     public String getNomeAtivo() {
         return nomeAtivo;
     }

@@ -1,5 +1,10 @@
 package br.com.investimentos.usuarios;
 
+import br.com.investimentos.financas.AtivosFinanceiros;
+import br.com.investimentos.repositorios.RepositorioAtivos;
+
+import java.time.LocalDate;
+
 public class UsuarioAdministrador extends ContaUsuario {
     private String setor;
     private int ativosCadastrados;
@@ -15,11 +20,21 @@ public class UsuarioAdministrador extends ContaUsuario {
         super(nome, nomeUsuario, email, senha, telefone, cpf, EnumTipoConta.ADM);
     }
 
-    public void criarAtivo() {}
+    public void criarAtivo(String nomeAtivo, String tipoAtivo, String codigo, double valorAtual, double valorNominal,
+                           double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial) {
+        AtivosFinanceiros novoAtivo = new AtivosFinanceiros(
+                nomeAtivo, tipoAtivo, codigo, valorAtual, valorNominal, rentabilidade, risco, liquidez, moeda, dataInicial
+        );
 
-    public void editarAtivo() {}
+    }
 
-    public void removerAtivo() {}
+    public void editarAtivo(AtivosFinanceiros ativoFin) {
+
+    }
+
+    public void removerAtivo() {
+
+    }
 
     public String getSetor() {
         return setor;

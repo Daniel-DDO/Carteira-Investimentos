@@ -1,6 +1,7 @@
 package br.com.investimentos.controladores.gui;
 
 import br.com.investimentos.controladores.UsuarioLogado;
+import br.com.investimentos.controladores.gui.adm.ControladorPerfilAdm;
 import br.com.investimentos.controladores.gui.comum.ControladorCarteiras;
 import br.com.investimentos.controladores.gui.comum.ControladorGerenciarCarteiras;
 import br.com.investimentos.controladores.gui.comum.ControladorPerfil;
@@ -34,8 +35,10 @@ public class Programa extends Application {
     private static Scene criarCarteiraTela;
     private static Scene visualizarCarteirasTela;
     private static Scene gerenciarCarteirasTela;
+    private static Scene perfilAdmTela;
 
     private static ControladorPerfil controladorPerfil;
+    private static ControladorPerfilAdm controladorPerfilAdm;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -96,6 +99,12 @@ public class Programa extends Application {
         gerenciarCarteirasTela = new Scene(fxmlGerenciarCarteiras, 1000, 600);
         ControladorGerenciarCarteiras controladorGerenciarCarteiras = loaderGerenciarCarteiras.getController();
         adicionarMudancaTela(controladorGerenciarCarteiras);
+
+        FXMLLoader loaderPerfilAdm = new FXMLLoader(getClass().getResource(localFxml+ "06-6-perfil-adm.fxml"));
+        Parent fxmlPerfilAdm = loaderPerfilAdm.load();
+        perfilAdmTela = new Scene(fxmlPerfilAdm, 1000, 600);
+        controladorPerfilAdm = loaderPerfilAdm.getController();
+        adicionarMudancaTela(controladorPerfilAdm);
 
         stage.setScene(telaInicial01);
         stage.show();
@@ -164,6 +173,10 @@ public class Programa extends Application {
                 stage.setScene(gerenciarCarteirasTela);
                 informarMudancaTela(15, objeto);
                 break;
+            case 16:
+                stage.setScene(perfilAdmTela);
+                informarMudancaTela(16, objeto);
+                break;
         }
     }
 
@@ -177,6 +190,10 @@ public class Programa extends Application {
 
     public static ControladorPerfil getControladorPerfil() {
         return controladorPerfil;
+    }
+
+    public static ControladorPerfilAdm getControladorPerfilAdm() {
+        return controladorPerfilAdm;
     }
 
     //Passar dados na troca de tela

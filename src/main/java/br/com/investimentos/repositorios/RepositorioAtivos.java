@@ -1,7 +1,6 @@
 package br.com.investimentos.repositorios;
 
 import br.com.investimentos.financas.AtivosFinanceiros;
-import br.com.investimentos.financas.Investimentos;
 
 public class RepositorioAtivos {
 
@@ -15,6 +14,6 @@ public class RepositorioAtivos {
         }
         return instancia;
     }
-    
+
 
 }

@@ -59,6 +59,18 @@ public class RepositorioContaUsuario {
         ControladorArquivos.atualizarContas(contaUsuarios);
     }
 
+    public void atualizarContas(ContaUsuario contaUsuario) {
+        for (int i = 0; i < tamanho; i++) {
+            if (contaUsuarios[i] != null) {
+                if (contaUsuarios[i].equals(contaUsuario)) {
+                    contaUsuarios[i] = contaUsuario;
+                    break;
+                }
+            }
+        }
+        ControladorArquivos.atualizarContas(contaUsuarios);
+    }
+
     public ContaUsuario[] getContas() {
         return contaUsuarios;
     }

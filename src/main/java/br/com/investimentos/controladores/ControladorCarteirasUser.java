@@ -2,6 +2,7 @@ package br.com.investimentos.controladores;
 
 import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.repositorios.RepositorioCarteiras;
+import br.com.investimentos.repositorios.RepositorioContaUsuario;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import br.com.investimentos.usuarios.EnumTipoInvestidor;
 import br.com.investimentos.usuarios.UsuarioComum;
@@ -25,6 +26,7 @@ public class ControladorCarteirasUser {
 
         RepositorioCarteiras.getInstancia().adicionarCarteira(carteira);
         UsuarioLogado.getInstancia().getUsuarioComum().setQuantidadeCarteiras(UsuarioLogado.getInstancia().getUsuarioComum().getQuantidadeCarteiras() + 1);
+        RepositorioContaUsuario.getInstancia().atualizarContas(UsuarioLogado.getInstancia().getUsuarioComum());
         exibirTodasCarteiras();
     }
 
@@ -67,6 +69,19 @@ public class ControladorCarteirasUser {
         }
 
         return carteiraSelecionada;
+    }
+
+    public boolean verificarSeTemCarteira(UsuarioComum usuario) {
+        boolean temCarteira = false;
+
+        if (UsuarioLogado.getInstancia().getUsuarioComum().getQuantidadeCarteiras() > 0) {
+            temCarteira = true;
+            exibirCarteirasDoUser(usuario);
+        } else {
+            System.out.println(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario()+" não tem carteiras cadastradas.");
+        }
+
+        return temCarteira;
     }
 
 }

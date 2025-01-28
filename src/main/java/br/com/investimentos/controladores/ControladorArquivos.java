@@ -120,6 +120,23 @@ public class ControladorArquivos {
         }
     }
 
+    public static void atualizarCarteiras(CarteiraUsuario[] carteiras) {
+        CarteiraUsuario[] carteirasAtualizadas = new CarteiraUsuario[carteiras.length];
+        int posicaoLivre = 0;
+
+        for (int i = 0; i < carteiras.length; i++) {
+            if (carteiras[i] != null) {
+                carteirasAtualizadas[posicaoLivre] =  carteiras[i];
+                posicaoLivre++;
+            }
+        }
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CARTEIRAS_ARQUIVO))) {
+            oos.writeObject(carteirasAtualizadas);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static int getTamanho() {
         return tamanho;

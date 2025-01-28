@@ -50,6 +50,17 @@ public class RepositorioCarteiras {
                 break;
             }
         }
+        ControladorArquivos.atualizarCarteiras(carteiras);
+    }
+
+    public void atualizarCarteira(CarteiraUsuario carteiraUsuario) {
+        for (int i = 0; i < tamanho; i++) {
+            if (carteiras[i] != null && carteiras[i].equals(carteiraUsuario)) {
+                carteiras[i] = carteiraUsuario;
+                break;
+            }
+        }
+        ControladorArquivos.atualizarCarteiras(carteiras);
     }
 
     public static RepositorioCarteiras getInstancia() {
@@ -86,6 +97,4 @@ public class RepositorioCarteiras {
     public void setPosicao(int posicao) {
         this.posicao = posicao;
     }
-
-
 }

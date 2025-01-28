@@ -2,6 +2,7 @@ package br.com.investimentos.controladores.gui;
 
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.comum.ControladorCarteiras;
+import br.com.investimentos.controladores.gui.comum.ControladorGerenciarCarteiras;
 import br.com.investimentos.controladores.gui.comum.ControladorPerfil;
 import br.com.investimentos.controladores.gui.comum.ControladorVerCarteiras;
 import javafx.application.Application;
@@ -32,6 +33,7 @@ public class Programa extends Application {
     private static Scene perfilComumTela;
     private static Scene criarCarteiraTela;
     private static Scene visualizarCarteirasTela;
+    private static Scene gerenciarCarteirasTela;
 
     private static ControladorPerfil controladorPerfil;
 
@@ -88,6 +90,12 @@ public class Programa extends Application {
         visualizarCarteirasTela = new Scene(fxmlVisualizarCarteiras, 1000, 600);
         ControladorVerCarteiras controladorVerCarteiras = loaderVisualizarCarteiras.getController();
         adicionarMudancaTela(controladorVerCarteiras);
+
+        FXMLLoader loaderGerenciarCarteiras = new FXMLLoader(getClass().getResource(localFxml + "05-2-3-gerenciar-carteiras.fxml"));
+        Parent fxmlGerenciarCarteiras = loaderGerenciarCarteiras.load();
+        gerenciarCarteirasTela = new Scene(fxmlGerenciarCarteiras, 1000, 600);
+        ControladorGerenciarCarteiras controladorGerenciarCarteiras = loaderGerenciarCarteiras.getController();
+        adicionarMudancaTela(controladorGerenciarCarteiras);
 
         stage.setScene(telaInicial01);
         stage.show();

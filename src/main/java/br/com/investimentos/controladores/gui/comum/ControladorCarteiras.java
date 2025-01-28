@@ -63,14 +63,22 @@ public class ControladorCarteiras {
 
     @FXML
     void botaoGerenciarCarteiras(ActionEvent event) {
-
+        if (ControladorCarteirasUser.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
+            Programa.trocarTela(14);
+        } else {
+            ControladorGeral.alertaErro("Visualizar carteiras",
+                    "Ops! Você não tem carteiras. Crie uma para visualizá-la ou gerenciá-la.");
+        }
     }
 
     @FXML
     void botaoVisualizarCarteiras(ActionEvent event) {
-        ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
-        initialize();
-        Programa.trocarTela(14);
+        if (ControladorCarteirasUser.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
+            Programa.trocarTela(14);
+        } else {
+            ControladorGeral.alertaErro("Visualizar carteiras",
+                    "Ops! Você não tem carteiras. Crie uma para visualizá-la ou gerenciá-la.");
+        }
     }
 
     @FXML
@@ -120,6 +128,10 @@ public class ControladorCarteiras {
 
             ControladorCarteirasUser.getInstancia().criarNovaCarteira(nomeCarteira, saldoInicial, localDate, objetivoCarteira, enumTipoInvestidor, UsuarioLogado.getInstancia().getUsuarioComum());
             ControladorGeral.alertaInformacao("Carteira criada!", "Parabéns, sua carteira foi criada com sucesso.");
+            nomeCarteiraField.clear();
+            objetivoCarteiraField.clear();
+            saldoInicialField.clear();
+            tipoInvestidorComboBox.getItems().clear();
             Programa.trocarTela(8);
         }
     }

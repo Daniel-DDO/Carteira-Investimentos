@@ -129,6 +129,7 @@ public class ControladorCadastro {
             ControladorContaUsuario.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
 
             ContaUsuario contaUsuarioUsuarioComum = new UsuarioComum(nome, nomeUsuario, email, senha, telefone, cpf);
+            ((UsuarioComum) contaUsuarioUsuarioComum).setQuantidadeCarteiras(0);
 
             RepositorioContaUsuario repositorioContaUsuario = RepositorioContaUsuario.getInstancia();
             repositorioContaUsuario.inserirConta(contaUsuarioUsuarioComum);

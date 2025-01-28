@@ -24,6 +24,7 @@ public class ControladorCarteirasUser {
         CarteiraUsuario carteira = new CarteiraUsuario(nomeCarteira, saldoDisponivel, dataCriacao, objetivoInvestimento, enumTipoInvestidor, usuario);
 
         RepositorioCarteiras.getInstancia().adicionarCarteira(carteira);
+        UsuarioLogado.getInstancia().getUsuarioComum().setQuantidadeCarteiras(UsuarioLogado.getInstancia().getUsuarioComum().getQuantidadeCarteiras() + 1);
         exibirTodasCarteiras();
     }
 

@@ -12,6 +12,7 @@ public class UsuarioComum extends ContaUsuario {
     private double reservaEmergencia;
     private RiscosFinanceiros riscosFinanceiros;
     private double rendaFixa;
+    private int quantidadeCarteiras;
 
     public UsuarioComum() {
         this.setTipoConta(EnumTipoConta.COMUM);
@@ -81,9 +82,18 @@ public class UsuarioComum extends ContaUsuario {
         this.rendaFixa = rendaFixa;
     }
 
+    public int getQuantidadeCarteiras() {
+        return quantidadeCarteiras;
+    }
+
+    public void setQuantidadeCarteiras(int quantidadeCarteiras) {
+        this.quantidadeCarteiras = quantidadeCarteiras;
+    }
+
     @Override
     public String toString() {
         return "CONTA COMUM:\n" + "Nome: "+getNome()+"\nNome Usuário: "+getNomeUsuario()+"\nEmail: "+getEmail()+
-                "\nSenha: "+getSenha()+"\nTelefone: "+getTelefone()+"\nCpf: "+getCpf()+"\nTipo Conta: "+getTipoConta()+"\n";
+                "\nSenha: "+getSenha()+"\nTelefone: "+getTelefone()+"\nCpf: "+getCpf()+"\nTipo Conta: "+getTipoConta()+
+                "\nQuantidade de carteiras: "+getQuantidadeCarteiras()+"\n";
     }
 }

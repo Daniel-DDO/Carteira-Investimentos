@@ -1,8 +1,10 @@
 package br.com.investimentos.financas;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class AtivosFinanceiros {
+public class AtivosFinanceiros implements Serializable {
 
     private String nomeAtivo;
     private String tipoAtivo;
@@ -14,6 +16,9 @@ public class AtivosFinanceiros {
     private double liquidez;
     private String moeda;
     private LocalDate dataInicial;
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public AtivosFinanceiros() {
 
@@ -30,6 +35,22 @@ public class AtivosFinanceiros {
         this.liquidez = liquidez;
         this.moeda = moeda;
         this.dataInicial = dataInicial;
+    }
+
+    @Override
+    public String toString() {
+        return "AtivosFinanceiros{" +
+                "nomeAtivo= " + nomeAtivo + '\'' +
+                ", tipoAtivo= " + tipoAtivo + '\'' +
+                ", codigo= " + codigo + '\'' +
+                ", valorAtual= " + valorAtual +
+                ", valorNominal=" + valorNominal +
+                ", rentabilidade= " + rentabilidade +
+                ", risco= " + risco +
+                ", liquidez= " + liquidez +
+                ", moeda= " + moeda + '\'' +
+                ", dataInicial= " + dataInicial +
+                '}';
     }
 
     public String getNomeAtivo() {

@@ -1,9 +1,11 @@
 package br.com.investimentos.main;
 
+import br.com.investimentos.controladores.ControladorAtivosFinanceiros;
 import br.com.investimentos.controladores.ControladorCarteirasUser;
 import br.com.investimentos.controladores.ControladorContaUsuario;
 import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
+import br.com.investimentos.repositorios.RepositorioAtivos;
 import br.com.investimentos.repositorios.RepositorioContaUsuario;
 import br.com.investimentos.usuarios.ContaUsuario;
 import br.com.investimentos.usuarios.EnumTipoConta;
@@ -18,6 +20,7 @@ public class Main extends Programa {
     public static void main(String[] args) {
         System.out.println("Carteira de Investimentos");
 
+        RepositorioAtivos.getInstancia().exibirTodosAtivos();
         launch();
 
         //Daqui pra frente tudo é apenas para depuração e testes

@@ -1,6 +1,7 @@
 package br.com.investimentos.controladores.gui;
 
 import br.com.investimentos.controladores.UsuarioLogado;
+import br.com.investimentos.controladores.gui.adm.ControladorAtivosAdm;
 import br.com.investimentos.controladores.gui.adm.ControladorPerfilAdm;
 import br.com.investimentos.controladores.gui.comum.ControladorCarteiras;
 import br.com.investimentos.controladores.gui.comum.ControladorGerenciarCarteiras;
@@ -36,9 +37,11 @@ public class Programa extends Application {
     private static Scene visualizarCarteirasTela;
     private static Scene gerenciarCarteirasTela;
     private static Scene perfilAdmTela;
+    private static Scene ativosAdmTela;
 
     private static ControladorPerfil controladorPerfil;
     private static ControladorPerfilAdm controladorPerfilAdm;
+    private static ControladorAtivosAdm controladorAtivosAdm;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -105,6 +108,12 @@ public class Programa extends Application {
         perfilAdmTela = new Scene(fxmlPerfilAdm, 1000, 600);
         controladorPerfilAdm = loaderPerfilAdm.getController();
         adicionarMudancaTela(controladorPerfilAdm);
+
+        FXMLLoader loaderAtivosAdm = new FXMLLoader(getClass().getResource(localFxml+"06-1-ativos-financeiros.fxml"));
+        Parent fxmlAtivosAdm = loaderAtivosAdm.load();
+        ativosAdmTela = new Scene(fxmlAtivosAdm, 1000, 600);
+        controladorAtivosAdm = loaderAtivosAdm.getController();
+        adicionarMudancaTela(controladorAtivosAdm);
 
         stage.setScene(telaInicial01);
         stage.show();
@@ -176,6 +185,10 @@ public class Programa extends Application {
             case 16:
                 stage.setScene(perfilAdmTela);
                 informarMudancaTela(16, objeto);
+                break;
+            case 17:
+                stage.setScene(ativosAdmTela);
+                informarMudancaTela(17, objeto);
                 break;
         }
     }

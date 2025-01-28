@@ -26,6 +26,7 @@ public class UsuarioAdministrador extends ContaUsuario {
                 nomeAtivo, tipoAtivo, codigo, valorAtual, valorNominal, rentabilidade, risco, liquidez, moeda, dataInicial
         );
 
+        RepositorioAtivos.getInstancia().adicionarAtivos(novoAtivo);
     }
 
     public void editarAtivo(AtivosFinanceiros ativoFin) {

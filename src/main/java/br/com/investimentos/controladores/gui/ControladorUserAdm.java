@@ -23,7 +23,7 @@ public class ControladorUserAdm {
 
     @FXML
     void botaoAtivosFinanceiros(ActionEvent event) {
-
+        Programa.trocarTela(17);
     }
 
     @FXML

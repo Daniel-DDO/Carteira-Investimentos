@@ -64,7 +64,7 @@ public class ControladorCarteiras {
     @FXML
     void botaoGerenciarCarteiras(ActionEvent event) {
         if (ControladorCarteirasUser.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
-            Programa.trocarTela(14);
+            Programa.trocarTela(15);
         } else {
             ControladorGeral.alertaErro("Visualizar carteiras",
                     "Ops! Você não tem carteiras. Crie uma para visualizá-la ou gerenciá-la.");

@@ -160,6 +160,10 @@ public class Programa extends Application {
                 stage.setScene(visualizarCarteirasTela);
                 informarMudancaTela(14, objeto);
                 break;
+            case 15:
+                stage.setScene(gerenciarCarteirasTela);
+                informarMudancaTela(15, objeto);
+                break;
         }
     }
 

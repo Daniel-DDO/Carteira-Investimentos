@@ -52,7 +52,6 @@ public class RepositorioCarteiras {
         }
     }
 
-
     public static RepositorioCarteiras getInstancia() {
         if (instancia == null) {
             instancia = new RepositorioCarteiras();

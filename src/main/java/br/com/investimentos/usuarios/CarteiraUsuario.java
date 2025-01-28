@@ -104,4 +104,9 @@ public class CarteiraUsuario implements Serializable {
     public String toString() {
         return "CARTEIRA: "+nomeCarteira+"\n";
     }
+
+    public String exibirInformacoesCarteira() {
+        return "Nome da carteira: "+nomeCarteira+"\nID carteira: "+carteiraID+"\nSaldo disponível: "+saldoDisponivel+"\nData de criação"+dataCriacao
+                +"\nObjetivo de investimento: "+objetivoInvestimento+"\nTipo investidor: "+enumTipoInvestidor+"\n";
+    }
 }

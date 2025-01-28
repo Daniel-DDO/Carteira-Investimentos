@@ -69,12 +69,13 @@ public class ControladorCarteiras {
     @FXML
     void botaoVisualizarCarteiras(ActionEvent event) {
         ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
+        initialize();
         Programa.trocarTela(14);
     }
 
     @FXML
     void confirmarBotao052(ActionEvent event) {
-        visualizarCarteirasCbox();
+
     }
 
 
@@ -132,60 +133,4 @@ public class ControladorCarteiras {
         Programa.trocarTela(8);
     }
 
-
-    //Tela 05-2-2
-
-    public void listarCarteirasCbox() {
-        if (cboxSelecionarCarteira != null) {
-            cboxSelecionarCarteira.getItems().addAll(ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum()));
-        }
-    }
-
-    public void visualizarCarteirasCbox() {
-        ArrayList<CarteiraUsuario> carteiraUsuarios = ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
-
-        boolean temCarteira = false;
-
-        for (int i = 0; i < carteiraUsuarios.size(); i++) {
-            if (carteiraUsuarios.get(i) != null) {
-                if (carteiraUsuarios.get(i).getUsuario().getNomeUsuario().equals(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario())) {
-                    System.out.println(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario());
-                    System.out.println(carteiraUsuarios.get(i).getUsuario().getNomeUsuario());
-
-                    for (int a = 0; a < carteiraUsuarios.size(); a++) {
-                        if (carteiraUsuarios.get(a) != null) {
-                            if (carteiraUsuarios.get(a).getUsuario().getNomeUsuario().equals(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario())) {
-                                System.out.println(carteiraUsuarios.get(a));
-                            }
-                        }
-                    }
-                    temCarteira = true;
-
-                    listarCarteirasCbox();
-                }
-            }
-        }
-
-        if (!temCarteira) {
-            System.out.println(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario()+" não tem carteiras.");
-        }
-    }
-
-    @FXML
-    private ComboBox<CarteiraUsuario> cboxSelecionarCarteira;
-
-    @FXML
-    private Label infoCarteiraSelecionadaLabel;
-
-    @FXML
-    void selecionarCarteiraCbox(ActionEvent event) {
-        infoCarteiraSelecionadaLabel.setText("Selecionado");
-    }
-
-    @FXML
-    public void voltarBotao0522(ActionEvent actionEvent) {
-        cboxSelecionarCarteira.getItems().clear();
-        cboxSelecionarCarteira.setPromptText("Selecione uma carteira");
-        voltarBotao052(actionEvent);
-    }
 }

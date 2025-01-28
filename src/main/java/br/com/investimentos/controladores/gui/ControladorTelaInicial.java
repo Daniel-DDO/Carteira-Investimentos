@@ -42,8 +42,6 @@ public class ControladorTelaInicial {
             enumTipoConta = EnumTipoConta.COMUM;
         }
 
-        RepositorioContaUsuario repositorioContaUsuario = RepositorioContaUsuario.getInstancia();
-
         try {
             ContaUsuario contaUsuarioLogada = ControladorContaUsuario.getInstancia().obterContaParaLogar(emailUsuario, senha, enumTipoConta);
 
@@ -83,6 +81,5 @@ public class ControladorTelaInicial {
     }
 
     public void configurarPosLogin() {
-        ControladorCarteiras.getInstancia().visualizarCarteirasCbox();
     }
 }

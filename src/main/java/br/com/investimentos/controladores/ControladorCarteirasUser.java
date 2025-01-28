@@ -53,4 +53,19 @@ public class ControladorCarteirasUser {
         }
     }
 
+    public ArrayList<CarteiraUsuario> exibirCarteiraSelecionada(UsuarioComum usuario, long idCarteira) {
+        CarteiraUsuario[] carteiras = RepositorioCarteiras.getInstancia().getCarteiras();
+        ArrayList<CarteiraUsuario> carteiraSelecionada = new ArrayList<>();
+
+        for (int i = 0; i < RepositorioCarteiras.getInstancia().getTamanho(); i++) {
+            if (carteiras[i] != null && carteiras[i].getUsuario().getNomeUsuario().equals(usuario.getNomeUsuario())) {
+                if (carteiras[i].getCarteiraID() == idCarteira) {
+                    carteiraSelecionada.add(carteiras[i]);
+                }
+            }
+        }
+
+        return carteiraSelecionada;
+    }
+
 }

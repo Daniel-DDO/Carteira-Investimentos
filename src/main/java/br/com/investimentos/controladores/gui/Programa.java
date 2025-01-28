@@ -1,7 +1,9 @@
 package br.com.investimentos.controladores.gui;
 
 import br.com.investimentos.controladores.UsuarioLogado;
+import br.com.investimentos.controladores.gui.comum.ControladorCarteiras;
 import br.com.investimentos.controladores.gui.comum.ControladorPerfil;
+import br.com.investimentos.controladores.gui.comum.ControladorVerCarteiras;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -73,16 +75,19 @@ public class Programa extends Application {
         Parent fxmlTelaRenda = FXMLLoader.load(getClass().getResource(localFxml+"05-5-renda.fxml"));
         rendaTela = new Scene(fxmlTelaRenda, 1000, 600);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(localFxml+"05-6-perfil-comum.fxml"));
-        Parent fxmlTelaPerfilComum = loader.load();
+        FXMLLoader loaderPerfilComum = new FXMLLoader(getClass().getResource(localFxml+"05-6-perfil-comum.fxml"));
+        Parent fxmlTelaPerfilComum = loaderPerfilComum.load();
         perfilComumTela = new Scene(fxmlTelaPerfilComum, 1000, 600);
-        controladorPerfil = loader.getController();
+        controladorPerfil = loaderPerfilComum.getController();
 
         Parent fxmlCriarCarteira = FXMLLoader.load(getClass().getResource(localFxml+"05-2-1-criar-carteira.fxml"));
         criarCarteiraTela = new Scene(fxmlCriarCarteira, 1000, 600);
 
-        Parent fxmlVisualizarCarteiras = FXMLLoader.load(getClass().getResource(localFxml+"05-2-2-visualizar-carteiras.fxml"));
+        FXMLLoader loaderVisualizarCarteiras = new FXMLLoader(getClass().getResource(localFxml + "05-2-2-visualizar-carteiras.fxml"));
+        Parent fxmlVisualizarCarteiras = loaderVisualizarCarteiras.load();
         visualizarCarteirasTela = new Scene(fxmlVisualizarCarteiras, 1000, 600);
+        ControladorVerCarteiras controladorVerCarteiras = loaderVisualizarCarteiras.getController();
+        adicionarMudancaTela(controladorVerCarteiras);
 
         stage.setScene(telaInicial01);
         stage.show();
@@ -175,10 +180,6 @@ public class Programa extends Application {
         } else {
             //Atingiu o máximo de telas
         }
-    }
-
-    public static interface MudancaTela {
-        void mudancaTela(int novaTela, Object objeto);
     }
 
     public static void adicionarMudancaTela(MudancaTela novaTela) {

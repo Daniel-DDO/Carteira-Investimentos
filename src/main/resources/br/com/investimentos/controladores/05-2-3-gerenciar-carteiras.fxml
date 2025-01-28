@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.investimentos.controladores.gui.comum.ControladorVerCarteiras">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.investimentos.controladores.gui.comum.ControladorGerenciarCarteiras">
    <center>
       <ScrollPane prefHeight="362.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <content>
@@ -59,8 +59,8 @@
    <bottom>
       <Pane prefHeight="67.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="botaoVoltar052" layoutX="859.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#voltarBotao0522" prefHeight="35.0" prefWidth="121.0" stylesheets="@design.css" text="Voltar" textAlignment="CENTER" wrapText="true" />
-            <Button fx:id="botaoConfirmar052" layoutX="726.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#confirmarBotao052" prefHeight="35.0" prefWidth="121.0" stylesheets="@design.css" text="Confirmar" textAlignment="CENTER" wrapText="true" />
+            <Button fx:id="botaoVoltar0523" layoutX="859.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#voltarBotao0523" prefHeight="35.0" prefWidth="121.0" stylesheets="@design.css" text="Voltar" textAlignment="CENTER" wrapText="true" />
+            <Button fx:id="botaoConfirmar0523" layoutX="726.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#confirmarBotao0523" prefHeight="35.0" prefWidth="121.0" stylesheets="@design.css" text="Confirmar" textAlignment="CENTER" wrapText="true" />
          </children>
       </Pane>
    </bottom>

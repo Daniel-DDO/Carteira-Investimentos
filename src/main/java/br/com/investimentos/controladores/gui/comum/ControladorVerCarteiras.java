@@ -26,8 +26,8 @@ public class ControladorVerCarteiras implements MudancaTela {
     public Label infoCarteiraSelecionadaLabel;
 
     public void selecionarCarteiraCbox(ActionEvent actionEvent) {
-        infoCarteiraSelecionadaLabel.setText("Detalhes da carteira selecionada: "
-        );
+        infoCarteiraSelecionadaLabel.setText("Detalhes da carteira selecionada:\n\n"
+        +infoCarteira());
     }
 
     public void confirmarBotao052(ActionEvent actionEvent) {
@@ -39,6 +39,19 @@ public class ControladorVerCarteiras implements MudancaTela {
         cboxSelecionarCarteira.getItems().clear();
         cboxSelecionarCarteira.setPromptText("Selecione uma carteira");
         Programa.trocarTela(8);
+    }
+
+    public String infoCarteira() {
+        CarteiraUsuario carteiraSelecionada = cboxSelecionarCarteira.getSelectionModel().getSelectedItem();
+        String informacoes;
+
+        if (carteiraSelecionada != null) {
+            informacoes = carteiraSelecionada.exibirInformacoesCarteira();
+            infoCarteiraSelecionadaLabel.setText(informacoes);
+        } else {
+            informacoes = "Selecione uma carteira para verificar as informações.";
+        }
+        return informacoes;
     }
 
     public void visualizarCarteirasCbox() {
@@ -62,6 +75,8 @@ public class ControladorVerCarteiras implements MudancaTela {
                     temCarteira = true;
 
                     if (cboxSelecionarCarteira != null) {
+                        cboxSelecionarCarteira.getItems().clear();
+                        cboxSelecionarCarteira.setPromptText("Selecione uma carteira");
                         cboxSelecionarCarteira.getItems().addAll(carteiraUsuarios);
                     }
 

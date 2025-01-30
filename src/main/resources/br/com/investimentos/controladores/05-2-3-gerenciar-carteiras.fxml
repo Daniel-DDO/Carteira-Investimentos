@@ -60,7 +60,10 @@
                                     <TableView prefHeight="287.0" prefWidth="354.0" GridPane.rowIndex="1">
                                       <columns>
                                         <TableColumn prefWidth="75.0" text="Código ação" />
-                                        <TableColumn prefWidth="75.0" text="Preço atual" />
+                                        <TableColumn prefWidth="81.0" text="Preço atual" />
+                                          <TableColumn prefWidth="81.0" text="Abertura" />
+                                          <TableColumn prefWidth="65.0" text="Maior" />
+                                          <TableColumn prefWidth="73.0" text="Menor" />
                                       </columns>
                                     </TableView>
                                  </children>
@@ -83,8 +86,9 @@
                                     </Label>
                                     <TableView prefHeight="287.0" prefWidth="354.0" GridPane.rowIndex="1">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="Código ação" />
-                                          <TableColumn prefWidth="75.0" text="Preço atual" />
+                                          <TableColumn prefWidth="133.0" text="Código ação" />
+                                          <TableColumn prefWidth="121.0" text="Quantidade" />
+                                          <TableColumn prefWidth="113.0" text="Preço médio" />
                                        </columns>
                                     </TableView>
                                  </children>

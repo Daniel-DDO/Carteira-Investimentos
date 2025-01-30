@@ -49,9 +49,13 @@ public class ControladorAtivosAdm implements MudancaTela {
     private TextField valorNominalField;
 
     @FXML
+    private TextField quantidadeAtivosField;
+
+    @FXML
     void confirmarBotao061(ActionEvent event) {
         String nomeAtivo = nomeAtivoField.getText();
         String tipoAtivo = tipoAtivoField.getText();
+        int quantidadeAtivos = Integer.parseInt(quantidadeAtivosField.getText());
         double rentabilidade = Double.parseDouble(rentabilidadeField.getText());
         double riscoFinanceiro = Double.parseDouble(riscoFinanceiroField.getText());
         double valorAtual = Double.parseDouble((valorAtualField.getText()));
@@ -63,6 +67,8 @@ public class ControladorAtivosAdm implements MudancaTela {
         } else if (ControladorAtivosFinanceiros.getInstancia().verificarNomeAtivo(nomeAtivo)) {
             ControladorAtivosFinanceiros.getInstancia().verificarNomeAtivo(nomeAtivo);
         } else if (tipoAtivo.trim().isEmpty()) {
+            ControladorGeral.alertaErro("Erro", "Erro");
+        } else if (quantidadeAtivos == 0) {
             ControladorGeral.alertaErro("Erro", "Erro");
         } else if (riscoFinanceiro == 0) {
             ControladorGeral.alertaErro("Erro", "Erro");
@@ -76,7 +82,7 @@ public class ControladorAtivosAdm implements MudancaTela {
 
         } else {
             LocalDate dataInicial = LocalDate.now();
-            ControladorAtivosFinanceiros.getInstancia().criarNovoAtivo(nomeAtivo, tipoAtivo, "código", valorAtual, valorNominal, rentabilidade, riscoFinanceiro, liquidez, "Real Brasileiro", dataInicial);
+            ControladorAtivosFinanceiros.getInstancia().criarNovoAtivo(nomeAtivo, tipoAtivo, "código", valorAtual, valorNominal, rentabilidade, riscoFinanceiro, liquidez, "Real Brasileiro", dataInicial, quantidadeAtivos);
         }
     }
 

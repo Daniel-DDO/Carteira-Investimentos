@@ -21,9 +21,9 @@ public class UsuarioAdministrador extends ContaUsuario {
     }
 
     public static AtivosFinanceiros criarAtivo(String nomeAtivo, String tipoAtivo, String codigo, double valorAtual, double valorNominal,
-                                               double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial) {
+                                               double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial, int quantidadeDisponivel) {
         AtivosFinanceiros novoAtivo = new AtivosFinanceiros(
-                nomeAtivo, tipoAtivo, codigo, valorAtual, valorNominal, rentabilidade, risco, liquidez, moeda, dataInicial
+                nomeAtivo, tipoAtivo, codigo, valorAtual, valorNominal, rentabilidade, risco, liquidez, moeda, dataInicial, quantidadeDisponivel
         );
 
         return novoAtivo;

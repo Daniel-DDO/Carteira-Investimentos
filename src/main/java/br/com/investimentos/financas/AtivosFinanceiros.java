@@ -25,7 +25,7 @@ public class AtivosFinanceiros implements Serializable {
 
     }
 
-    public AtivosFinanceiros(String nomeAtivo, String tipoAtivo, String codigo, double valorAtual, double valorNominal, double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial) {
+    public AtivosFinanceiros(String nomeAtivo, String tipoAtivo, String codigo, double valorAtual, double valorNominal, double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial, int quantidadeDisponivel) {
         this.nomeAtivo = nomeAtivo;
         this.tipoAtivo = tipoAtivo;
         this.codigo = codigo;
@@ -36,6 +36,7 @@ public class AtivosFinanceiros implements Serializable {
         this.liquidez = liquidez;
         this.moeda = moeda;
         this.dataInicial = dataInicial;
+        this.quantidadeDisponivel = quantidadeDisponivel;
     }
 
     @Override

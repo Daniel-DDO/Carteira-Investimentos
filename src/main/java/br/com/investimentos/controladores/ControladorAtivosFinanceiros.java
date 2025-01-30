@@ -18,8 +18,8 @@ public class ControladorAtivosFinanceiros {
         return instancia;
     }
 
-    public void criarNovoAtivo(String nomeAtivo, String tipoAtivo, String codigo, double valorAtual, double valorNominal, double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial) {
-        AtivosFinanceiros novoAtivo = UsuarioAdministrador.criarAtivo(nomeAtivo, tipoAtivo, codigo, valorAtual, valorNominal, rentabilidade, risco, liquidez, moeda, dataInicial);
+    public void criarNovoAtivo(String nomeAtivo, String tipoAtivo, String codigo, double valorAtual, double valorNominal, double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial, int quantidadeDisponivel) {
+        AtivosFinanceiros novoAtivo = UsuarioAdministrador.criarAtivo(nomeAtivo, tipoAtivo, codigo, valorAtual, valorNominal, rentabilidade, risco, liquidez, moeda, dataInicial, quantidadeDisponivel);
         RepositorioAtivos.getInstancia().adicionarAtivos(novoAtivo);
         RepositorioAtivos.getInstancia().exibirTodosAtivos();
     }

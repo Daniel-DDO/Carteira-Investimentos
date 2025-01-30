@@ -1,7 +1,9 @@
 package br.com.investimentos.controladores;
 
+import br.com.investimentos.excecoes.AtivoJaExisteException;
 import br.com.investimentos.financas.AtivosFinanceiros;
 import br.com.investimentos.repositorios.RepositorioAtivos;
+import br.com.investimentos.usuarios.UsuarioAdministrador;
 
 import java.time.LocalDate;
 
@@ -17,9 +19,25 @@ public class ControladorAtivosFinanceiros {
     }
 
     public void criarNovoAtivo(String nomeAtivo, String tipoAtivo, String codigo, double valorAtual, double valorNominal, double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial) {
-        AtivosFinanceiros novoAtivo = new AtivosFinanceiros(nomeAtivo, tipoAtivo, codigo, valorAtual, valorNominal, rentabilidade, risco, liquidez, moeda, dataInicial);
+        AtivosFinanceiros novoAtivo = UsuarioAdministrador.criarAtivo(nomeAtivo, tipoAtivo, codigo, valorAtual, valorNominal, rentabilidade, risco, liquidez, moeda, dataInicial);
         RepositorioAtivos.getInstancia().adicionarAtivos(novoAtivo);
         RepositorioAtivos.getInstancia().exibirTodosAtivos();
+    }
+
+    public boolean verificarNomeAtivo(String nomeAtivo) throws AtivoJaExisteException {
+        AtivosFinanceiros[] ativosFinanceiros = RepositorioAtivos.getInstancia().getAtivosFinanceiros();
+        boolean nomeAtivoIgual = false;
+
+        for (int i = 0; i < RepositorioAtivos.getInstancia().getTamanho(); i++) {
+            if (ativosFinanceiros[i] != null) {
+                if (ativosFinanceiros[i].getNomeAtivo().equals(nomeAtivo)) {
+                    nomeAtivoIgual = true;
+                    throw new AtivoJaExisteException(nomeAtivo);
+                }
+            }
+        }
+
+        return nomeAtivoIgual;
     }
 
 }

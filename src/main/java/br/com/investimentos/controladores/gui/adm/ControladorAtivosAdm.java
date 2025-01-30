@@ -59,7 +59,9 @@ public class ControladorAtivosAdm implements MudancaTela {
         double liquidez = Double.parseDouble((liquidezField.getText()));
 
         if (nomeAtivo.isEmpty()) {
-
+            ControladorGeral.alertaErro("Nome ativo", "O nome do ativo não pode ser vazio.");
+        } else if (ControladorAtivosFinanceiros.getInstancia().verificarNomeAtivo(nomeAtivo)) {
+            ControladorAtivosFinanceiros.getInstancia().verificarNomeAtivo(nomeAtivo);
         } else if (rentabilidade == 0) {
             ControladorGeral.alertaErro("Erro", "Erro");
         } else if (riscoFinanceiro == 0) {

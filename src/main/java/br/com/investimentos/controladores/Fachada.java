@@ -10,6 +10,12 @@ public class Fachada {
         return instancia;
     }
 
+    private ControladorArquivos controladorArquivos;
+    private ControladorAtivosFinanceiros controladorAtivosFinanceiros;
+    private ControladorCarteirasUser controladorCarteirasUser;
+    private ControladorContaUsuario controladorContaUsuario;
+
+
     /*
     private Controle controle;
 

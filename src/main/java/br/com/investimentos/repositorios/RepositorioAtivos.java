@@ -17,9 +17,9 @@ public class RepositorioAtivos {
         return instancia;
     }
 
-    public RepositorioAtivos() {
+    private RepositorioAtivos() {
         AtivosFinanceiros[] ativosCarregados = ControladorArquivos.lerAtivos();
-        if (ativosFinanceiros != null) {
+        if (ativosCarregados != null) {
             for (AtivosFinanceiros ativo : ativosCarregados) {
                 if (ativo != null) {
                     ativosFinanceiros[posicao] = ativo;
@@ -33,7 +33,7 @@ public class RepositorioAtivos {
         if (posicao < tamanho) {
             ativosFinanceiros[posicao] = ativo;
             posicao++;
-            ControladorArquivos.escreverAtivos(ativo);
+            ControladorArquivos.escreverAtivo(ativo);
         }
     }
 
@@ -49,17 +49,18 @@ public class RepositorioAtivos {
         return ativoEncontrado;
     }
 
-    public void excluirAtivos(AtivosFinanceiros  ativo) {
+    public void excluirAtivos(AtivosFinanceiros ativo) {
         for (int i = 0; i < tamanho; i++) {
             if (ativosFinanceiros[i] != null) {
                 if (ativosFinanceiros[i].equals(ativo)) {
                     ativosFinanceiros[i] = ativosFinanceiros[posicao-1];
                     ativosFinanceiros[posicao-1] = null;
                     posicao--;
+                    break;
                 }
             }
         }
-        ControladorArquivos.escreverAtivos(ativo);
+        ControladorArquivos.atualizarAtivos(ativosFinanceiros);
     }
 
     public void exibirTodosAtivos() {

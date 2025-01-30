@@ -20,13 +20,13 @@ public class UsuarioAdministrador extends ContaUsuario {
         super(nome, nomeUsuario, email, senha, telefone, cpf, EnumTipoConta.ADM);
     }
 
-    public void criarAtivo(String nomeAtivo, String tipoAtivo, String codigo, double valorAtual, double valorNominal,
-                           double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial) {
+    public static AtivosFinanceiros criarAtivo(String nomeAtivo, String tipoAtivo, String codigo, double valorAtual, double valorNominal,
+                                               double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial) {
         AtivosFinanceiros novoAtivo = new AtivosFinanceiros(
                 nomeAtivo, tipoAtivo, codigo, valorAtual, valorNominal, rentabilidade, risco, liquidez, moeda, dataInicial
         );
 
-        RepositorioAtivos.getInstancia().adicionarAtivos(novoAtivo);
+        return novoAtivo;
     }
 
     public void editarAtivo(AtivosFinanceiros ativoFin) {

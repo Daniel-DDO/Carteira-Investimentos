@@ -146,8 +146,7 @@ public class ControladorArquivos {
 
 
     //Métodos de ativos
-
-    public static void escreverAtivos(AtivosFinanceiros ativo) {
+    public static void escreverAtivo(AtivosFinanceiros ativo) {
         AtivosFinanceiros[] ativosFinanceiros = lerAtivos();
 
         if (ativosFinanceiros == null) {
@@ -183,7 +182,7 @@ public class ControladorArquivos {
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ativosArquivo))) {
             Object obj = ois.readObject();
-            if (obj instanceof CarteiraUsuario[]) {
+            if (obj instanceof AtivosFinanceiros[]) {
                 return (AtivosFinanceiros[]) obj;
             } else {
                 return new AtivosFinanceiros[tamanho];
@@ -198,15 +197,35 @@ public class ControladorArquivos {
         AtivosFinanceiros[] ativosAtualizados = new AtivosFinanceiros[ativos.length];
         int posicaoLivre = 0;
 
-        for (int i = 0; i < ativos.length; i++) {
-            if (ativos[i] != null) {
-                ativosAtualizados[posicaoLivre] =  ativos[i];
+        for (AtivosFinanceiros ativo : ativos) {
+            if (ativo != null) {
+                ativosAtualizados[posicaoLivre] = ativo;
                 posicaoLivre++;
             }
         }
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ATIVOS_ARQUIVO))) {
             oos.writeObject(ativosAtualizados);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //ideia
+
+    public static void atualizarArquivo(Object[] objects, final String ARQUIVO) {
+        Object[] objectsAtualizados = new Object[objects.length];
+        int posicaoLivre = 0;
+
+        for (Object object : objects) {
+            if (object != null) {
+                objectsAtualizados[posicaoLivre] =  object;
+                posicaoLivre++;
+            }
+        }
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARQUIVO))) {
+            oos.writeObject(objectsAtualizados);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -16,6 +16,7 @@ public class AtivosFinanceiros implements Serializable {
     private double liquidez;
     private String moeda;
     private LocalDate dataInicial;
+    private int quantidadeDisponivel;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -39,18 +40,17 @@ public class AtivosFinanceiros implements Serializable {
 
     @Override
     public String toString() {
-        return "AtivosFinanceiros{" +
-                "nomeAtivo= " + nomeAtivo + '\'' +
-                ", tipoAtivo= " + tipoAtivo + '\'' +
-                ", codigo= " + codigo + '\'' +
-                ", valorAtual= " + valorAtual +
-                ", valorNominal=" + valorNominal +
-                ", rentabilidade= " + rentabilidade +
-                ", risco= " + risco +
-                ", liquidez= " + liquidez +
-                ", moeda= " + moeda + '\'' +
-                ", dataInicial= " + dataInicial +
-                '}';
+        return "ATIVO FINANCEIRO"+"\nNome ativo: "+nomeAtivo
+                +"\nTipo ativo: "+tipoAtivo
+                +"\nCódigo ativo: "+codigo
+                +"\nValor atual: "+valorAtual
+                +"\nValor nominal: "+valorNominal
+                +"\nRentabilidade: "+rentabilidade
+                +"\nRisco: "+risco
+                +"\nLiquidez: "+liquidez
+                +"\nMoeda: "+moeda
+                +"\nData inicial: "+dataInicial
+                +"\nQuant. Disponível: "+quantidadeDisponivel+"\n";
     }
 
     public String getNomeAtivo() {
@@ -131,5 +131,13 @@ public class AtivosFinanceiros implements Serializable {
 
     public void setDataInicial(LocalDate dataInicial) {
         this.dataInicial = dataInicial;
+    }
+
+    public int getQuantidadeDisponivel() {
+        return quantidadeDisponivel;
+    }
+
+    public void setQuantidadeDisponivel(int quantidadeDisponivel) {
+        this.quantidadeDisponivel = quantidadeDisponivel;
     }
 }

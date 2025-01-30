@@ -58,15 +58,15 @@ public class ControladorAtivosAdm implements MudancaTela {
         double valorNominal = Double.parseDouble((valorNominalField.getText()));
         double liquidez = Double.parseDouble((liquidezField.getText()));
 
-        if (nomeAtivo.isEmpty()) {
+        if (nomeAtivo.trim().isEmpty()) {
             ControladorGeral.alertaErro("Nome ativo", "O nome do ativo não pode ser vazio.");
         } else if (ControladorAtivosFinanceiros.getInstancia().verificarNomeAtivo(nomeAtivo)) {
             ControladorAtivosFinanceiros.getInstancia().verificarNomeAtivo(nomeAtivo);
-        } else if (rentabilidade == 0) {
+        } else if (tipoAtivo.trim().isEmpty()) {
             ControladorGeral.alertaErro("Erro", "Erro");
         } else if (riscoFinanceiro == 0) {
             ControladorGeral.alertaErro("Erro", "Erro");
-        } else if (tipoAtivo.isEmpty()) {
+        } else if (rentabilidade == 0) {
             ControladorGeral.alertaErro("Erro", "Erro");
         } else if (valorAtual == 0) {
             ControladorGeral.alertaErro("Erro", "Erro");
@@ -78,6 +78,10 @@ public class ControladorAtivosAdm implements MudancaTela {
             LocalDate dataInicial = LocalDate.now();
             ControladorAtivosFinanceiros.getInstancia().criarNovoAtivo(nomeAtivo, tipoAtivo, "código", valorAtual, valorNominal, rentabilidade, riscoFinanceiro, liquidez, "Real Brasileiro", dataInicial);
         }
+    }
+
+    private void converterStringDouble() {
+
     }
 
     @FXML

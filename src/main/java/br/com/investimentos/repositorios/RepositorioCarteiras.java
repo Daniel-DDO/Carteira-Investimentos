@@ -3,14 +3,16 @@ package br.com.investimentos.repositorios;
 import br.com.investimentos.controladores.ControladorArquivos;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 
+import java.io.*;
+
 public class RepositorioCarteiras {
     private static RepositorioCarteiras instancia;
-    private int tamanho = 1000; //quantidade máxima de carteiras
+    private static int tamanho = 1000; //quantidade máxima de carteiras
     private CarteiraUsuario[] carteiras = new CarteiraUsuario[tamanho];
     private int posicao = 0;
 
     private RepositorioCarteiras() {
-        CarteiraUsuario[] carteirasCarregadas = ControladorArquivos.lerCarteira();
+        CarteiraUsuario[] carteirasCarregadas = lerCarteira();
         if (carteirasCarregadas != null) {
             for (CarteiraUsuario carteiraUsuario : carteirasCarregadas) {
                 if (carteiraUsuario != null) {
@@ -25,7 +27,7 @@ public class RepositorioCarteiras {
         if (posicao < tamanho) {
             carteiras[posicao] = carteira;
             posicao++;
-            ControladorArquivos.escreverCarteira(carteira);
+            escreverCarteira(carteira);
         } else {
 
         }
@@ -50,7 +52,7 @@ public class RepositorioCarteiras {
                 break;
             }
         }
-        ControladorArquivos.atualizarCarteiras(carteiras);
+        atualizarCarteiras(carteiras);
     }
 
     public void atualizarCarteira(CarteiraUsuario carteiraUsuario) {
@@ -60,7 +62,7 @@ public class RepositorioCarteiras {
                 break;
             }
         }
-        ControladorArquivos.atualizarCarteiras(carteiras);
+        atualizarCarteiras(carteiras);
     }
 
     public static RepositorioCarteiras getInstancia() {
@@ -96,5 +98,73 @@ public class RepositorioCarteiras {
 
     public void setPosicao(int posicao) {
         this.posicao = posicao;
+    }
+
+    //Arquivos
+    private static final String CARTEIRAS_ARQUIVO = "Carteiras.dat";
+
+    public static void escreverCarteira(CarteiraUsuario carteira) {
+        CarteiraUsuario[] carteiras = lerCarteira();
+
+        if (carteiras == null) {
+            carteiras = new CarteiraUsuario[tamanho];
+        }
+
+        int posicaoLivre = -1;
+        for (int i = 0; i < carteiras.length; i++) {
+            if (carteiras[i] == null) {
+                posicaoLivre = i;
+                break;
+            }
+        }
+
+        if (posicaoLivre != -1) {
+            carteiras[posicaoLivre] = carteira;
+
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CARTEIRAS_ARQUIVO))) {
+                oos.writeObject(carteiras);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Array das carteiras está cheio.");
+        }
+    }
+
+    public static CarteiraUsuario[] lerCarteira() {
+        File carteiraArquivo = new File(CARTEIRAS_ARQUIVO);
+        if (!carteiraArquivo.exists()) {
+            return new CarteiraUsuario[tamanho];
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(carteiraArquivo))) {
+            Object obj = ois.readObject();
+            if (obj instanceof CarteiraUsuario[]) {
+                return (CarteiraUsuario[]) obj;
+            } else {
+                return new CarteiraUsuario[tamanho];
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return new CarteiraUsuario[tamanho];
+        }
+    }
+
+    public static void atualizarCarteiras(CarteiraUsuario[] carteiras) {
+        CarteiraUsuario[] carteirasAtualizadas = new CarteiraUsuario[carteiras.length];
+        int posicaoLivre = 0;
+
+        for (int i = 0; i < carteiras.length; i++) {
+            if (carteiras[i] != null) {
+                carteirasAtualizadas[posicaoLivre] =  carteiras[i];
+                posicaoLivre++;
+            }
+        }
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CARTEIRAS_ARQUIVO))) {
+            oos.writeObject(carteirasAtualizadas);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

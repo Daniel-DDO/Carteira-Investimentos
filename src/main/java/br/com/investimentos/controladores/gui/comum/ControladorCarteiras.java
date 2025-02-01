@@ -4,19 +4,21 @@ import br.com.investimentos.controladores.ControladorCarteirasUser;
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.controladores.gui.Programa;
-import br.com.investimentos.repositorios.RepositorioCarteiras;
-import br.com.investimentos.usuarios.CarteiraUsuario;
 import br.com.investimentos.usuarios.EnumTipoInvestidor;
-import br.com.investimentos.usuarios.UsuarioComum;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.animation.PauseTransition;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+
+import static br.com.investimentos.controladores.gui.Programa.trocarTela;
 
 public class ControladorCarteiras {
 
@@ -53,18 +55,18 @@ public class ControladorCarteiras {
 
     @FXML
     void voltarBotao05(ActionEvent event) {
-        Programa.trocarTela(5);
+        trocarTela(5);
     }
 
     @FXML
     void botaoCriarCarteira(ActionEvent event) {
-        Programa.trocarTela(13);
+        trocarTela(13);
     }
 
     @FXML
     void botaoGerenciarCarteiras(ActionEvent event) {
         if (ControladorCarteirasUser.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
-            Programa.trocarTela(15);
+            trocarTela(15);
         } else {
             ControladorGeral.alertaErro("Visualizar carteiras",
                     "Ops! Você não tem carteiras. Crie uma para visualizá-la ou gerenciá-la.");
@@ -74,7 +76,7 @@ public class ControladorCarteiras {
     @FXML
     void botaoVisualizarCarteiras(ActionEvent event) {
         if (ControladorCarteirasUser.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
-            Programa.trocarTela(14);
+            trocarTela(14);
         } else {
             ControladorGeral.alertaErro("Visualizar carteiras",
                     "Ops! Você não tem carteiras. Crie uma para visualizá-la ou gerenciá-la.");
@@ -132,7 +134,7 @@ public class ControladorCarteiras {
             objetivoCarteiraField.clear();
             saldoInicialField.clear();
             tipoInvestidorComboBox.getItems().clear();
-            Programa.trocarTela(8);
+            trocarTela(8);
         }
     }
 
@@ -143,7 +145,7 @@ public class ControladorCarteiras {
 
     @FXML
     void voltarBotao052(ActionEvent event) {
-        Programa.trocarTela(8);
+        trocarTela(8);
     }
 
 }

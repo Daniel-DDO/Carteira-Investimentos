@@ -3,14 +3,16 @@ package br.com.investimentos.repositorios;
 import br.com.investimentos.controladores.ControladorArquivos;
 import br.com.investimentos.usuarios.ContaUsuario;
 
+import java.io.*;
+
 public class RepositorioContaUsuario {
     private static RepositorioContaUsuario instancia;
-    private int tamanho = 100;
+    private static int tamanho = 100;
     private ContaUsuario[] contaUsuarios = new ContaUsuario[tamanho];
     private int posicao = 0;
 
     private RepositorioContaUsuario() {
-        ContaUsuario[] contasCarregadas = ControladorArquivos.lerDoArquivo();
+        ContaUsuario[] contasCarregadas = lerDoArquivo();
         if (contasCarregadas != null) {
             for (ContaUsuario contaUsuario : contasCarregadas) {
                 if (contaUsuario != null) {
@@ -25,7 +27,7 @@ public class RepositorioContaUsuario {
         if (posicao < tamanho) {
             contaUsuarios[posicao] = novaContaUsuario;
             posicao++;
-            ControladorArquivos.escreverNoArquivo(novaContaUsuario);
+            escreverNoArquivo(novaContaUsuario);
         } else {
             System.err.println("Array de contas está cheio.");
         }
@@ -56,7 +58,7 @@ public class RepositorioContaUsuario {
                 }
             }
         }
-        ControladorArquivos.atualizarContas(contaUsuarios);
+        atualizarContas(contaUsuarios);
     }
 
     public void atualizarContas(ContaUsuario contaUsuario) {
@@ -68,7 +70,7 @@ public class RepositorioContaUsuario {
                 }
             }
         }
-        ControladorArquivos.atualizarContas(contaUsuarios);
+        atualizarContas(contaUsuarios);
     }
 
     public ContaUsuario[] getContas() {
@@ -104,5 +106,69 @@ public class RepositorioContaUsuario {
 
     public static void setInstancia(RepositorioContaUsuario instancia) {
         RepositorioContaUsuario.instancia = instancia;
+    }
+
+    //Arquivos
+    private static final String CONTAS_ARQUIVO = "Contas.dat";
+
+    public static void escreverNoArquivo(ContaUsuario contaUsuario) {
+        ContaUsuario[] contaUsuarios = lerDoArquivo();
+
+        if (contaUsuarios == null) {
+            contaUsuarios = new ContaUsuario[tamanho];
+        }
+
+        int posicaoLivre = -1;
+        for (int i = 0; i < contaUsuarios.length; i++) {
+            if (contaUsuarios[i] == null) {
+                posicaoLivre = i;
+                break;
+            }
+        }
+
+        if (posicaoLivre != -1) {
+            contaUsuarios[posicaoLivre] = contaUsuario;
+
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CONTAS_ARQUIVO))) {
+                oos.writeObject(contaUsuarios);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Array de contas está cheio.");
+        }
+
+    }
+
+    public static void atualizarContas(ContaUsuario[] contaUsuarios) {
+        ContaUsuario[] contasAtualizadas = new ContaUsuario[contaUsuarios.length];
+        int posicaoLivre = 0;
+
+        for (int i = 0; i < contaUsuarios.length; i++) {
+            if (contaUsuarios[i] != null) {
+                contasAtualizadas[posicaoLivre] = contaUsuarios[i];
+                posicaoLivre++;
+            }
+        }
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CONTAS_ARQUIVO))) {
+            oos.writeObject(contasAtualizadas);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ContaUsuario[] lerDoArquivo() {
+        File arquivo = new File(CONTAS_ARQUIVO);
+        if (!arquivo.exists()) {
+            return new ContaUsuario[tamanho];
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
+            return (ContaUsuario[]) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return new ContaUsuario[tamanho];
+        }
     }
 }

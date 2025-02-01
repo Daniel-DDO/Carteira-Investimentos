@@ -20,7 +20,7 @@ public class Main extends Programa {
     public static void main(String[] args) {
         System.out.println("Carteira de Investimentos");
 
-        RepositorioAtivos.getInstancia().exibirTodosAtivos();
+        //RepositorioAtivos.getInstancia().exibirTodosAtivos();
         launch();
 
         //Daqui pra frente tudo é apenas para depuração e testes

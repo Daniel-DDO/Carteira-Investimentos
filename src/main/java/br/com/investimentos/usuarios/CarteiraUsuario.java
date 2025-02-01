@@ -117,4 +117,9 @@ public class CarteiraUsuario implements Serializable {
         return "Nome da carteira: "+nomeCarteira+"\nID carteira: "+carteiraID+"\nSaldo disponível: R$ "+saldoDisponivel+"\nData de criação: "+dataCriacao
                 +"\nObjetivo de investimento: "+objetivoInvestimento+"\nTipo investidor: "+enumTipoInvestidor+"\n";
     }
+
+    public String exibirNoGerenciarCarteiras() {
+        return "Carteira: "+nomeCarteira+" ID Carteira: "+carteiraID+
+                "\nSaldo disponível: R$ "+saldoDisponivel;
+    }
 }

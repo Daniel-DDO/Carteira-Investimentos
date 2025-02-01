@@ -16,6 +16,13 @@ import java.util.ArrayList;
 
 public class ControladorVerCarteiras implements MudancaTela {
 
+    @Override
+    public void mudancaTela(int novaTela, Object objeto) {
+        if (novaTela == 14) {
+            inicializarComboBox();
+        }
+    }
+
     @FXML
     public Button botaoVoltar052;
     @FXML
@@ -89,14 +96,7 @@ public class ControladorVerCarteiras implements MudancaTela {
         }
     }
 
-    @Override
-    public void mudancaTela(int novaTela, Object objeto) {
-        if (novaTela == 14) {
-            inicializarComboBox();
-        }
-    }
-
-    private void inicializarComboBox() {
+    public void inicializarComboBox() {
         if (UsuarioLogado.getInstancia().getUsuarioComum() != null) {
             cboxSelecionarCarteira.getItems().clear();
             visualizarCarteirasCbox();

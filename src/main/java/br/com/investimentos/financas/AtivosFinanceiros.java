@@ -9,7 +9,11 @@ public class AtivosFinanceiros implements Serializable {
     private String nomeAtivo;
     private String tipoAtivo;
     private String codigo;
-    private double valorAtual;
+    private double precoAtual;
+    private double precoMedio;
+    private double precoAbertura;
+    private double maiorPreco;
+    private double menorPreco;
     private double valorNominal;
     private double rentabilidade;
     private double risco;
@@ -25,11 +29,11 @@ public class AtivosFinanceiros implements Serializable {
 
     }
 
-    public AtivosFinanceiros(String nomeAtivo, String tipoAtivo, String codigo, double valorAtual, double valorNominal, double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial, int quantidadeDisponivel) {
+    public AtivosFinanceiros(String nomeAtivo, String tipoAtivo, String codigo, double precoAtual, double valorNominal, double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial, int quantidadeDisponivel) {
         this.nomeAtivo = nomeAtivo;
         this.tipoAtivo = tipoAtivo;
         this.codigo = codigo;
-        this.valorAtual = valorAtual;
+        this.precoAtual = precoAtual;
         this.valorNominal = valorNominal;
         this.rentabilidade = rentabilidade;
         this.risco = risco;
@@ -44,7 +48,7 @@ public class AtivosFinanceiros implements Serializable {
         return "ATIVO FINANCEIRO"+"\nNome ativo: "+nomeAtivo
                 +"\nTipo ativo: "+tipoAtivo
                 +"\nCódigo ativo: "+codigo
-                +"\nValor atual: "+valorAtual
+                +"\nValor atual: "+ precoAtual
                 +"\nValor nominal: "+valorNominal
                 +"\nRentabilidade: "+rentabilidade
                 +"\nRisco: "+risco
@@ -78,12 +82,12 @@ public class AtivosFinanceiros implements Serializable {
         this.codigo = codigo;
     }
 
-    public double getValorAtual() {
-        return valorAtual;
+    public double getPrecoAtual() {
+        return precoAtual;
     }
 
-    public void setValorAtual(double valorAtual) {
-        this.valorAtual = valorAtual;
+    public void setPrecoAtual(double precoAtual) {
+        this.precoAtual = precoAtual;
     }
 
     public double getValorNominal() {
@@ -140,5 +144,37 @@ public class AtivosFinanceiros implements Serializable {
 
     public void setQuantidadeDisponivel(int quantidadeDisponivel) {
         this.quantidadeDisponivel = quantidadeDisponivel;
+    }
+
+    public double getPrecoMedio() {
+        return precoMedio;
+    }
+
+    public void setPrecoMedio(double precoMedio) {
+        this.precoMedio = precoMedio;
+    }
+
+    public double getPrecoAbertura() {
+        return precoAbertura;
+    }
+
+    public void setPrecoAbertura(double precoAbertura) {
+        this.precoAbertura = precoAbertura;
+    }
+
+    public double getMaiorPreco() {
+        return maiorPreco;
+    }
+
+    public void setMaiorPreco(double maiorPreco) {
+        this.maiorPreco = maiorPreco;
+    }
+
+    public double getMenorPreco() {
+        return menorPreco;
+    }
+
+    public void setMenorPreco(double menorPreco) {
+        this.menorPreco = menorPreco;
     }
 }

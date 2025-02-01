@@ -2,6 +2,7 @@ module br.com.investimentos.controladores {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql.rowset;
+    requires com.google.gson;
 
 
     opens br.com.investimentos.controladores to javafx.fxml;

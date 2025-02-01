@@ -59,11 +59,12 @@
                                     </Label>
                                     <TableView fx:id="acoesDisponiveisTable" prefHeight="287.0" prefWidth="354.0" GridPane.rowIndex="1">
                                       <columns>
-                                        <TableColumn fx:id="codigoAcao" prefWidth="75.0" text="Código ação" />
-                                        <TableColumn fx:id="precoAtual" prefWidth="81.0" text="Preço atual" />
-                                          <TableColumn fx:id="precoAbertura" prefWidth="81.0" text="Abertura" />
-                                          <TableColumn fx:id="precoMaior" prefWidth="65.0" text="Maior" />
-                                          <TableColumn fx:id="precoMenor" prefWidth="73.0" text="Menor" />
+                                        <TableColumn fx:id="codigoAcao" prefWidth="62.0" text="Ação" />
+                                        <TableColumn fx:id="precoAtual" prefWidth="71.0" text="Preço atual" />
+                                          <TableColumn fx:id="precoAbertura" text="Abertura" />
+                                          <TableColumn fx:id="precoMaior" prefWidth="73.0" text="Maior" />
+                                          <TableColumn fx:id="precoMenor" prefWidth="89.0" text="Menor" />
+                                          <TableColumn fx:id="moedaLocal" prefWidth="89.0" text="Moeda" />
                                       </columns>
                                     </TableView>
                                  </children>

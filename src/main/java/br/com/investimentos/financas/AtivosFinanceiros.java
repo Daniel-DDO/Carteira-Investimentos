@@ -43,6 +43,15 @@ public class AtivosFinanceiros implements Serializable {
         this.quantidadeDisponivel = quantidadeDisponivel;
     }
 
+    public AtivosFinanceiros(String codigo, double precoAtual, double precoAbertura, double maiorPreco, double menorPreco, String moeda) {
+        this.codigo = codigo;
+        this.precoAtual = precoAtual;
+        this.precoAbertura = precoAbertura;
+        this.maiorPreco = maiorPreco;
+        this.menorPreco = menorPreco;
+        this.moeda = moeda;
+    }
+
     @Override
     public String toString() {
         return "ATIVO FINANCEIRO"+"\nNome ativo: "+nomeAtivo

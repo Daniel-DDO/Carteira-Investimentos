@@ -7,7 +7,12 @@ import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -80,13 +85,55 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
     @FXML
     void botaoComprar(ActionEvent event) {
-
+        abrirCompraVenda();
     }
 
     @FXML
     void botaoVender(ActionEvent event) {
+        abrirCompraVenda();
+    }
+
+    private Stage novaJanela;
+
+    public void abrirCompraVenda() {
+        if (novaJanela != null && novaJanela.isShowing()) {
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/investimentos/controladores/confirmar-compra-venda.fxml"));
+            Parent root = loader.load();
+            novaJanela = new Stage();
+            novaJanela.setTitle("Digite a quantidade:");
+
+            Scene sceneNovaJanela = new Scene(root, 400, 250);
+            novaJanela.setResizable(false);
+            novaJanela.setScene(sceneNovaJanela);
+            novaJanela.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //Tela compra ou venda
+
+    @FXML
+    private Label compraVendaLabel;
+
+    @FXML
+    private Button confirmarCompraVendaBotao;
+
+    @FXML
+    private TextField quantidadeCompVendField;
+
+    @FXML
+    void botaoConfirmarCompraVenda(ActionEvent event) {
 
     }
+
+    //final dessa tela extra
+
 
     public String infoCarteira() {
         CarteiraUsuario carteiraSelecionada = cboxSelecionarCarteira.getSelectionModel().getSelectedItem();

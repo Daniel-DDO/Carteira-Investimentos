@@ -97,6 +97,7 @@ public class RepositorioAtivos {
         this.posicao = posicao;
     }
 
+
     //Arquivos
     private static final String ATIVOS_ARQUIVO = "Ativos.dat";
 

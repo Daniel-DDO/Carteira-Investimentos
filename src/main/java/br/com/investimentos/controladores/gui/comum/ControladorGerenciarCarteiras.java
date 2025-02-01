@@ -5,6 +5,7 @@ import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.financas.AtivosFinanceiros;
+import br.com.investimentos.repositorios.RepositorioAtivos;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import com.google.gson.JsonArray;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -17,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import javafx.collections.FXCollections;
@@ -100,7 +100,8 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     @FXML
     private TableColumn<AtivosFinanceiros, String> moedaLocal;
 
-    private static final String API_KEY = "176d06fe91ded98c0dbd428b9fc1d45311bf34ea";
+    private static final String API_KEY1 = "176d06fe91ded98c0dbd428b9fc1d45311bf34ea";
+    private static final String API_KEY2 = "d24000f8cfa3e553854f164e1ffe7308eacd7be4";
     private static final String[] SYMBOLS = {
             "AAPL", "GOOGL", "AMZN"
     };
@@ -118,12 +119,15 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     };
      */
 
+    private String apiKeyEmUso = API_KEY1;
+
     @FXML
     private void carregarDadosAtivo() {
         ObservableList<AtivosFinanceiros> ativosList = FXCollections.observableArrayList();
+        AtivosFinanceiros[] ativosFinanceirosDoArquivo = RepositorioAtivos.lerAtivos();
 
         for (String symbol : SYMBOLS) {
-            String apiUrl = "https://api.tiingo.com/tiingo/daily/" + symbol + "/prices?token=" + API_KEY;
+            String apiUrl = "https://api.tiingo.com/tiingo/daily/" + symbol + "/prices?token=" + apiKeyEmUso;
 
             try {
                 URL url = new URL(apiUrl);
@@ -132,6 +136,16 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
                 int responseCode = connection.getResponseCode();
                 System.out.println("Requisitando " + symbol + " com código de resposta: " + responseCode);
+
+                if (responseCode == 429) {
+                    System.out.println("Limite de requisições atingido para " + apiKeyEmUso);
+                    apiKeyEmUso = (apiKeyEmUso.equals(API_KEY1)) ? API_KEY2 : API_KEY1;
+                    apiUrl = "https://api.tiingo.com/tiingo/daily/" + symbol + "/prices?token=" + apiKeyEmUso;
+                    connection = (HttpURLConnection) new URL(apiUrl).openConnection();
+                    connection.setRequestMethod("GET");
+                    responseCode = connection.getResponseCode();
+                    System.out.println("Tentando novamente com a chave " + apiKeyEmUso + " para " + symbol);
+                }
 
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -159,7 +173,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
                         AtivosFinanceiros ativo = new AtivosFinanceiros(symbol, precoAtual, precoAbertura, maiorPreco, menorPreco, moeda);
                         ativosList.add(ativo);
-                        System.out.println("Ativo adicionado: " + ativo.getCodigo());
+                        System.out.println("Ativo adicionado da API: " + ativo.getCodigo());
                     } else {
                         System.out.println("Sem dados para " + symbol);
                     }
@@ -172,9 +186,24 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             }
         }
 
+        if (ativosList.isEmpty()) {
+            System.out.println("Carregando dados do arquivo, já que não conseguimos dados da API.");
+            for (AtivosFinanceiros ativoArquivo : ativosFinanceirosDoArquivo) {
+                if (ativoArquivo != null) {
+                    ativosList.add(ativoArquivo);
+                    System.out.println("Ativo carregado do arquivo: " + ativoArquivo.getCodigo());
+                }
+            }
+        } else {
+            System.out.println("Atualizando o arquivo com os novos dados da API.");
+            for (AtivosFinanceiros ativo : ativosList) {
+                RepositorioAtivos.escreverAtivo(ativo);
+            }
+        }
         System.out.println("Dados carregados: " + ativosList.size());
         acoesDisponiveisTable.setItems(ativosList);
     }
+
 
     private String getMoedaPorSigla(String sigla) {
         return "USD";

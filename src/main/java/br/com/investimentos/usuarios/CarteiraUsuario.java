@@ -119,7 +119,7 @@ public class CarteiraUsuario implements Serializable {
     }
 
     public String exibirNoGerenciarCarteiras() {
-        return "Carteira: "+nomeCarteira+" ID Carteira: "+carteiraID+
+        return "Carteira: "+nomeCarteira+"  -  ID Carteira: "+carteiraID+
                 "\nSaldo disponível: R$ "+saldoDisponivel;
     }
 }

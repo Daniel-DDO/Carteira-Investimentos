@@ -17,15 +17,48 @@ public class ControladorAtivosAdm implements MudancaTela {
     @Override
     public void mudancaTela(int novaTela, Object objeto) {
         if (novaTela == 17) {
-            System.out.println("Controlador ativos adm");
+            System.out.println("Controlador ativos adm 17");
+        } else if (novaTela == 18) {
+            System.out.println("Controlador ativos adm 18");
         }
     }
+
+    //Pré-tela 6-1
 
     @FXML
     private Button botaoConfirmar061;
 
     @FXML
     private Button botaoVoltar061;
+
+    @FXML
+    private Button criarAtivoBotao;
+
+    @FXML
+    private Button gerenciarAtivosBotao;
+
+    @FXML
+    void botaoCriarAtivo(ActionEvent event) {
+        Programa.trocarTela(18);
+    }
+
+    @FXML
+    void botaoGerenciarAtivos(ActionEvent event) {
+        Programa.trocarTela(19);
+    }
+
+    @FXML
+    void confirmarBotao061(ActionEvent event) {
+
+    }
+
+    @FXML
+    void voltarBotao061(ActionEvent event) {
+        Programa.trocarTela(6);
+    }
+
+
+    //Tela 6-1-1
 
     @FXML
     private TextField liquidezField;
@@ -52,7 +85,7 @@ public class ControladorAtivosAdm implements MudancaTela {
     private TextField quantidadeAtivosField;
 
     @FXML
-    void confirmarBotao061(ActionEvent event) {
+    void confirmarBotao0611(ActionEvent event) {
         String nomeAtivo = nomeAtivoField.getText();
         String tipoAtivo = tipoAtivoField.getText();
         int quantidadeAtivos = Integer.parseInt(quantidadeAtivosField.getText());
@@ -86,12 +119,8 @@ public class ControladorAtivosAdm implements MudancaTela {
         }
     }
 
-    private void converterStringDouble() {
-
-    }
-
     @FXML
-    void voltarBotao061(ActionEvent event) {
-        Programa.trocarTela(6);
+    void voltarBotao0611(ActionEvent event) {
+        Programa.trocarTela(17);
     }
 }

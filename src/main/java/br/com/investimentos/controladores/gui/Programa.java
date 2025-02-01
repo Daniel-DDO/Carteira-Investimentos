@@ -2,8 +2,8 @@ package br.com.investimentos.controladores.gui;
 
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.adm.ControladorAtivosAdm;
+import br.com.investimentos.controladores.gui.adm.ControladorGerenciarAtivosAdm;
 import br.com.investimentos.controladores.gui.adm.ControladorPerfilAdm;
-import br.com.investimentos.controladores.gui.comum.ControladorCarteiras;
 import br.com.investimentos.controladores.gui.comum.ControladorGerenciarCarteiras;
 import br.com.investimentos.controladores.gui.comum.ControladorPerfil;
 import br.com.investimentos.controladores.gui.comum.ControladorVerCarteiras;
@@ -38,10 +38,13 @@ public class Programa extends Application {
     private static Scene gerenciarCarteirasTela;
     private static Scene perfilAdmTela;
     private static Scene ativosAdmTela;
+    private static Scene criarAtivosAdmTela;
+    private static Scene gerenciarAtivosAdmTela;
 
     private static ControladorPerfil controladorPerfil;
     private static ControladorPerfilAdm controladorPerfilAdm;
     private static ControladorAtivosAdm controladorAtivosAdm;
+    private static ControladorGerenciarAtivosAdm controladorGerenciarAtivosAdm;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -114,6 +117,18 @@ public class Programa extends Application {
         ativosAdmTela = new Scene(fxmlAtivosAdm, 1000, 600);
         controladorAtivosAdm = loaderAtivosAdm.getController();
         adicionarMudancaTela(controladorAtivosAdm);
+
+        FXMLLoader loaderCriarAtivosAdm = new FXMLLoader(getClass().getResource(localFxml+"06-1-1-criar-ativos.fxml"));
+        Parent fxmlCriarAtivosAdm = loaderCriarAtivosAdm.load();
+        criarAtivosAdmTela = new Scene(fxmlCriarAtivosAdm, 1000, 600);
+        controladorAtivosAdm = loaderCriarAtivosAdm.getController();
+        adicionarMudancaTela(controladorAtivosAdm);
+
+        FXMLLoader loaderGerenciarAtivosAdm = new FXMLLoader(getClass().getResource(localFxml+"06-1-2-gerenciar-ativos.fxml"));
+        Parent fxmlGerenciarAtivosAdm = loaderGerenciarAtivosAdm.load();
+        gerenciarAtivosAdmTela = new Scene(fxmlGerenciarAtivosAdm, 1000, 600);
+        controladorGerenciarAtivosAdm = loaderGerenciarAtivosAdm.getController();
+        adicionarMudancaTela(controladorGerenciarAtivosAdm);
 
         stage.setScene(telaInicial01);
         stage.show();
@@ -189,6 +204,14 @@ public class Programa extends Application {
             case 17:
                 stage.setScene(ativosAdmTela);
                 informarMudancaTela(17, objeto);
+                break;
+            case 18:
+                stage.setScene(criarAtivosAdmTela);
+                informarMudancaTela(18, objeto);
+                break;
+            case 19:
+                stage.setScene(gerenciarAtivosAdmTela);
+                informarMudancaTela(19, objeto);
                 break;
         }
     }

@@ -103,7 +103,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     private static final String API_KEY1 = "176d06fe91ded98c0dbd428b9fc1d45311bf34ea";
     private static final String API_KEY2 = "d24000f8cfa3e553854f164e1ffe7308eacd7be4";
     private static final String[] SYMBOLS = {
-            "AAPL", "GOOGL", "AMZN"
+            "AAPL", "GOOGL"
     };
     /*
     private static final String[] SYMBOLS = {
@@ -157,8 +157,6 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                     }
                     in.close();
 
-                    System.out.println("Resposta da API para " + symbol + ": " + response.toString());
-
                     JsonArray jsonResponse = JsonParser.parseString(response.toString()).getAsJsonArray();
 
                     if (jsonResponse.size() > 0) {
@@ -171,9 +169,30 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
                         String moeda = getMoedaPorSigla(symbol);
 
-                        AtivosFinanceiros ativo = new AtivosFinanceiros(symbol, precoAtual, precoAbertura, maiorPreco, menorPreco, moeda);
-                        ativosList.add(ativo);
-                        System.out.println("Ativo adicionado da API: " + ativo.getCodigo());
+                        AtivosFinanceiros novoAtivo = new AtivosFinanceiros(symbol, precoAtual, precoAbertura, maiorPreco, menorPreco, moeda);
+
+                        boolean ativoAtualizado = false;
+                        for (int i = 0; i < ativosFinanceirosDoArquivo.length; i++) {
+                            if (ativosFinanceirosDoArquivo[i] != null &&
+                                    ativosFinanceirosDoArquivo[i].getCodigo().equals(novoAtivo.getCodigo())) {
+                                ativosFinanceirosDoArquivo[i] = novoAtivo;
+                                ativoAtualizado = true;
+                                System.out.println("Ativo atualizado: " + novoAtivo.getCodigo());
+                                break;
+                            }
+                        }
+
+                        if (!ativoAtualizado) {
+                            for (int i = 0; i < ativosFinanceirosDoArquivo.length; i++) {
+                                if (ativosFinanceirosDoArquivo[i] == null) {
+                                    ativosFinanceirosDoArquivo[i] = novoAtivo;
+                                    System.out.println("Novo ativo adicionado: " + novoAtivo.getCodigo());
+                                    break;
+                                }
+                            }
+                        }
+
+                        ativosList.add(novoAtivo);
                     } else {
                         System.out.println("Sem dados para " + symbol);
                     }
@@ -195,15 +214,13 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                 }
             }
         } else {
-            System.out.println("Atualizando o arquivo com os novos dados da API.");
-            for (AtivosFinanceiros ativo : ativosList) {
-                RepositorioAtivos.escreverAtivo(ativo);
-            }
+            System.out.println("Atualizando o arquivo com os novos dados.");
+            RepositorioAtivos.atualizarAtivos(ativosFinanceirosDoArquivo);
         }
+
         System.out.println("Dados carregados: " + ativosList.size());
         acoesDisponiveisTable.setItems(ativosList);
     }
-
 
     private String getMoedaPorSigla(String sigla) {
         return "USD";

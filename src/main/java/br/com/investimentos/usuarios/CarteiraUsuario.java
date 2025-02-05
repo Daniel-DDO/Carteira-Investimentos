@@ -12,7 +12,8 @@ public class CarteiraUsuario implements Serializable {
     private long carteiraID;
     private String nomeCarteira;
     private double saldoDisponivel;
-    private AtivosFinanceiros[] ativosFinanceiros;
+    private int tamanho;
+    private AtivosFinanceiros[] ativosFinanceiros = new AtivosFinanceiros[tamanho];
     private LocalDate dataCriacao;
     private String objetivoInvestimento;
     private EnumTipoInvestidor enumTipoInvestidor;

@@ -232,13 +232,13 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     private TableView<AtivosFinanceiros> mihasAcoesTable;
 
     @FXML
-    private TableColumn<?, ?> codigoMinhasAcoes;
+    private TableColumn<AtivosFinanceiros, String> codigoMinhasAcoes;
 
     @FXML
-    private TableColumn<?, ?> precoMedioMinhasAcoes;
+    private TableColumn<AtivosFinanceiros, Double> precoMedioMinhasAcoes;
 
     @FXML
-    private TableColumn<?, ?> quantidadeMinhasAcoes;
+    private TableColumn<AtivosFinanceiros, Integer> quantidadeMinhasAcoes;
 
     @FXML
     private Button comprarBotao;

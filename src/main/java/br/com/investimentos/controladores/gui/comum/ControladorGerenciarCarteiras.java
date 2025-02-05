@@ -25,6 +25,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -104,7 +105,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     private static final String API_KEY1 = "176d06fe91ded98c0dbd428b9fc1d45311bf34ea";
     private static final String API_KEY2 = "d24000f8cfa3e553854f164e1ffe7308eacd7be4";
     private static final String[] SYMBOLS = {
-            "AAPL", "GOOGL"
+            "AAPL"
     };
     /*
     private static final String[] SYMBOLS = {
@@ -248,29 +249,36 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     @FXML
     void botaoComprar(ActionEvent event) {
         AtivosFinanceiros ativoFinanceiro = acoesDisponiveisTable.getSelectionModel().getSelectedItem();
-        if (ativoFinanceiro != null) {
-            abrirCompraVenda(ativoFinanceiro, true);
+        CarteiraUsuario carteiraUsuario = cboxSelecionarCarteira.getValue();
+        if (ativoFinanceiro != null && carteiraUsuario != null) {
+            abrirCompraVenda(ativoFinanceiro, carteiraUsuario, true);
+        } else if (ativoFinanceiro == null) {
+            ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar um ativo, primeiro você deve selecionar na tabela.");
+        } else if (carteiraUsuario == null) {
+            ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar ativos, você deve selecionar a carteira de investimentos.");
         } else {
             ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar um ativo, primeiro você deve selecionar na tabela.");
         }
-
-
     }
 
     @FXML
     void botaoVender(ActionEvent event) {
         AtivosFinanceiros ativoFinanceiro = mihasAcoesTable.getSelectionModel().getSelectedItem();
-        if (ativoFinanceiro != null) {
-            abrirCompraVenda(ativoFinanceiro, false);
+        CarteiraUsuario carteiraUsuario = cboxSelecionarCarteira.getValue();
+        if (ativoFinanceiro != null && carteiraUsuario != null) {
+            abrirCompraVenda(ativoFinanceiro, carteiraUsuario, false);
+        } else if (ativoFinanceiro == null) {
+            ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar um ativo, primeiro você deve selecionar na tabela.");
+        } else if (carteiraUsuario == null) {
+            ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar ativos, você deve selecionar a carteira de investimentos.");
         } else {
-            ControladorGeral.alertaErro("Ativos Financeiros", "Para vender um ativo, primeiro você deve selecionar na tabela.");
+            ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar um ativo, primeiro você deve selecionar na tabela.");
         }
-
     }
 
     private Stage novaJanela;
 
-    public void abrirCompraVenda(AtivosFinanceiros ativoFinanceiro, boolean compra) {
+    public void abrirCompraVenda(AtivosFinanceiros ativoFinanceiro, CarteiraUsuario carteira, boolean compra) {
         if (novaJanela != null && novaJanela.isShowing()) {
             return;
         }
@@ -279,6 +287,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/investimentos/controladores/confirmar-compra-venda.fxml"));
             Parent root = loader.load();
             Label compraVendaLabel = (Label) loader.getNamespace().get("compraVendaLabel");
+            Label informacoesCambioLabel = (Label) loader.getNamespace().get("informacoesCambioLabel");
 
             if (compraVendaLabel != null) {
                 String operacao;
@@ -288,6 +297,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                     operacao = "Vender";
                 }
                 compraVendaLabel.setText(operacao + ": " + ativoFinanceiro.informacoesDoAtivo());
+                informacoesCambioLabel.setText(carteira.informacoesCarteira()+precoCambio(ativoFinanceiro, carteira));
             }
 
             novaJanela = new Stage();
@@ -300,6 +310,56 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String precoCambio(AtivosFinanceiros ativoFinanceiro, CarteiraUsuario carteiraUsuario) {
+        String saldoPosConversao;
+        String moedaOrigem = carteiraUsuario.getEnumTipoMoeda().toString();
+        String moedaDestino = ativoFinanceiro.getMoeda();
+
+        double saldoAtual = carteiraUsuario.getSaldoDisponivel();
+        double taxaCambio = getTaxaCambio(moedaOrigem, moedaDestino);
+
+        if (taxaCambio != -1) {
+            saldoPosConversao = String.format("%.2f", saldoAtual * taxaCambio);
+        } else {
+            saldoPosConversao = "Não foi possível obter o câmbio";
+        }
+
+        return "\n\nPreço ativo (unidade): "+ativoFinanceiro.getPrecoAtual()+" "+ativoFinanceiro.getMoeda()+
+                "\nCâmbio "+moedaOrigem+" para " +moedaDestino+ "\n\n"+
+                "Seu saldo atual em "+moedaDestino+": "+saldoPosConversao;
+    }
+
+    private double getTaxaCambio(String moedaOrigem, String moedaDestino) {
+        System.out.println(moedaOrigem+" "+moedaDestino);
+
+        try {
+            String url = "https://economia.awesomeapi.com.br/last/" + moedaOrigem + "-" + moedaDestino;
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("GET");
+
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String inputLine;
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+
+                in.close();
+
+                JSONObject jsonObject = new JSONObject(response.toString());
+                String key = moedaOrigem + moedaDestino;
+                return jsonObject.getJSONObject(key).getDouble("bid");
+            } else {
+                System.out.println("Erro na conexão com a API.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
 

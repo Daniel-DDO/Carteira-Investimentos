@@ -16,25 +16,25 @@ public enum EnumTipoMoeda {
     public String toString() {
         switch (this) {
             case BRL:
-                return "BRL - Real Brasileiro";
+                return "BRL";
             case USD:
-                return "USD - Dólar Americano";
+                return "USD";
             case EUR:
-                return "EUR - Euro";
+                return "EUR";
             case GBP:
-                return "GBP - Libra Esterlina";
+                return "GBP";
             case JPY:
-                return "JPY - Iene Japonês";
+                return "JPY";
             case AUD:
-                return "AUD - Dólar Australiano";
+                return "AUD";
             case CAD:
-                return "CAD - Dólar Canadense";
+                return "CAD";
             case CHF:
-                return "CHF - Franco Suíço";
+                return "CHF";
             case CNY:
-                return "CNY - Yuan Chinês";
+                return "CNY";
             case MXN:
-                return "MXN - Peso Mexicano";
+                return "MXN";
             default:
                 return super.toString();
         }

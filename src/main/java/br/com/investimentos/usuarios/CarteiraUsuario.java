@@ -40,6 +40,10 @@ public class CarteiraUsuario implements Serializable {
 
     }
 
+    public String informacoesCarteira() {
+        return "Carteira "+nomeCarteira+"\nSaldo disponível: "+saldoDisponivel+" "+enumTipoMoeda;
+    }
+
     public AtivosFinanceiros[] getAtivosFinanceiros() {
         return ativosFinanceiros;
     }

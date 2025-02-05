@@ -1,5 +1,7 @@
 package br.com.investimentos.usuarios;
 
+import br.com.investimentos.financas.AtivosFinanceiros;
+import br.com.investimentos.financas.EnumTipoMoeda;
 import br.com.investimentos.financas.Investimentos;
 
 import java.io.Serial;
@@ -10,21 +12,23 @@ public class CarteiraUsuario implements Serializable {
     private long carteiraID;
     private String nomeCarteira;
     private double saldoDisponivel;
-    private Investimentos[] investimentos;
+    private AtivosFinanceiros[] ativosFinanceiros;
     private LocalDate dataCriacao;
     private String objetivoInvestimento;
     private EnumTipoInvestidor enumTipoInvestidor;
     private UsuarioComum usuario;
+    private EnumTipoMoeda enumTipoMoeda;
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public CarteiraUsuario(String nomeCarteira, double saldoDisponivel, LocalDate dataCriacao, String objetivoInvestimento, EnumTipoInvestidor enumTipoInvestidor, UsuarioComum usuario) {
+    public CarteiraUsuario(String nomeCarteira, double saldoDisponivel, LocalDate dataCriacao, String objetivoInvestimento, EnumTipoInvestidor enumTipoInvestidor, EnumTipoMoeda enumTipoMoeda, UsuarioComum usuario) {
         this.nomeCarteira = nomeCarteira;
         this.saldoDisponivel = saldoDisponivel;
         this.dataCriacao = dataCriacao;
         this.objetivoInvestimento = objetivoInvestimento;
         this.enumTipoInvestidor = enumTipoInvestidor;
+        this.enumTipoMoeda = enumTipoMoeda;
         this.usuario = usuario;
     }
 
@@ -34,6 +38,14 @@ public class CarteiraUsuario implements Serializable {
 
     public void comprarAtivos() {
 
+    }
+
+    public AtivosFinanceiros[] getAtivosFinanceiros() {
+        return ativosFinanceiros;
+    }
+
+    public void setAtivosFinanceiros(AtivosFinanceiros[] ativosFinanceiros) {
+        this.ativosFinanceiros = ativosFinanceiros;
     }
 
     public long getCarteiraID() {
@@ -58,14 +70,6 @@ public class CarteiraUsuario implements Serializable {
 
     public void setSaldoDisponivel(double saldoDisponivel) {
         this.saldoDisponivel = saldoDisponivel;
-    }
-
-    public Investimentos[] getInvestimentos() {
-        return investimentos;
-    }
-
-    public void setInvestimentos(Investimentos[] investimentos) {
-        this.investimentos = investimentos;
     }
 
     public LocalDate getDataCriacao() {
@@ -100,6 +104,14 @@ public class CarteiraUsuario implements Serializable {
         this.enumTipoInvestidor = enumTipoInvestidor;
     }
 
+    public EnumTipoMoeda getEnumTipoMoeda() {
+        return enumTipoMoeda;
+    }
+
+    public void setEnumTipoMoeda(EnumTipoMoeda enumTipoMoeda) {
+        this.enumTipoMoeda = enumTipoMoeda;
+    }
+
     public UsuarioComum getUsuario() {
         return usuario;
     }
@@ -114,7 +126,7 @@ public class CarteiraUsuario implements Serializable {
     }
 
     public String exibirInformacoesCarteira() {
-        return "Nome da carteira: "+nomeCarteira+"\nID carteira: "+carteiraID+"\nSaldo disponível: R$ "+saldoDisponivel+"\nData de criação: "+dataCriacao
+        return "Nome da carteira: "+nomeCarteira+"\nID carteira: "+carteiraID+"\nSaldo disponível: "+saldoDisponivel+" "+enumTipoMoeda+"\nData de criação: "+dataCriacao
                 +"\nObjetivo de investimento: "+objetivoInvestimento+"\nTipo investidor: "+enumTipoInvestidor+"\n";
     }
 

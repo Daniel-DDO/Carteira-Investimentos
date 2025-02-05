@@ -41,12 +41,13 @@
                               <Font size="14.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="saldoInicialField" layoutX="10.0" layoutY="82.0" prefHeight="33.0" prefWidth="488.0" promptText="Saldo inicial (BRL):" stylesheets="@design.css" GridPane.rowIndex="2">
+                        <TextField fx:id="saldoInicialField" layoutX="10.0" layoutY="82.0" prefHeight="33.0" prefWidth="488.0" promptText="Saldo inicial:" stylesheets="@design.css" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </TextField>
-                        <ComboBox fx:id="tipoInvestidorComboBox" prefHeight="36.0" prefWidth="584.0" promptText="Tipo Investidor" stylesheets="@design.css" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="tipoInvestidorComboBox" prefHeight="36.0" prefWidth="584.0" promptText="Tipo Investidor" stylesheets="@design.css" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="tipoMoedaComboBox" layoutX="10.0" layoutY="199.0" prefHeight="36.0" prefWidth="584.0" promptText="Selecione a moeda (Essa será usual em todas as operações)" stylesheets="@design.css" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children></Pane>

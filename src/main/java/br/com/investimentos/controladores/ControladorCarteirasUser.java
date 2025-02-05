@@ -1,6 +1,7 @@
 package br.com.investimentos.controladores;
 
 import br.com.investimentos.controladores.gui.ControladorGeral;
+import br.com.investimentos.financas.EnumTipoMoeda;
 import br.com.investimentos.repositorios.RepositorioCarteiras;
 import br.com.investimentos.repositorios.RepositorioContaUsuario;
 import br.com.investimentos.usuarios.CarteiraUsuario;
@@ -21,8 +22,8 @@ public class ControladorCarteirasUser {
         return instacia;
     }
 
-    public void criarNovaCarteira(String nomeCarteira, double saldoDisponivel, LocalDate dataCriacao, String objetivoInvestimento, EnumTipoInvestidor enumTipoInvestidor, UsuarioComum usuario) {
-        CarteiraUsuario carteira = new CarteiraUsuario(nomeCarteira, saldoDisponivel, dataCriacao, objetivoInvestimento, enumTipoInvestidor, usuario);
+    public void criarNovaCarteira(String nomeCarteira, double saldoDisponivel, LocalDate dataCriacao, String objetivoInvestimento, EnumTipoInvestidor enumTipoInvestidor, EnumTipoMoeda enumTipoMoeda, UsuarioComum usuario) {
+        CarteiraUsuario carteira = new CarteiraUsuario(nomeCarteira, saldoDisponivel, dataCriacao, objetivoInvestimento, enumTipoInvestidor, enumTipoMoeda, usuario);
 
         RepositorioCarteiras.getInstancia().adicionarCarteira(carteira);
         UsuarioLogado.getInstancia().getUsuarioComum().setQuantidadeCarteiras(UsuarioLogado.getInstancia().getUsuarioComum().getQuantidadeCarteiras() + 1);

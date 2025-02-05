@@ -1,20 +1,16 @@
 package br.com.investimentos.controladores.gui.comum;
 
 import br.com.investimentos.controladores.ControladorCarteirasUser;
+import br.com.investimentos.controladores.Fachada;
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.ControladorGeral;
-import br.com.investimentos.controladores.gui.Programa;
+import br.com.investimentos.financas.EnumTipoMoeda;
 import br.com.investimentos.usuarios.EnumTipoInvestidor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.animation.PauseTransition;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
 
 import java.time.LocalDate;
 
@@ -35,6 +31,9 @@ public class ControladorCarteiras {
     public void initialize() {
         if (tipoInvestidorComboBox != null) {
             tipoInvestidorComboBox.getItems().addAll(EnumTipoInvestidor.values());
+        }
+        if (tipoMoedaComboBox != null) {
+            tipoMoedaComboBox.getItems().addAll(EnumTipoMoeda.values());
         }
     }
 
@@ -109,12 +108,17 @@ public class ControladorCarteiras {
     @FXML
     private ComboBox<EnumTipoInvestidor> tipoInvestidorComboBox;
 
+    @FXML
+    private ComboBox<EnumTipoMoeda> tipoMoedaComboBox;
+
+
 
     public void criarNovaCarteira() {
         String nomeCarteira = nomeCarteiraField.getText();
         String objetivoCarteira = objetivoCarteiraField.getText();
         double saldoInicial = Double.parseDouble(saldoInicialField.getText());
         EnumTipoInvestidor enumTipoInvestidor = tipoInvestidorComboBox.getValue();
+        EnumTipoMoeda enumTipoMoeda = tipoMoedaComboBox.getValue();
 
         if (nomeCarteira.length() < 5) {
             ControladorGeral.alertaErro("Erro", "O nome da carteira deve conter 5 ou mais caracteres.");
@@ -123,15 +127,18 @@ public class ControladorCarteiras {
         } else if (saldoInicial < 0) {
             ControladorGeral.alertaErro("Erro", "O saldo inicial não pode ser negativo.");
         } else if (enumTipoInvestidor == null) {
-            enumTipoInvestidor = EnumTipoInvestidor.MODERADO;
+            ControladorGeral.alertaErro("Erro", "Selecione um tipo de investidor.");
+        } else if (enumTipoMoeda == null) {
+            ControladorGeral.alertaErro("Erro", "Selecione um tipo de moeda.");
         } else {
 
             LocalDate localDate = LocalDate.now();
 
-            ControladorCarteirasUser.getInstancia().criarNovaCarteira(nomeCarteira, saldoInicial, localDate, objetivoCarteira, enumTipoInvestidor, UsuarioLogado.getInstancia().getUsuarioComum());
+            Fachada.getInstancia().criarNovaCarteira(nomeCarteira, saldoInicial, localDate, objetivoCarteira, enumTipoInvestidor, enumTipoMoeda, UsuarioLogado.getInstancia().getUsuarioComum());
             ControladorGeral.alertaInformacao("Carteira criada!", "Parabéns, sua carteira foi criada com sucesso.");
             nomeCarteiraField.clear();
             objetivoCarteiraField.clear();
+            tipoMoedaComboBox.getItems().clear();
             saldoInicialField.clear();
             tipoInvestidorComboBox.getItems().clear();
             trocarTela(8);

@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -23,9 +24,10 @@
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="111.0" minHeight="5.0" prefHeight="28.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="275.0" minHeight="10.0" prefHeight="275.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="111.0" minHeight="5.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="317.0" minHeight="10.0" prefHeight="235.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="275.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Selecione a carteira que deseja visualizar as informações" textAlignment="CENTER">
@@ -39,6 +41,23 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
+                        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="466.0" GridPane.rowIndex="3">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <TextField fx:id="salddAddField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="221.0" promptText="Digite o valor a ser adicionado:" stylesheets="@design.css">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                              <Button fx:id="adicionarSaldoBotao" mnemonicParsing="false" onAction="#botaoAdicionarSaldo" prefHeight="35.0" prefWidth="221.0" stylesheets="@design.css" text="Adicionar saldo" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
                      </children>
                   </GridPane>
                </children></Pane>

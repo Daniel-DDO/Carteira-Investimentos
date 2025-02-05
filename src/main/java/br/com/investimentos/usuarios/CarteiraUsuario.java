@@ -33,7 +33,7 @@ public class CarteiraUsuario implements Serializable {
     }
 
     public void depositarDinheiro(double valorDeposito) {
-        this.saldoDisponivel = saldoDisponivel + valorDeposito;
+        this.saldoDisponivel = this.saldoDisponivel + valorDeposito;
     }
 
     public void comprarAtivos() {

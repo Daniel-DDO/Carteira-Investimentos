@@ -85,4 +85,14 @@ public class ControladorCarteirasUser {
         return temCarteira;
     }
 
+    public void adicionarSaldo(double novoSaldo, CarteiraUsuario carteira) {
+        CarteiraUsuario[] carteiras = RepositorioCarteiras.getInstancia().getCarteiras();
+
+        for (int i = 0; i < RepositorioCarteiras.getInstancia().getTamanho(); i++) {
+            if (carteira.equals(carteiras[i])) {
+                carteira.depositarDinheiro(novoSaldo);
+            }
+        }
+    }
+
 }

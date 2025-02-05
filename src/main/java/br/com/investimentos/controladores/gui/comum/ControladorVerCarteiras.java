@@ -1,16 +1,19 @@
 package br.com.investimentos.controladores.gui.comum;
 
 import br.com.investimentos.controladores.ControladorCarteirasUser;
+import br.com.investimentos.controladores.Fachada;
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.controladores.gui.Programa;
+import br.com.investimentos.repositorios.RepositorioCarteiras;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 
@@ -24,17 +27,21 @@ public class ControladorVerCarteiras implements MudancaTela {
     }
 
     @FXML
-    public Button botaoVoltar052;
+    private Button botaoVoltar052;
     @FXML
-    public Button botaoConfirmar052;
+    private Button botaoConfirmar052;
     @FXML
-    public ComboBox<CarteiraUsuario> cboxSelecionarCarteira;
+    private ComboBox<CarteiraUsuario> cboxSelecionarCarteira;
     @FXML
-    public Label infoCarteiraSelecionadaLabel;
+    private Label infoCarteiraSelecionadaLabel;
+    @FXML
+    private Button adicionarSaldoBotao;
+    @FXML
+    private TextField salddAddField;
 
-    public void selecionarCarteiraCbox(ActionEvent actionEvent) {
+    public void selecionarCarteiraCbox(ActionEvent actionEvent){
         infoCarteiraSelecionadaLabel.setText("Detalhes da carteira selecionada:\n\n"
-        +infoCarteira());
+                + infoCarteira());
     }
 
     public void confirmarBotao052(ActionEvent actionEvent) {
@@ -101,5 +108,14 @@ public class ControladorVerCarteiras implements MudancaTela {
             cboxSelecionarCarteira.getItems().clear();
             visualizarCarteirasCbox();
         }
+    }
+
+    @FXML
+    public void botaoAdicionarSaldo(ActionEvent event) {
+        double novoSaldo = Double.parseDouble(salddAddField.getText());
+
+        Fachada.getInstancia().adicionarSaldo(novoSaldo, cboxSelecionarCarteira.getValue());
+        RepositorioCarteiras.getInstancia().atualizarCarteira(cboxSelecionarCarteira.getValue());
+        infoCarteira();
     }
 }

@@ -18,23 +18,30 @@ public class Fachada {
         return instancia;
     }
 
-    private ControladorArquivos controladorArquivos;
-    private ControladorAtivosFinanceiros controladorAtivosFinanceiros;
-    private ControladorCarteirasUser controladorCarteirasUser;
-    private ControladorContaUsuario controladorContaUsuario;
+    private ControladorAtivosFinanceiros controladorAtivosFinanceiros  = ControladorAtivosFinanceiros.getInstancia();
+    private ControladorCarteirasUser controladorCarteirasUser = ControladorCarteirasUser.getInstancia();
+    private ControladorContaUsuario controladorContaUsuario = ControladorContaUsuario.getInstancia();
 
     //Carteiras
 
     public void criarNovaCarteira(String nomeCarteira, double saldoDisponivel, LocalDate dataCriacao, String objetivoInvestimento, EnumTipoInvestidor enumTipoInvestidor, EnumTipoMoeda enumTipoMoeda, UsuarioComum usuario) {
-        ControladorCarteirasUser.getInstancia().criarNovaCarteira(nomeCarteira, saldoDisponivel, dataCriacao, objetivoInvestimento, enumTipoInvestidor, enumTipoMoeda, usuario);
+        controladorCarteirasUser.criarNovaCarteira(nomeCarteira, saldoDisponivel, dataCriacao, objetivoInvestimento, enumTipoInvestidor, enumTipoMoeda, usuario);
     }
 
     public boolean verificarSeTemCarteira(UsuarioComum usuario) {
-        return ControladorCarteirasUser.getInstancia().verificarSeTemCarteira(usuario);
+        return controladorCarteirasUser.verificarSeTemCarteira(usuario);
     }
 
     public ArrayList<CarteiraUsuario> exibirCarteirasDoUser(UsuarioComum usuario) {
-        return ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(usuario);
+        return controladorCarteirasUser.exibirCarteirasDoUser(usuario);
+    }
+
+    public void exibirTodasCarteiras() {
+        controladorCarteirasUser.exibirTodasCarteiras();
+    }
+
+    public void adicionarSaldo(double novoSaldo, CarteiraUsuario carteira) {
+        controladorCarteirasUser.adicionarSaldo(novoSaldo, carteira);
     }
 
     /*

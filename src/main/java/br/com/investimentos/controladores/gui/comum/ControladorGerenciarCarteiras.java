@@ -249,8 +249,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     void botaoComprar(ActionEvent event) {
         AtivosFinanceiros ativoFinanceiro = acoesDisponiveisTable.getSelectionModel().getSelectedItem();
         if (ativoFinanceiro != null) {
-            abrirCompraVenda();
-            compraVendaLabel.setText(infoAtivoComprar());
+            abrirCompraVenda(ativoFinanceiro, true);
         } else {
             ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar um ativo, primeiro você deve selecionar na tabela.");
         }
@@ -262,8 +261,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     void botaoVender(ActionEvent event) {
         AtivosFinanceiros ativoFinanceiro = mihasAcoesTable.getSelectionModel().getSelectedItem();
         if (ativoFinanceiro != null) {
-            abrirCompraVenda();
-            compraVendaLabel.setText(infoAtivoVender());
+            abrirCompraVenda(ativoFinanceiro, false);
         } else {
             ControladorGeral.alertaErro("Ativos Financeiros", "Para vender um ativo, primeiro você deve selecionar na tabela.");
         }
@@ -272,7 +270,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
     private Stage novaJanela;
 
-    public void abrirCompraVenda() {
+    public void abrirCompraVenda(AtivosFinanceiros ativoFinanceiro, boolean compra) {
         if (novaJanela != null && novaJanela.isShowing()) {
             return;
         }
@@ -280,13 +278,25 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/investimentos/controladores/confirmar-compra-venda.fxml"));
             Parent root = loader.load();
+            Label compraVendaLabel = (Label) loader.getNamespace().get("compraVendaLabel");
+
+            if (compraVendaLabel != null) {
+                String operacao;
+                if (compra) {
+                    operacao = "Comprar";
+                } else {
+                    operacao = "Vender";
+                }
+                compraVendaLabel.setText(operacao + ": " + ativoFinanceiro.informacoesDoAtivo());
+            }
+
             novaJanela = new Stage();
             novaJanela.setTitle("Ativos Financeiros - Negociação");
-
             Scene sceneNovaJanela = new Scene(root, 400, 400);
             novaJanela.setResizable(false);
             novaJanela.setScene(sceneNovaJanela);
             novaJanela.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

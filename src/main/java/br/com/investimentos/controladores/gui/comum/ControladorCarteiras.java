@@ -4,6 +4,7 @@ import br.com.investimentos.controladores.ControladorCarteirasUser;
 import br.com.investimentos.controladores.Fachada;
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.ControladorGeral;
+import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.financas.EnumTipoMoeda;
 import br.com.investimentos.usuarios.EnumTipoInvestidor;
 import javafx.event.ActionEvent;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 
 import static br.com.investimentos.controladores.gui.Programa.trocarTela;
 
-public class ControladorCarteiras {
+public class ControladorCarteiras implements MudancaTela {
 
     private static ControladorCarteiras instancia;
 
@@ -25,6 +26,18 @@ public class ControladorCarteiras {
             instancia = new ControladorCarteiras();
         }
         return instancia;
+    }
+
+    @Override
+    public void mudancaTela(int novaTela, Object objeto) {
+        if (novaTela == 13) {
+            System.out.println("13");
+            saldoInicialField.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                    saldoInicialField.setText(oldValue);
+                }
+            });
+        }
     }
 
     @FXML
@@ -154,5 +167,6 @@ public class ControladorCarteiras {
     void voltarBotao052(ActionEvent event) {
         trocarTela(8);
     }
+
 
 }

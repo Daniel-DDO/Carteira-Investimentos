@@ -67,6 +67,10 @@ public class AtivosFinanceiros implements Serializable {
                 +"\nQuant. Disponível: "+quantidadeDisponivel+"\n";
     }
 
+    public String informacoesDoAtivo() {
+        return "ATIVO FINANCEIRO\n"+"Código/Nome ação: "+codigo+"\nPreço atual: "+precoAtual+"\nMoeda: "+moeda;
+    }
+
     public String getNomeAtivo() {
         return nomeAtivo;
     }

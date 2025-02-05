@@ -4,6 +4,7 @@ import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.adm.ControladorAtivosAdm;
 import br.com.investimentos.controladores.gui.adm.ControladorGerenciarAtivosAdm;
 import br.com.investimentos.controladores.gui.adm.ControladorPerfilAdm;
+import br.com.investimentos.controladores.gui.comum.ControladorCarteiras;
 import br.com.investimentos.controladores.gui.comum.ControladorGerenciarCarteiras;
 import br.com.investimentos.controladores.gui.comum.ControladorPerfil;
 import br.com.investimentos.controladores.gui.comum.ControladorVerCarteiras;
@@ -91,8 +92,11 @@ public class Programa extends Application {
         perfilComumTela = new Scene(fxmlTelaPerfilComum, 1000, 600);
         controladorPerfil = loaderPerfilComum.getController();
 
-        Parent fxmlCriarCarteira = FXMLLoader.load(getClass().getResource(localFxml+"05-2-1-criar-carteira.fxml"));
+        FXMLLoader loaderCriarCarteira = new FXMLLoader(getClass().getResource(localFxml+"05-2-1-criar-carteira.fxml"));
+        Parent fxmlCriarCarteira = loaderCriarCarteira.load();
         criarCarteiraTela = new Scene(fxmlCriarCarteira, 1000, 600);
+        ControladorCarteiras controladorCarteiras = loaderCriarCarteira.getController();
+        adicionarMudancaTela(controladorCarteiras);
 
         FXMLLoader loaderVisualizarCarteiras = new FXMLLoader(getClass().getResource(localFxml + "05-2-2-visualizar-carteiras.fxml"));
         Parent fxmlVisualizarCarteiras = loaderVisualizarCarteiras.load();

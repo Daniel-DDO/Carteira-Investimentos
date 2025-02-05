@@ -23,6 +23,11 @@ public class ControladorVerCarteiras implements MudancaTela {
     public void mudancaTela(int novaTela, Object objeto) {
         if (novaTela == 14) {
             inicializarComboBox();
+            salddAddField.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                    salddAddField.setText(oldValue);
+                }
+            });
         }
     }
 

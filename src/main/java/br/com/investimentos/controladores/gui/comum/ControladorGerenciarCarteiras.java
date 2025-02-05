@@ -2,6 +2,7 @@ package br.com.investimentos.controladores.gui.comum;
 
 import br.com.investimentos.controladores.ControladorCarteirasUser;
 import br.com.investimentos.controladores.UsuarioLogado;
+import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.financas.AtivosFinanceiros;
@@ -227,7 +228,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     }
 
     @FXML
-    private TableView<?> mihasAcoesTable;
+    private TableView<AtivosFinanceiros> mihasAcoesTable;
 
     @FXML
     private TableColumn<?, ?> codigoMinhasAcoes;
@@ -246,12 +247,27 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
     @FXML
     void botaoComprar(ActionEvent event) {
-        abrirCompraVenda();
+        AtivosFinanceiros ativoFinanceiro = acoesDisponiveisTable.getSelectionModel().getSelectedItem();
+        if (ativoFinanceiro != null) {
+            abrirCompraVenda();
+            compraVendaLabel.setText(infoAtivoComprar());
+        } else {
+            ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar um ativo, primeiro você deve selecionar na tabela.");
+        }
+
+
     }
 
     @FXML
     void botaoVender(ActionEvent event) {
-        abrirCompraVenda();
+        AtivosFinanceiros ativoFinanceiro = mihasAcoesTable.getSelectionModel().getSelectedItem();
+        if (ativoFinanceiro != null) {
+            abrirCompraVenda();
+            compraVendaLabel.setText(infoAtivoVender());
+        } else {
+            ControladorGeral.alertaErro("Ativos Financeiros", "Para vender um ativo, primeiro você deve selecionar na tabela.");
+        }
+
     }
 
     private Stage novaJanela;
@@ -265,9 +281,9 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/investimentos/controladores/confirmar-compra-venda.fxml"));
             Parent root = loader.load();
             novaJanela = new Stage();
-            novaJanela.setTitle("Digite a quantidade:");
+            novaJanela.setTitle("Ativos Financeiros - Negociação");
 
-            Scene sceneNovaJanela = new Scene(root, 400, 250);
+            Scene sceneNovaJanela = new Scene(root, 400, 400);
             novaJanela.setResizable(false);
             novaJanela.setScene(sceneNovaJanela);
             novaJanela.show();
@@ -289,8 +305,28 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     private TextField quantidadeCompVendField;
 
     @FXML
+    private Label informacoesCambioLabel;
+
+    @FXML
     void botaoConfirmarCompraVenda(ActionEvent event) {
 
+    }
+
+    public String infoAtivoComprar() {
+        AtivosFinanceiros ativoFinanceiro = acoesDisponiveisTable.getSelectionModel().getSelectedItem();
+        String informacoes;
+
+        if (ativoFinanceiro != null) {
+            informacoes = ativoFinanceiro.informacoesDoAtivo();
+            compraVendaLabel.setText(informacoes);
+        } else {
+            informacoes = "Selecione um ativo.";
+        }
+        return informacoes;
+    }
+
+    public String infoAtivoVender() {
+        return "a";
     }
 
     //final dessa tela extra

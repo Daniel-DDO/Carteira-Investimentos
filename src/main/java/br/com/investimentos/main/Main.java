@@ -1,20 +1,14 @@
 package br.com.investimentos.main;
 
-import br.com.investimentos.controladores.ControladorAtivosFinanceiros;
-import br.com.investimentos.controladores.ControladorCarteirasUser;
 import br.com.investimentos.controladores.ControladorContaUsuario;
 import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
-import br.com.investimentos.repositorios.RepositorioAtivos;
 import br.com.investimentos.repositorios.RepositorioContaUsuario;
 import br.com.investimentos.usuarios.ContaUsuario;
 import br.com.investimentos.usuarios.EnumTipoConta;
 import br.com.investimentos.usuarios.UsuarioAdministrador;
 import br.com.investimentos.usuarios.UsuarioComum;
-
 import java.util.Scanner;
-
-import static javafx.application.Application.launch;
 
 public class Main extends Programa {
     public static void main(String[] args) {

@@ -4,7 +4,13 @@ import br.com.investimentos.excecoes.AtivoJaExisteException;
 import br.com.investimentos.financas.AtivosFinanceiros;
 import br.com.investimentos.repositorios.RepositorioAtivos;
 import br.com.investimentos.usuarios.UsuarioAdministrador;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDate;
 
 public class ControladorAtivosFinanceiros {
@@ -38,6 +44,34 @@ public class ControladorAtivosFinanceiros {
         }
 
         return nomeAtivoIgual;
+    }
+
+    private static final String API_URL = "https://economia.awesomeapi.com.br/json/last/";
+
+    public static double converter(String moedaOrigem, String moedaDestino, double valor) throws Exception {
+        String urlStr = API_URL + moedaOrigem + "-" + moedaDestino;
+        URL url = new URL(urlStr);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode != 200) {
+            throw new RuntimeException("Erro na requisição: Código " + responseCode);
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            response.append(line);
+        }
+        reader.close();
+
+        JsonObject jsonObject = JsonParser.parseString(response.toString()).getAsJsonObject();
+        String key = moedaOrigem + moedaDestino;
+        double taxa = jsonObject.getAsJsonObject(key).get("bid").getAsDouble();
+
+        return valor * taxa;
     }
 
 }

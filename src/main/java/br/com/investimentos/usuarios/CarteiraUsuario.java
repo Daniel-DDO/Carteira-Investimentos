@@ -12,13 +12,14 @@ public class CarteiraUsuario implements Serializable {
     private long carteiraID;
     private String nomeCarteira;
     private double saldoDisponivel;
-    private int tamanho;
-    private AtivosFinanceiros[] ativosFinanceiros = new AtivosFinanceiros[tamanho];
     private LocalDate dataCriacao;
     private String objetivoInvestimento;
     private EnumTipoInvestidor enumTipoInvestidor;
     private UsuarioComum usuario;
     private EnumTipoMoeda enumTipoMoeda;
+    private int posicao = 0;
+    private int tamanho = 300;
+    private AtivosFinanceiros[] ativosFinanceiros = new AtivosFinanceiros[tamanho];
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -43,6 +44,25 @@ public class CarteiraUsuario implements Serializable {
 
     public String informacoesCarteira() {
         return "Carteira "+nomeCarteira+"\nSaldo disponível: "+saldoDisponivel+" "+enumTipoMoeda;
+    }
+
+    public void adicionarAtivoNaCarteira(AtivosFinanceiros ativoFinanceiro) {
+        if (posicao < tamanho) {
+            ativosFinanceiros[posicao] = ativoFinanceiro;
+            posicao++;
+        }
+    }
+    
+    public void removerAtivoDaCarteira(AtivosFinanceiros ativoFinanceiro) {
+        for (int i = 0; i < tamanho; i++) {
+            if (ativosFinanceiros[i] != null) {
+                if (ativosFinanceiros[i].equals(ativoFinanceiro)) {
+                    ativosFinanceiros[i] = ativosFinanceiros[posicao-1];
+                    ativosFinanceiros[posicao-1] = null;
+                    posicao--;
+                }
+            }
+        }
     }
 
     public AtivosFinanceiros[] getAtivosFinanceiros() {

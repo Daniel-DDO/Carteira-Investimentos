@@ -20,7 +20,7 @@ public class AtivosFinanceiros implements Serializable {
     private double liquidez;
     private String moeda;
     private LocalDate dataInicial;
-    private int quantidadeDisponivel;
+    private int quantidade;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -29,7 +29,7 @@ public class AtivosFinanceiros implements Serializable {
 
     }
 
-    public AtivosFinanceiros(String nomeAtivo, String tipoAtivo, String codigo, double precoAtual, double valorNominal, double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial, int quantidadeDisponivel) {
+    public AtivosFinanceiros(String nomeAtivo, String tipoAtivo, String codigo, double precoAtual, double valorNominal, double rentabilidade, double risco, double liquidez, String moeda, LocalDate dataInicial, int quantidade) {
         this.nomeAtivo = nomeAtivo;
         this.tipoAtivo = tipoAtivo;
         this.codigo = codigo;
@@ -40,7 +40,7 @@ public class AtivosFinanceiros implements Serializable {
         this.liquidez = liquidez;
         this.moeda = moeda;
         this.dataInicial = dataInicial;
-        this.quantidadeDisponivel = quantidadeDisponivel;
+        this.quantidade = quantidade;
     }
 
     public AtivosFinanceiros(String codigo, double precoAtual, double precoAbertura, double maiorPreco, double menorPreco, String moeda) {
@@ -64,7 +64,7 @@ public class AtivosFinanceiros implements Serializable {
                 +"\nLiquidez: "+liquidez
                 +"\nMoeda: "+moeda
                 +"\nData inicial: "+dataInicial
-                +"\nQuant. Disponível: "+quantidadeDisponivel+"\n";
+                +"\nQuant. Disponível: "+ quantidade +"\n";
     }
 
     public String informacoesDoAtivo() {
@@ -151,12 +151,12 @@ public class AtivosFinanceiros implements Serializable {
         this.dataInicial = dataInicial;
     }
 
-    public int getQuantidadeDisponivel() {
-        return quantidadeDisponivel;
+    public int getQuantidade() {
+        return quantidade;
     }
 
-    public void setQuantidadeDisponivel(int quantidadeDisponivel) {
-        this.quantidadeDisponivel = quantidadeDisponivel;
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 
     public double getPrecoMedio() {

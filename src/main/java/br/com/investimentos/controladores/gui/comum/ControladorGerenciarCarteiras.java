@@ -36,6 +36,8 @@ import java.util.ArrayList;
 
 public class ControladorGerenciarCarteiras implements MudancaTela {
 
+    private boolean compra = false;
+
     @Override
     public void mudancaTela(int novaTela, Object objeto) {
         if (novaTela == 15) {
@@ -105,7 +107,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     private static final String API_KEY1 = "176d06fe91ded98c0dbd428b9fc1d45311bf34ea";
     private static final String API_KEY2 = "d24000f8cfa3e553854f164e1ffe7308eacd7be4";
     private static final String[] SYMBOLS = {
-            "AAPL"
+            "AAPL", "GOOGL", "AMZN"
     };
     /*
     private static final String[] SYMBOLS = {
@@ -252,6 +254,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         CarteiraUsuario carteiraUsuario = cboxSelecionarCarteira.getValue();
         if (ativoFinanceiro != null && carteiraUsuario != null) {
             abrirCompraVenda(ativoFinanceiro, carteiraUsuario, true);
+            compra = true;
         } else if (ativoFinanceiro == null) {
             ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar um ativo, primeiro você deve selecionar na tabela.");
         } else if (carteiraUsuario == null) {
@@ -267,6 +270,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         CarteiraUsuario carteiraUsuario = cboxSelecionarCarteira.getValue();
         if (ativoFinanceiro != null && carteiraUsuario != null) {
             abrirCompraVenda(ativoFinanceiro, carteiraUsuario, false);
+            compra = false;
         } else if (ativoFinanceiro == null) {
             ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar um ativo, primeiro você deve selecionar na tabela.");
         } else if (carteiraUsuario == null) {
@@ -283,9 +287,15 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             return;
         }
 
+        this.ativoSelecionado = ativoFinanceiro;
+        this.carteiraSelecionada = carteira;
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/investimentos/controladores/confirmar-compra-venda.fxml"));
             Parent root = loader.load();
+
+            ControladorGerenciarCarteiras controlador = loader.getController();
+            controlador.setDadosCompraVenda(ativoFinanceiro, carteira, compra);
             Label compraVendaLabel = (Label) loader.getNamespace().get("compraVendaLabel");
             Label informacoesCambioLabel = (Label) loader.getNamespace().get("informacoesCambioLabel");
 
@@ -301,7 +311,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             }
 
             novaJanela = new Stage();
-            novaJanela.setTitle("Ativos Financeiros - Negociação");
+            novaJanela.setTitle(compra ? "Comprar" : "Vender");
             Scene sceneNovaJanela = new Scene(root, 400, 400);
             novaJanela.setResizable(false);
             novaJanela.setScene(sceneNovaJanela);
@@ -377,18 +387,101 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     @FXML
     private Label informacoesCambioLabel;
 
+    private AtivosFinanceiros ativoSelecionado;
+    private CarteiraUsuario carteiraSelecionada;
+
+    public AtivosFinanceiros ativoSelecionado() {
+        return ativoSelecionado;
+    }
+
+    public CarteiraUsuario carteiraSelecionada() {
+        return carteiraSelecionada;
+    }
+
+    public void setDadosCompraVenda(AtivosFinanceiros ativo, CarteiraUsuario carteira, boolean compra) {
+        this.ativoSelecionado = ativo;
+        this.carteiraSelecionada = carteira;
+    }
+
     @FXML
     void botaoConfirmarCompraVenda(ActionEvent event) {
+        try {
+            int quantidade = Integer.parseInt(quantidadeCompVendField.getText());
 
+            if (quantidade <= 0) {
+                ControladorGeral.alertaErro("Quantidade Inválida", "A quantidade deve ser maior que zero.");
+                return;
+            }
+
+            AtivosFinanceiros ativoParaComprar = ativoSelecionado();
+            CarteiraUsuario carteiraUsuario = carteiraSelecionada();
+
+            comprarAtivos(ativoParaComprar, carteiraUsuario);
+
+        } catch (NumberFormatException e) {
+            ControladorGeral.alertaErro("Entrada Inválida", "Digite um número válido para a quantidade.");
+        }
     }
 
-    public void comprarAtivos() {
+    public void comprarAtivos(AtivosFinanceiros ativoFinanceiro, CarteiraUsuario carteiraUsuario) {
         int quantidade = Integer.parseInt(quantidadeCompVendField.getText());
-        double saldoAtualDoUser;
-        double precoAtualDoAtivo;
 
-        double valorFinal;
+        double taxaCambio = getTaxaCambio(carteiraSelecionada().getEnumTipoMoeda().toString(), ativoFinanceiro.getMoeda());
+        if (taxaCambio == -1) {
+            ControladorGeral.alertaErro("Erro de Câmbio", "Não foi possível obter a taxa de câmbio. Tente novamente mais tarde.");
+            return;
+        }
+
+        double precoAtivoConvertido = ativoFinanceiro.getPrecoAtual() * taxaCambio;
+        double valorFinal = precoAtivoConvertido * quantidade;
+
+        if (carteiraUsuario.getSaldoDisponivel() >= valorFinal) {
+            carteiraUsuario.setSaldoDisponivel(carteiraUsuario.getSaldoDisponivel() - valorFinal);
+            carteiraUsuario.comprarAtivos(ativoFinanceiro, quantidade);
+            ControladorGeral.alertaInformacao("Compra Realizada",
+                    "Compra de " + quantidade + " unidades do ativo " + ativoFinanceiro.getCodigo() + " efetuada com sucesso.");
+        } else {
+            ControladorGeral.alertaErro("Saldo Insuficiente",
+                    "Saldo insuficiente para completar a compra. Valor necessário: " + String.format("%.2f", valorFinal) + " " + ativoFinanceiro.getMoeda());
+        }
     }
+
+    public void venderAtivos(AtivosFinanceiros ativoFinanceiro, CarteiraUsuario carteiraUsuario, int quantidade) {
+        if (quantidade <= 0) {
+            ControladorGeral.alertaErro("Quantidade Inválida", "A quantidade de ativos deve ser maior que zero.");
+            return;
+        }
+
+        boolean ativoEncontrado = false;
+
+        for (int i = 0; i < carteiraUsuario.getTamanho(); i++) {
+            AtivosFinanceiros ativo = carteiraUsuario.getAtivosFinanceiros()[i];
+
+            if (ativo.getCodigo().equals(ativoFinanceiro.getCodigo())) {
+                ativoEncontrado = true;
+
+                if (ativo.getQuantidade() >= quantidade) {
+                    ativo.removerQuantidade(quantidade);
+                    double valorRecebido = ativoFinanceiro.getPrecoAtual() * quantidade;
+                    carteiraUsuario.setSaldoDisponivel(carteiraUsuario.getSaldoDisponivel() + valorRecebido);
+
+                    if (ativo.getQuantidade() == 0) {
+                        carteiraUsuario.removerAtivoDaCarteira(i);
+                    }
+
+                    ControladorGeral.alertaInformacao("Venda Realizada", "Venda de " + quantidade + " unidades do ativo " + ativoFinanceiro.getCodigo() + " efetuada com sucesso.");
+                } else {
+                    ControladorGeral.alertaErro("Quantidade Insuficiente", "Você não possui quantidade suficiente do ativo para realizar a venda.");
+                }
+                break;
+            }
+        }
+
+        if (!ativoEncontrado) {
+            ControladorGeral.alertaErro("Ativo Não Encontrado", "O ativo " + ativoFinanceiro.getCodigo() + " não foi encontrado na sua carteira.");
+        }
+    }
+
 
     public String infoAtivoComprar() {
         AtivosFinanceiros ativoFinanceiro = acoesDisponiveisTable.getSelectionModel().getSelectedItem();

@@ -5,24 +5,26 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.investimentos.controladores.gui.comum.ControladorGerenciarCarteiras">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.investimentos.controladores.gui.comum.ControladorGerenciarCarteiras">
    <children>
-      <TextField fx:id="quantidadeCompVendField" layoutX="69.0" layoutY="129.0" prefHeight="33.0" prefWidth="262.0" promptText="Digite a quantidade:" stylesheets="@design.css">
+      <TextField fx:id="quantidadeCompVendField" layoutX="79.0" layoutY="152.0" prefHeight="33.0" prefWidth="262.0" promptText="Digite a quantidade:" stylesheets="@design.css">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Button fx:id="confirmarCompraVendaBotao" layoutX="143.0" layoutY="340.0" mnemonicParsing="false" onAction="#botaoConfirmarCompraVenda" prefHeight="33.0" prefWidth="114.0" stylesheets="@design.css" text="Confirmar" />
-      <Label fx:id="compraVendaLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="18.0" prefHeight="101.0" prefWidth="388.0" text="Ativos Financeiros" textAlignment="CENTER" wrapText="true">
+      <Button fx:id="confirmarCompraVendaBotao" layoutX="153.0" layoutY="396.0" mnemonicParsing="false" onAction="#botaoConfirmarCompraVenda" prefHeight="33.0" prefWidth="114.0" stylesheets="@design.css" text="Confirmar" />
+      <Label fx:id="compraVendaLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="12.0" prefHeight="101.0" prefWidth="388.0" text="Ativos Financeiros" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="informacoesCambioLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="179.0" prefHeight="147.0" prefWidth="337.0" text="Informações de dinheiro" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="informacoesCambioLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="20.0" layoutY="199.0" prefHeight="185.0" prefWidth="380.0" text="Informações de dinheiro" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
+      <Text layoutX="130.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Digite a quantidade:" textAlignment="CENTER" wrappingWidth="160.15625" />
    </children>
 </Pane>

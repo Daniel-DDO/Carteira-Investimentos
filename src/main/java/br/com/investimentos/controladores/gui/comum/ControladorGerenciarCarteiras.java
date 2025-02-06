@@ -107,8 +107,9 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     private static final String API_KEY1 = "176d06fe91ded98c0dbd428b9fc1d45311bf34ea";
     private static final String API_KEY2 = "d24000f8cfa3e553854f164e1ffe7308eacd7be4";
     private static final String[] SYMBOLS = {
-            "AAPL", "GOOGL", "AMZN"
+            "AAPL"
     };
+
     /*
     private static final String[] SYMBOLS = {
             "AAPL", "GOOGL", "AMZN", "MSFT", "TSLA", "META", "NFLX", "NVDA", "INTC", "AMD",
@@ -312,7 +313,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
             novaJanela = new Stage();
             novaJanela.setTitle(compra ? "Comprar" : "Vender");
-            Scene sceneNovaJanela = new Scene(root, 400, 400);
+            Scene sceneNovaJanela = new Scene(root, 420, 450);
             novaJanela.setResizable(false);
             novaJanela.setScene(sceneNovaJanela);
             novaJanela.show();
@@ -324,6 +325,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
     public String precoCambio(AtivosFinanceiros ativoFinanceiro, CarteiraUsuario carteiraUsuario) {
         String saldoPosConversao;
+        String precoPosConversao;
         String moedaOrigem = carteiraUsuario.getEnumTipoMoeda().toString();
         String moedaDestino = ativoFinanceiro.getMoeda();
 
@@ -332,12 +334,15 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
         if (taxaCambio != -1) {
             saldoPosConversao = String.format("%.2f", saldoAtual * taxaCambio);
+            precoPosConversao = String.format("%.2f", ativoFinanceiro.getPrecoAtual() / taxaCambio);
         } else {
             saldoPosConversao = "Não foi possível obter o câmbio";
+            precoPosConversao = "Não foi possível obter o preço em "+moedaDestino;
         }
 
-        return "\n\nPreço ativo (unidade): "+ativoFinanceiro.getPrecoAtual()+" "+ativoFinanceiro.getMoeda()+
-                "\nCâmbio "+moedaOrigem+" para " +moedaDestino+ "\n\n"+
+        return "\n\nPreço ativo (unidade): "+precoPosConversao+" "+moedaOrigem+
+                "\nCâmbio "+moedaOrigem+" para "+moedaDestino+
+                "\nPreço ativo (unidade): "+ativoFinanceiro.getPrecoAtual()+" "+ativoFinanceiro.getMoeda()+"\n\n"+
                 "Seu saldo atual em "+moedaDestino+": "+saldoPosConversao;
     }
 
@@ -432,7 +437,8 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             return;
         }
 
-        double precoAtivoConvertido = ativoFinanceiro.getPrecoAtual() * taxaCambio;
+        System.out.println(taxaCambio);
+        double precoAtivoConvertido = ativoFinanceiro.getPrecoAtual() / taxaCambio;
         double valorFinal = precoAtivoConvertido * quantidade;
 
         if (carteiraUsuario.getSaldoDisponivel() >= valorFinal) {

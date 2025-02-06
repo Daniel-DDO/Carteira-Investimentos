@@ -382,6 +382,14 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
     }
 
+    public void comprarAtivos() {
+        int quantidade = Integer.parseInt(quantidadeCompVendField.getText());
+        double saldoAtualDoUser;
+        double precoAtualDoAtivo;
+
+        double valorFinal;
+    }
+
     public String infoAtivoComprar() {
         AtivosFinanceiros ativoFinanceiro = acoesDisponiveisTable.getSelectionModel().getSelectedItem();
         String informacoes;

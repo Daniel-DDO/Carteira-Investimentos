@@ -7,9 +7,11 @@ import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.financas.AtivosFinanceiros;
 import br.com.investimentos.repositorios.RepositorioAtivos;
+import br.com.investimentos.repositorios.RepositorioCarteiras;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import com.google.gson.JsonArray;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,6 +35,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ControladorGerenciarCarteiras implements MudancaTela {
 
@@ -55,6 +59,29 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                     new SimpleDoubleProperty(cellData.getValue().getMenorPreco()).asObject());
             moedaLocal.setCellValueFactory(cellData ->
                     new SimpleStringProperty(cellData.getValue().getMoeda()));
+
+            /*
+            codigoMinhasAcoes.setCellValueFactory(cellData ->
+                    new SimpleStringProperty(cellData.getValue().getCodigo()));
+            precoMedioMinhasAcoes.setCellValueFactory(cellData ->
+                    new SimpleDoubleProperty(cellData.getValue().getPrecoMedio()).asObject());
+            quantidadeMinhasAcoes.setCellValueFactory(cellData ->
+                    new SimpleIntegerProperty(cellData.getValue().getQuantidade()).asObject());
+             */
+            codigoMinhasAcoes.setCellValueFactory(cellData -> {
+                AtivosFinanceiros ativo = cellData.getValue();
+                return ativo != null ? new SimpleStringProperty(ativo.getCodigo()) : new SimpleStringProperty("Código não disponível");
+            });
+
+            precoMedioMinhasAcoes.setCellValueFactory(cellData -> {
+                AtivosFinanceiros ativo = cellData.getValue();
+                return ativo != null ? new SimpleDoubleProperty(ativo.getPrecoMedio()).asObject() : new SimpleDoubleProperty(0.0).asObject();
+            });
+
+            quantidadeMinhasAcoes.setCellValueFactory(cellData -> {
+                AtivosFinanceiros ativo = cellData.getValue();
+                return ativo != null ? new SimpleIntegerProperty(ativo.getQuantidade()).asObject() : new SimpleIntegerProperty(0).asObject();
+            });
 
             carregarDadosAtivo();
         }
@@ -226,6 +253,21 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         System.out.println("Dados carregados: " + ativosList.size());
         acoesDisponiveisTable.setItems(ativosList);
     }
+
+    private void carregarAtivosDaCarteira(CarteiraUsuario carteiraUsuario) {
+        ObservableList<AtivosFinanceiros> ativosCarteiraList = FXCollections.observableArrayList();
+
+        List<AtivosFinanceiros> ativosNaCarteira =
+                carteiraUsuario.getAtivosFinanceiros() != null ?
+                        Arrays.asList(carteiraUsuario.getAtivosFinanceiros()) :
+                        new ArrayList<>();
+
+        for (AtivosFinanceiros ativo : ativosNaCarteira) {
+            ativosCarteiraList.add(ativo);
+        }
+        mihasAcoesTable.setItems(ativosCarteiraList);
+    }
+
 
     private String getMoedaPorSigla(String sigla) {
         return "USD";
@@ -422,6 +464,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             CarteiraUsuario carteiraUsuario = carteiraSelecionada();
 
             comprarAtivos(ativoParaComprar, carteiraUsuario);
+            RepositorioCarteiras.getInstancia().atualizarCarteira(carteiraUsuario);
 
         } catch (NumberFormatException e) {
             ControladorGeral.alertaErro("Entrada Inválida", "Digite um número válido para a quantidade.");
@@ -516,6 +559,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         if (carteiraSelecionada != null) {
             informacoes = carteiraSelecionada.exibirNoGerenciarCarteiras();
             infoCarteiraSelecionadaLabel.setText(informacoes);
+            carregarAtivosDaCarteira(carteiraSelecionada);
         } else {
             informacoes = "Selecione uma carteira para verificar as informações.";
         }

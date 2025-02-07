@@ -37,6 +37,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class ControladorGerenciarCarteiras implements MudancaTela {
 
@@ -60,27 +61,22 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             moedaLocal.setCellValueFactory(cellData ->
                     new SimpleStringProperty(cellData.getValue().getMoeda()));
 
-            /*
-            codigoMinhasAcoes.setCellValueFactory(cellData ->
-                    new SimpleStringProperty(cellData.getValue().getCodigo()));
-            precoMedioMinhasAcoes.setCellValueFactory(cellData ->
-                    new SimpleDoubleProperty(cellData.getValue().getPrecoMedio()).asObject());
-            quantidadeMinhasAcoes.setCellValueFactory(cellData ->
-                    new SimpleIntegerProperty(cellData.getValue().getQuantidade()).asObject());
-             */
             codigoMinhasAcoes.setCellValueFactory(cellData -> {
                 AtivosFinanceiros ativo = cellData.getValue();
-                return ativo != null ? new SimpleStringProperty(ativo.getCodigo()) : new SimpleStringProperty("Código não disponível");
+                String codigo = (ativo != null && ativo.getCodigo() != null) ? ativo.getCodigo() : "N/A";
+                return new SimpleStringProperty(codigo);
             });
 
             precoMedioMinhasAcoes.setCellValueFactory(cellData -> {
                 AtivosFinanceiros ativo = cellData.getValue();
-                return ativo != null ? new SimpleDoubleProperty(ativo.getPrecoMedio()).asObject() : new SimpleDoubleProperty(0.0).asObject();
+                double precoMedio = (ativo != null) ? ativo.getPrecoMedio() : 0.0;
+                return new SimpleDoubleProperty(precoMedio).asObject();
             });
 
             quantidadeMinhasAcoes.setCellValueFactory(cellData -> {
                 AtivosFinanceiros ativo = cellData.getValue();
-                return ativo != null ? new SimpleIntegerProperty(ativo.getQuantidade()).asObject() : new SimpleIntegerProperty(0).asObject();
+                int quantidade = (ativo != null) ? ativo.getQuantidade() : 0;
+                return new SimpleIntegerProperty(quantidade).asObject();
             });
 
             carregarDadosAtivo();
@@ -257,17 +253,16 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     private void carregarAtivosDaCarteira(CarteiraUsuario carteiraUsuario) {
         ObservableList<AtivosFinanceiros> ativosCarteiraList = FXCollections.observableArrayList();
 
-        List<AtivosFinanceiros> ativosNaCarteira =
-                carteiraUsuario.getAtivosFinanceiros() != null ?
-                        Arrays.asList(carteiraUsuario.getAtivosFinanceiros()) :
-                        new ArrayList<>();
+        List<AtivosFinanceiros> ativosNaCarteira = Optional.ofNullable(carteiraUsuario.getAtivosFinanceiros())
+                .map(Arrays::asList)
+                .orElseGet(ArrayList::new);
 
-        for (AtivosFinanceiros ativo : ativosNaCarteira) {
-            ativosCarteiraList.add(ativo);
-        }
+        ativosNaCarteira.stream()
+                .filter(ativo -> ativo != null && (ativo.getQuantidade() > 0 || ativo.getPrecoMedio() > 0.0))
+                .forEach(ativosCarteiraList::add);
+
         mihasAcoesTable.setItems(ativosCarteiraList);
     }
-
 
     private String getMoedaPorSigla(String sigla) {
         return "USD";

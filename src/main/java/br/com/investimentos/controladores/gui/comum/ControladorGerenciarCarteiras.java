@@ -80,6 +80,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             });
 
             carregarDadosAtivo();
+            atualizarInformacoesTela();
         }
     }
 
@@ -461,10 +462,12 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             comprarAtivos(ativoParaComprar, carteiraUsuario);
             RepositorioCarteiras.getInstancia().atualizarCarteira(carteiraUsuario);
 
+            //ControladorGeral.alertaInformacao("Operação Concluída", "Compra ou venda realizada com sucesso!");
         } catch (NumberFormatException e) {
             ControladorGeral.alertaErro("Entrada Inválida", "Digite um número válido para a quantidade.");
         }
     }
+
 
     public void comprarAtivos(AtivosFinanceiros ativoFinanceiro, CarteiraUsuario carteiraUsuario) {
         int quantidade = Integer.parseInt(quantidadeCompVendField.getText());
@@ -604,6 +607,9 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         }
     }
 
+    public void atualizarInformacoesTela() {
+        infoCarteira();
+    }
 
 
     /* ALPHA VANTAGE

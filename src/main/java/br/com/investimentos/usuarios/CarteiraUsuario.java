@@ -101,7 +101,7 @@ public class CarteiraUsuario implements Serializable {
 
 
     public String informacoesCarteira() {
-        return "Carteira "+nomeCarteira+"\nSaldo disponível: "+saldoDisponivel+" "+enumTipoMoeda;
+        return "Carteira "+nomeCarteira+"\nSaldo disponível: "+String.format("%.2f", saldoDisponivel)+" "+enumTipoMoeda;
     }
 
     public void removerAtivoDaCarteira(int quantidade) {

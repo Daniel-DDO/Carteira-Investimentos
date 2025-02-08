@@ -13,6 +13,7 @@ import br.com.investimentos.usuarios.CarteiraUsuario;
 import com.google.gson.JsonArray;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -74,11 +75,21 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                 return new SimpleIntegerProperty(quantidade).asObject();
             });
 
-            precoMedioMinhasAcoes.setCellValueFactory(cellData -> {
-                AtivosFinanceiros ativo = cellData.getValue();
-                double precoMedio = (ativo != null) ? ativo.getPrecoMedio() : 0.0;
-                return new SimpleDoubleProperty(precoMedio).asObject();
+            precoMedioMinhasAcoes.setCellFactory(column -> new TableCell<AtivosFinanceiros, Double>() {
+                @Override
+                protected void updateItem(Double precoMedio, boolean empty) {
+                    super.updateItem(precoMedio, empty);
+                    if (empty || precoMedio == null) {
+                        setText(null);
+                    } else {
+                        setText(String.format("%.2f", precoMedio));
+                    }
+                }
             });
+
+            precoMedioMinhasAcoes.setCellValueFactory(cellData ->
+                    new SimpleObjectProperty<>(cellData.getValue().getPrecoMedio())
+            );
 
             moedaMinhasAcoes.setCellValueFactory(cellData -> {
                 AtivosFinanceiros ativo = cellData.getValue();

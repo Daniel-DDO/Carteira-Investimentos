@@ -6,6 +6,7 @@ import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.financas.AtivosFinanceiros;
+import br.com.investimentos.financas.EnumTipoMoeda;
 import br.com.investimentos.repositorios.RepositorioAtivos;
 import br.com.investimentos.repositorios.RepositorioCarteiras;
 import br.com.investimentos.usuarios.CarteiraUsuario;
@@ -67,16 +68,22 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                 return new SimpleStringProperty(codigo);
             });
 
+            quantidadeMinhasAcoes.setCellValueFactory(cellData -> {
+                AtivosFinanceiros ativo = cellData.getValue();
+                int quantidade = (ativo != null) ? ativo.getQuantidade() : 0;
+                return new SimpleIntegerProperty(quantidade).asObject();
+            });
+
             precoMedioMinhasAcoes.setCellValueFactory(cellData -> {
                 AtivosFinanceiros ativo = cellData.getValue();
                 double precoMedio = (ativo != null) ? ativo.getPrecoMedio() : 0.0;
                 return new SimpleDoubleProperty(precoMedio).asObject();
             });
 
-            quantidadeMinhasAcoes.setCellValueFactory(cellData -> {
+            moedaMinhasAcoes.setCellValueFactory(cellData -> {
                 AtivosFinanceiros ativo = cellData.getValue();
-                int quantidade = (ativo != null) ? ativo.getQuantidade() : 0;
-                return new SimpleIntegerProperty(quantidade).asObject();
+                String moeda = (ativo != null && ativo.getMoeda() != null) ? ativo.getMoeda() : "USD";
+                return new SimpleStringProperty(moeda);
             });
 
             carregarDadosAtivo();
@@ -281,6 +288,9 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
     @FXML
     private TableColumn<AtivosFinanceiros, Integer> quantidadeMinhasAcoes;
+
+    @FXML
+    private TableColumn<AtivosFinanceiros, String> moedaMinhasAcoes;
 
     @FXML
     private Button comprarBotao;

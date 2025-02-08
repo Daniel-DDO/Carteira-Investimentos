@@ -90,6 +90,7 @@
                                           <TableColumn fx:id="codigoMinhasAcoes" prefWidth="133.0" text="Código ação" />
                                           <TableColumn fx:id="quantidadeMinhasAcoes" prefWidth="121.0" text="Quantidade" />
                                           <TableColumn fx:id="precoMedioMinhasAcoes" prefWidth="113.0" text="Preço médio" />
+                                          <TableColumn fx:id="moedaMinhasAcoes" prefWidth="113.0" text="Moeda" />
                                        </columns>
                                     </TableView>
                                  </children>

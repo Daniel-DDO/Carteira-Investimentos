@@ -108,11 +108,11 @@ public class ControladorCarteirasUser {
                 int quantidadeAtual = ativoExistente.getQuantidade();
                 double precoMedioAtual = ativoExistente.getPrecoMedio();
 
-                double custoTotalAtual = precoMedioAtual * quantidadeAtual;
+                double custoTotalExistente = precoMedioAtual * quantidadeAtual;
                 double custoNovaCompra = precoCompra * quantidadeCompra;
 
                 int novaQuantidade = quantidadeAtual + quantidadeCompra;
-                double novoPrecoMedio = (custoTotalAtual + custoNovaCompra) / novaQuantidade;
+                double novoPrecoMedio = (custoTotalExistente + custoNovaCompra) / novaQuantidade;
 
                 ativoExistente.setPrecoMedio(novoPrecoMedio);
                 ativoExistente.setQuantidade(novaQuantidade);
@@ -131,5 +131,6 @@ public class ControladorCarteirasUser {
             ControladorGeral.alertaErro("Limite da Carteira", "Não há espaço para novos ativos na carteira.");
         }
     }
+
 
 }

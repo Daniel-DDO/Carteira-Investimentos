@@ -265,6 +265,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         mihasAcoesTable.setItems(ativosCarteiraList);
     }
 
+
     private String getMoedaPorSigla(String sigla) {
         return "USD";
     }
@@ -462,7 +463,6 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             comprarAtivos(ativoParaComprar, carteiraUsuario);
             RepositorioCarteiras.getInstancia().atualizarCarteira(carteiraUsuario);
 
-            //ControladorGeral.alertaInformacao("Operação Concluída", "Compra ou venda realizada com sucesso!");
         } catch (NumberFormatException e) {
             ControladorGeral.alertaErro("Entrada Inválida", "Digite um número válido para a quantidade.");
         }
@@ -480,18 +480,22 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
         System.out.println(taxaCambio);
         double precoAtivoConvertido = ativoFinanceiro.getPrecoAtual() / taxaCambio;
+        double valorFinalOrigem = ativoFinanceiro.getPrecoAtual() * quantidade;
         double valorFinal = precoAtivoConvertido * quantidade;
 
         if (carteiraUsuario.getSaldoDisponivel() >= valorFinal) {
             carteiraUsuario.setSaldoDisponivel(carteiraUsuario.getSaldoDisponivel() - valorFinal);
-            carteiraUsuario.comprarAtivos(ativoFinanceiro, quantidade);
+
+            ControladorCarteirasUser.getInstancia().calcularPrecoMedioAtivo(carteiraUsuario, ativoFinanceiro, quantidade, precoAtivoConvertido);
+
             ControladorGeral.alertaInformacao("Compra Realizada",
                     "Compra de " + quantidade + " unidades do ativo " + ativoFinanceiro.getCodigo() + " efetuada com sucesso.");
         } else {
             ControladorGeral.alertaErro("Saldo Insuficiente",
-                    "Saldo insuficiente para completar a compra. Valor necessário: " + String.format("%.2f", valorFinal) + " " + ativoFinanceiro.getMoeda());
+                    "Saldo insuficiente para completar a compra. Valor necessário: " + String.format("%.2f", valorFinalOrigem) + " " + ativoFinanceiro.getMoeda());
         }
     }
+
 
     public void venderAtivos(AtivosFinanceiros ativoFinanceiro, CarteiraUsuario carteiraUsuario, int quantidade) {
         if (quantidade <= 0) {

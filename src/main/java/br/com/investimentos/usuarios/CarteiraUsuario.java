@@ -20,7 +20,7 @@ public class CarteiraUsuario implements Serializable {
     private EnumTipoMoeda enumTipoMoeda;
     private int posicao = 0;
     private int tamanho = 400;
-    private AtivosFinanceiros[] ativosFinanceiros = new AtivosFinanceiros[400];
+    private AtivosFinanceiros[] ativosFinanceiros;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -198,6 +198,14 @@ public class CarteiraUsuario implements Serializable {
 
     public void setTamanho(int tamanho) {
         this.tamanho = tamanho;
+    }
+
+    public int getPosicao() {
+        return posicao;
+    }
+
+    public void setPosicao(int posicao) {
+        this.posicao = posicao;
     }
 
     @Override

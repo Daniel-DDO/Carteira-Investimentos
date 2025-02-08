@@ -1,6 +1,7 @@
 package br.com.investimentos.controladores;
 
 import br.com.investimentos.controladores.gui.ControladorGeral;
+import br.com.investimentos.financas.AtivosFinanceiros;
 import br.com.investimentos.financas.EnumTipoMoeda;
 import br.com.investimentos.repositorios.RepositorioCarteiras;
 import br.com.investimentos.repositorios.RepositorioContaUsuario;
@@ -95,6 +96,40 @@ public class ControladorCarteirasUser {
         }
     }
 
+    public void calcularPrecoMedioAtivo(CarteiraUsuario carteira, AtivosFinanceiros ativoFinanceiro, int quantidadeCompra, double precoCompra) {
+        if (quantidadeCompra <= 0 || precoCompra <= 0) {
+            return;
+        }
 
+        for (int i = 0; i < carteira.getPosicao(); i++) {
+            AtivosFinanceiros ativoExistente = carteira.getAtivosFinanceiros()[i];
+
+            if (ativoExistente.getCodigo().equals(ativoFinanceiro.getCodigo())) {
+                int quantidadeAtual = ativoExistente.getQuantidade();
+                double precoMedioAtual = ativoExistente.getPrecoMedio();
+
+                double custoTotalAtual = precoMedioAtual * quantidadeAtual;
+                double custoNovaCompra = precoCompra * quantidadeCompra;
+
+                int novaQuantidade = quantidadeAtual + quantidadeCompra;
+                double novoPrecoMedio = (custoTotalAtual + custoNovaCompra) / novaQuantidade;
+
+                ativoExistente.setPrecoMedio(novoPrecoMedio);
+                ativoExistente.setQuantidade(novaQuantidade);
+                return;
+            }
+        }
+
+        if (carteira.getPosicao() < carteira.getTamanho()) {
+            ativoFinanceiro.setQuantidade(quantidadeCompra);
+            ativoFinanceiro.setPrecoMedio(precoCompra);
+            carteira.getAtivosFinanceiros()[carteira.getPosicao()] = ativoFinanceiro;
+            carteira.setPosicao(carteira.getPosicao() + 1);
+
+            ControladorGeral.alertaInformacao("Ativo Adicionado", "O ativo " + ativoFinanceiro.getCodigo() + " foi adicionado à carteira.");
+        } else {
+            ControladorGeral.alertaErro("Limite da Carteira", "Não há espaço para novos ativos na carteira.");
+        }
+    }
 
 }

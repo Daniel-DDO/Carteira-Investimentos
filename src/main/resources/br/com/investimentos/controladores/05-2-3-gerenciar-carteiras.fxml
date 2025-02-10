@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -16,40 +17,103 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.investimentos.controladores.gui.comum.ControladorGerenciarCarteiras">
    <center>
-      <ScrollPane prefHeight="499.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+      <ScrollPane fitToWidth="true" prefHeight="297.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <content>
-            <Pane prefHeight="539.0" prefWidth="998.0">
+            <Pane prefHeight="571.0" prefWidth="998.0">
                <children>
-                  <GridPane layoutX="9.0" layoutY="9.0" prefHeight="374.0" prefWidth="962.0">
+                  <GridPane layoutX="8.0" layoutY="7.0" prefHeight="538.0" prefWidth="992.0">
                     <columnConstraints>
-                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="368.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="644.0" minWidth="10.0" prefWidth="632.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="111.0" minHeight="5.0" prefHeight="28.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="275.0" minHeight="10.0" prefHeight="275.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Selecione a carteira que deseja visualizar as informações" textAlignment="CENTER">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <ComboBox fx:id="cboxSelecionarCarteira" onAction="#selecionarCarteiraCbox" prefHeight="33.0" prefWidth="312.0" promptText="Selecione uma carteira" stylesheets="@design.css" GridPane.rowIndex="1" />
-                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                        <GridPane prefHeight="368.0" prefWidth="962.0" GridPane.columnIndex="1">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="111.0" minHeight="5.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="457.0" minHeight="10.0" prefHeight="457.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
                            <children>
-                              <Label fx:id="infoCarteiraSelecionadaLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="6.0" prefHeight="62.0" prefWidth="949.0" text="Carteira selecionada" textAlignment="CENTER" wrapText="true">
+                              <Label text="Selecione a carteira que deseja visualizar as informações" textAlignment="CENTER">
                                  <font>
-                                    <Font name="System Bold" size="15.0" />
+                                    <Font size="15.0" />
                                  </font>
                               </Label>
-                              <GridPane layoutX="11.0" layoutY="67.0" prefHeight="324.0" prefWidth="368.0">
+                              <ComboBox fx:id="cboxSelecionarCarteira" onAction="#selecionarCarteiraCbox" prefHeight="33.0" prefWidth="312.0" promptText="Selecione uma carteira" stylesheets="@design.css" GridPane.rowIndex="1" />
+                              <Pane GridPane.rowIndex="2">
+                                 <children>
+                                    <Label fx:id="infoCarteiraSelecionadaLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="34.0" prefHeight="62.0" prefWidth="565.0" text="Carteira selecionada" textAlignment="CENTER" wrapText="true">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="venderBotao" layoutX="172.0" layoutY="68.0" mnemonicParsing="false" onAction="#botaoVender" prefHeight="35.0" prefWidth="140.0" stylesheets="@design.css" text="Vender" />
+                                    <Button fx:id="comprarBotao" layoutX="321.0" layoutY="68.0" mnemonicParsing="false" onAction="#botaoComprar" prefHeight="35.0" prefWidth="140.0" stylesheets="@design.css" text="Comprar" />
+                                    <GridPane layoutX="5.0" layoutY="115.0" prefHeight="340.0" prefWidth="618.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints maxHeight="122.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="122.0" minHeight="10.0" prefHeight="104.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="268.0" minHeight="10.0" prefHeight="173.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <GridPane prefHeight="62.0" prefWidth="618.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <TextField fx:id="quantidadeCompVendField" maxWidth="-Infinity" prefHeight="32.0" prefWidth="279.0" promptText="Digite a quantidade:" stylesheets="@design.css" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </TextField>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Digite a quantidade:" />
+                                             </children>
+                                          </GridPane>
+                                          <Label fx:id="informacoesCambioLabel" alignment="CENTER" prefHeight="261.0" prefWidth="650.0" text="Informações de dinheiro" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="compraVendaLabel" alignment="CENTER" prefHeight="100.0" prefWidth="618.0" text="Informações do ativo" textAlignment="CENTER" textFill="#001682" wrapText="true" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </GridPane>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <GridPane prefHeight="238.0" prefWidth="368.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                  <RowConstraints maxHeight="98.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="287.0" minHeight="10.0" prefHeight="287.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="98.0" minHeight="0.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="287.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="443.0" text="Ações disponíveis" textAlignment="CENTER" wrapText="true">
@@ -69,15 +133,13 @@
                                     </TableView>
                                  </children>
                               </GridPane>
-                              <Button fx:id="venderBotao" layoutX="409.0" layoutY="106.0" mnemonicParsing="false" onAction="#botaoVender" prefHeight="35.0" prefWidth="140.0" stylesheets="@design.css" text="Vender" />
-                              <Button fx:id="comprarBotao" layoutX="409.0" layoutY="159.0" mnemonicParsing="false" onAction="#botaoComprar" prefHeight="35.0" prefWidth="140.0" stylesheets="@design.css" text="Comprar" />
-                              <GridPane layoutX="585.0" layoutY="67.0" prefHeight="324.0" prefWidth="368.0">
+                              <GridPane prefHeight="248.0" prefWidth="368.0" GridPane.rowIndex="1">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                  </columnConstraints>
                                  <rowConstraints>
-                                    <RowConstraints maxHeight="98.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="287.0" minHeight="10.0" prefHeight="287.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="98.0" minHeight="0.0" prefHeight="42.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="287.0" minHeight="10.0" prefHeight="206.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
                                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="443.0" text="Minhas ações adquiridas" textAlignment="CENTER" wrapText="true">
@@ -96,7 +158,7 @@
                                  </children>
                               </GridPane>
                            </children>
-                        </Pane>
+                        </GridPane>
                      </children>
                   </GridPane>
                </children></Pane>

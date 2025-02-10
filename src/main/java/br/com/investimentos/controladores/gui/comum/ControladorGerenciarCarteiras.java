@@ -421,6 +421,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         return -1;
     }
 
+
     //Tela compra ou venda
 
     @FXML
@@ -459,6 +460,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             comprarAtivos(ativoParaComprar, carteiraUsuario);
             RepositorioCarteiras.getInstancia().atualizarCarteira(carteiraUsuario);
 
+            atualizarInformacoesTela();
         } catch (NumberFormatException e) {
             ControladorGeral.alertaErro("Entrada Inválida", "Digite um número válido para a quantidade.");
         }
@@ -609,6 +611,12 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
     public void atualizarInformacoesTela() {
         infoCarteira();
+        if (informacoesCambioLabel != null && carteiraSelecionada() != null && ativoSelecionado() != null) {
+            informacoesCambioLabel.setText(carteiraSelecionada().informacoesCarteira() + precoCambio(ativoSelecionado(), carteiraSelecionada()));
+        }
+        if (carteiraSelecionada() != null) {
+            carregarAtivosDaCarteira(carteiraSelecionada());
+        }
     }
 
 

@@ -110,6 +110,12 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     public Button botaoVoltar0523;
     @FXML
     public Button botaoConfirmar0523;
+    @FXML
+    public Label informacoesCambioLabel;
+    @FXML
+    public TextField quantidadeCompVendField;
+    @FXML
+    public Label compraVendaLabel;
 
     @FXML
     public void voltarBotao0523(ActionEvent actionEvent) {
@@ -118,6 +124,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
     @FXML
     public void confirmarBotao0523(ActionEvent actionEvent) {
+        botaoConfirmarCompraVenda(actionEvent);
     }
 
     @FXML
@@ -344,21 +351,9 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     private Stage novaJanela;
 
     public void abrirCompraVenda(AtivosFinanceiros ativoFinanceiro, CarteiraUsuario carteira, boolean compra) {
-        if (novaJanela != null && novaJanela.isShowing()) {
-            return;
-        }
-
-        this.ativoSelecionado = ativoFinanceiro;
-        this.carteiraSelecionada = carteira;
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/investimentos/controladores/confirmar-compra-venda.fxml"));
-            Parent root = loader.load();
-
-            ControladorGerenciarCarteiras controlador = loader.getController();
-            controlador.setDadosCompraVenda(ativoFinanceiro, carteira, compra);
-            Label compraVendaLabel = (Label) loader.getNamespace().get("compraVendaLabel");
-            Label informacoesCambioLabel = (Label) loader.getNamespace().get("informacoesCambioLabel");
+        setDadosCompraVenda(ativoFinanceiro, carteira, compra);
+            Label informacoesCambioLabel =  this.informacoesCambioLabel;
+            Label compraVendaLabel = this.compraVendaLabel;
 
             if (compraVendaLabel != null) {
                 String operacao;
@@ -369,17 +364,6 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                 }
                 compraVendaLabel.setText(operacao + ": " + ativoFinanceiro.informacoesDoAtivo());
                 informacoesCambioLabel.setText(carteira.informacoesCarteira()+precoCambio(ativoFinanceiro, carteira));
-            }
-
-            novaJanela = new Stage();
-            novaJanela.setTitle(compra ? "Comprar" : "Vender");
-            Scene sceneNovaJanela = new Scene(root, 420, 450);
-            novaJanela.setResizable(false);
-            novaJanela.setScene(sceneNovaJanela);
-            novaJanela.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -437,20 +421,11 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         return -1;
     }
 
-
     //Tela compra ou venda
-
-    @FXML
-    private Label compraVendaLabel;
 
     @FXML
     private Button confirmarCompraVendaBotao;
 
-    @FXML
-    private TextField quantidadeCompVendField;
-
-    @FXML
-    private Label informacoesCambioLabel;
 
     private AtivosFinanceiros ativoSelecionado;
     private CarteiraUsuario carteiraSelecionada;

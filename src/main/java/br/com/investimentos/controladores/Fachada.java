@@ -44,6 +44,12 @@ public class Fachada {
         controladorCarteirasUser.adicionarSaldo(novoSaldo, carteira);
     }
 
+    //Ativos
+
+    public static double converter(String moedaOrigem, String moedaDestino, double valor) throws Exception {
+        return ControladorAtivosFinanceiros.converter(moedaOrigem, moedaDestino, valor);
+    }
+
     /*
     private Controle controle;
 

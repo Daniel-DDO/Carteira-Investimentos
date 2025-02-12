@@ -45,6 +45,15 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
     private boolean compra = false;
 
+    private static ControladorGerenciarCarteiras controladorGerenciarCarteiras;
+
+    public static ControladorGerenciarCarteiras getInstancia() {
+        if (controladorGerenciarCarteiras == null){
+            controladorGerenciarCarteiras = new ControladorGerenciarCarteiras();
+        }
+        return controladorGerenciarCarteiras;
+    }
+
     @Override
     public void mudancaTela(int novaTela, Object objeto) {
         if (novaTela == 15) {
@@ -133,7 +142,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     }
 
     @FXML
-    private TableView<AtivosFinanceiros> acoesDisponiveisTable;
+    public TableView<AtivosFinanceiros> acoesDisponiveisTable;
 
     @FXML
     private TableColumn<AtivosFinanceiros, String> codigoAcao;
@@ -176,7 +185,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     private String apiKeyEmUso = API_KEY1;
 
     @FXML
-    private void carregarDadosAtivo() {
+    public void carregarDadosAtivo() {
         ObservableList<AtivosFinanceiros> ativosList = FXCollections.observableArrayList();
         AtivosFinanceiros[] ativosFinanceirosDoArquivo = RepositorioAtivos.lerAtivos();
 
@@ -610,6 +619,107 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         if (carteiraSelecionada() != null) {
             carregarAtivosDaCarteira(carteiraSelecionada());
         }
+    }
+
+    public ObservableList<AtivosFinanceiros> obterAtivos(EnumTipoMoeda enumTipoMoeda) {
+        ObservableList<AtivosFinanceiros> ativosList = FXCollections.observableArrayList();
+        AtivosFinanceiros[] ativosFinanceirosDoArquivo = RepositorioAtivos.lerAtivos();
+        String apiKeyEmUso = API_KEY1;
+
+        for (String symbol : SYMBOLS) {
+            String apiUrl = "https://api.tiingo.com/tiingo/daily/" + symbol + "/prices?token=" + apiKeyEmUso;
+
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                int responseCode = connection.getResponseCode();
+                System.out.println("Requisitando " + symbol + " com código de resposta: " + responseCode);
+
+                if (responseCode == 429) {
+                    System.out.println("Limite de requisições atingido para " + apiKeyEmUso);
+                    apiKeyEmUso = (apiKeyEmUso.equals(API_KEY1)) ? API_KEY2 : API_KEY1;
+                    apiUrl = "https://api.tiingo.com/tiingo/daily/" + symbol + "/prices?token=" + apiKeyEmUso;
+                    connection = (HttpURLConnection) new URL(apiUrl).openConnection();
+                    connection.setRequestMethod("GET");
+                    responseCode = connection.getResponseCode();
+                    System.out.println("Tentando novamente com a chave " + apiKeyEmUso + " para " + symbol);
+                }
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+
+                    String inputLine;
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    JsonArray jsonResponse = JsonParser.parseString(response.toString()).getAsJsonArray();
+
+                    if (jsonResponse.size() > 0) {
+                        JsonObject firstEntry = jsonResponse.get(0).getAsJsonObject();
+
+                        double precoAtual = firstEntry.get("close").getAsDouble();
+                        double precoAbertura = firstEntry.get("open").getAsDouble();
+                        double maiorPreco = firstEntry.get("high").getAsDouble();
+                        double menorPreco = firstEntry.get("low").getAsDouble();
+
+                        String moeda = enumTipoMoeda.name();
+
+                        AtivosFinanceiros novoAtivo = new AtivosFinanceiros(symbol, precoAtual, precoAbertura, maiorPreco, menorPreco, moeda);
+
+                        boolean ativoAtualizado = false;
+                        for (int i = 0; i < ativosFinanceirosDoArquivo.length; i++) {
+                            if (ativosFinanceirosDoArquivo[i] != null &&
+                                    ativosFinanceirosDoArquivo[i].getCodigo().equals(novoAtivo.getCodigo())) {
+                                ativosFinanceirosDoArquivo[i] = novoAtivo;
+                                ativoAtualizado = true;
+                                System.out.println("Ativo atualizado: " + novoAtivo.getCodigo());
+                                break;
+                            }
+                        }
+
+                        if (!ativoAtualizado) {
+                            for (int i = 0; i < ativosFinanceirosDoArquivo.length; i++) {
+                                if (ativosFinanceirosDoArquivo[i] == null) {
+                                    ativosFinanceirosDoArquivo[i] = novoAtivo;
+                                    System.out.println("Novo ativo adicionado: " + novoAtivo.getCodigo());
+                                    break;
+                                }
+                            }
+                        }
+
+                        ativosList.add(novoAtivo);
+                    } else {
+                        System.out.println("Sem dados para " + symbol);
+                    }
+                } else {
+                    System.out.println("Erro na requisição para " + symbol + ": " + responseCode);
+                }
+            } catch (Exception e) {
+                System.out.println("Erro ao processar a requisição para " + symbol);
+                e.printStackTrace();
+            }
+        }
+
+        if (ativosList.isEmpty()) {
+            System.out.println("Carregando dados do arquivo, já que não conseguimos dados da API.");
+            for (AtivosFinanceiros ativoArquivo : ativosFinanceirosDoArquivo) {
+                if (ativoArquivo != null) {
+                    ativosList.add(ativoArquivo);
+                    System.out.println("Ativo carregado do arquivo: " + ativoArquivo.getCodigo());
+                }
+            }
+        } else {
+            System.out.println("Atualizando o arquivo com os novos dados.");
+            RepositorioAtivos.atualizarAtivos(ativosFinanceirosDoArquivo);
+        }
+
+        System.out.println("Dados carregados: " + ativosList.size());
+        return ativosList;
     }
 
 

@@ -321,8 +321,8 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         AtivosFinanceiros ativoFinanceiro = acoesDisponiveisTable.getSelectionModel().getSelectedItem();
         CarteiraUsuario carteiraUsuario = cboxSelecionarCarteira.getValue();
         if (ativoFinanceiro != null && carteiraUsuario != null) {
+            this.compra = true;
             abrirCompraVenda(ativoFinanceiro, carteiraUsuario, true);
-            compra = true;
         } else if (ativoFinanceiro == null) {
             ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar um ativo, primeiro você deve selecionar na tabela.");
         } else if (carteiraUsuario == null) {
@@ -337,8 +337,8 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         AtivosFinanceiros ativoFinanceiro = mihasAcoesTable.getSelectionModel().getSelectedItem();
         CarteiraUsuario carteiraUsuario = cboxSelecionarCarteira.getValue();
         if (ativoFinanceiro != null && carteiraUsuario != null) {
+            this.compra = false;
             abrirCompraVenda(ativoFinanceiro, carteiraUsuario, false);
-            compra = false;
         } else if (ativoFinanceiro == null) {
             ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar um ativo, primeiro você deve selecionar na tabela.");
         } else if (carteiraUsuario == null) {
@@ -347,8 +347,6 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             ControladorGeral.alertaErro("Ativos Financeiros", "Para comprar um ativo, primeiro você deve selecionar na tabela.");
         }
     }
-
-    private Stage novaJanela;
 
     public void abrirCompraVenda(AtivosFinanceiros ativoFinanceiro, CarteiraUsuario carteira, boolean compra) {
         setDadosCompraVenda(ativoFinanceiro, carteira, compra);
@@ -421,13 +419,6 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         return -1;
     }
 
-
-    //Tela compra ou venda
-
-    @FXML
-    private Button confirmarCompraVendaBotao;
-
-
     private AtivosFinanceiros ativoSelecionado;
     private CarteiraUsuario carteiraSelecionada;
 
@@ -455,9 +446,14 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             }
 
             AtivosFinanceiros ativoParaComprar = ativoSelecionado();
+            AtivosFinanceiros ativoParaVender = ativoSelecionado();
             CarteiraUsuario carteiraUsuario = carteiraSelecionada();
 
-            comprarAtivos(ativoParaComprar, carteiraUsuario);
+            if (this.compra) {
+                comprarAtivos(ativoParaComprar, carteiraUsuario);
+            } else {
+                venderAtivos(ativoParaVender, carteiraUsuario, quantidade);
+            }
             RepositorioCarteiras.getInstancia().atualizarCarteira(carteiraUsuario);
 
             atualizarInformacoesTela();
@@ -548,9 +544,6 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     public String infoAtivoVender() {
         return "a";
     }
-
-    //final dessa tela extra
-
 
     public String infoCarteira() {
         CarteiraUsuario carteiraSelecionada = cboxSelecionarCarteira.getSelectionModel().getSelectedItem();

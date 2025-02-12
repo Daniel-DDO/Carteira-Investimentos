@@ -167,6 +167,40 @@
     -fx-background-radius: 2px;
 }
 
+.new-check-box {
+    -fx-text-fill: bold;
+    -fx-font-size: 11px;
+    -fx-font-family: 'Arial', sans-serif;
+    -fx-padding: 2 5;
+    -fx-cursor: hand;
+}
+
+.new-check-box .box {
+    -fx-border-color: #007fbb;
+    -fx-border-width: 1.5px;
+    -fx-background-color: #005f9f;
+    -fx-background-radius: 2px;
+    -fx-border-radius: 2px;
+    -fx-min-width: 1px;
+    -fx-min-height: 1px;
+    -fx-alignment: center;
+    -fx-transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.new-check-box:hover .box {
+    -fx-border-color: #005f9f;
+    -fx-background-color: #007fbb;
+}
+
+.new-check-box:selected .box {
+    -fx-border-color: #003f7f;
+    -fx-background-color: #003f7f;
+}
+
+.new-wcheck-box:selected .mark {
+    -fx-background-color: white;
+    -fx-background-radius: 2px;
+}
 
 .chart {
     -fx-background-color: #004c7f;

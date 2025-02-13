@@ -1,11 +1,16 @@
 package br.com.investimentos.financas;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class ExtratoOperacoes {
+public class ExtratoOperacoes implements Serializable {
     private String operacao;
     private LocalDate dataOperacao;
     private String informacoes;
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public ExtratoOperacoes(String operacao, LocalDate dataOperacao, String informacoes) {
         this.operacao = operacao;

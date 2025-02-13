@@ -4,11 +4,14 @@ import br.com.investimentos.controladores.ControladorCarteirasUser;
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.usuarios.CarteiraUsuario;
+import br.com.investimentos.financas.ExtratoOperacoes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.util.ArrayList;
 
 import static br.com.investimentos.controladores.gui.Programa.trocarTela;
@@ -21,6 +24,12 @@ public class ControladorExtrato implements MudancaTela {
             if (UsuarioLogado.getInstancia().getUsuarioComum() != null) {
                 cboxSelecionarCarteira.getItems().clear();
                 visualizarCarteirasCbox();
+
+                dataColuna.setCellValueFactory(new PropertyValueFactory<>("dataOperacao"));
+                operacoesColuna.setCellValueFactory(new PropertyValueFactory<>("operacao"));
+                informacoesColuna.setCellValueFactory(new PropertyValueFactory<>("informacoes"));
+
+                tableExtrato.setItems(extratos);
             }
         }
     }
@@ -32,15 +41,18 @@ public class ControladorExtrato implements MudancaTela {
     private ComboBox<CarteiraUsuario> cboxSelecionarCarteira;
 
     @FXML
-    private TableColumn<String, String> dataColuna;
+    private TableColumn<ExtratoOperacoes, String> dataColuna;
 
     @FXML
-    private TableColumn<String, String> operacoesColuna;
+    private TableColumn<ExtratoOperacoes, String> operacoesColuna;
 
     @FXML
-    private TableView<String> tableExtrato;
+    private TableColumn<ExtratoOperacoes, String> informacoesColuna;
 
-    private final ObservableList<String> extratos = FXCollections.observableArrayList();
+    @FXML
+    private TableView<ExtratoOperacoes> tableExtrato;
+
+    private final ObservableList<ExtratoOperacoes> extratos = FXCollections.observableArrayList();
 
     @FXML
     void confirmarBotao0524(ActionEvent event) {
@@ -53,7 +65,8 @@ public class ControladorExtrato implements MudancaTela {
     }
 
     public void visualizarCarteirasCbox() {
-        ArrayList<CarteiraUsuario> carteiraUsuarios = ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
+        ArrayList<CarteiraUsuario> carteiraUsuarios = ControladorCarteirasUser.getInstancia()
+                .exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
 
         if (!carteiraUsuarios.isEmpty()) {
             cboxSelecionarCarteira.getItems().clear();
@@ -75,13 +88,13 @@ public class ControladorExtrato implements MudancaTela {
     private void atualizarExtrato(CarteiraUsuario carteira) {
         extratos.clear();
 
-        String[] historico = carteira.getHistoricoOperacoes();
-        for (int i = 0; i < carteira.getPosicao1(); i++) {
-            if (historico[i] != null) {
-                extratos.add(historico[i]);
+        ExtratoOperacoes[] historico = carteira.retornarOperacoes();
+        for (ExtratoOperacoes operacao : historico) {
+            if (operacao != null) {
+                extratos.add(operacao);
             }
         }
+
         tableExtrato.setItems(extratos);
     }
-
 }

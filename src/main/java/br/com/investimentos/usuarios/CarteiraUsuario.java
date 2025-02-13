@@ -21,6 +21,7 @@ public class CarteiraUsuario implements Serializable {
     private int posicao1 = 0;
     private int tamanho = 400;
     private AtivosFinanceiros[] ativosFinanceiros;
+    private ExtratoOperacoes[] extratoOperacoes;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -34,6 +35,7 @@ public class CarteiraUsuario implements Serializable {
         this.enumTipoMoeda = enumTipoMoeda;
         this.usuario = usuario;
         this.ativosFinanceiros = new AtivosFinanceiros[tamanho];
+        this.extratoOperacoes = new ExtratoOperacoes[tamanho];
     }
 
     public void depositarDinheiro(double valorDeposito) {
@@ -49,6 +51,21 @@ public class CarteiraUsuario implements Serializable {
             ativosFinanceiros[i] = ativosFinanceiros[i + 1];
         }
         ativosFinanceiros[--posicao] = null;
+    }
+
+    public void adicionarAoExtrato(ExtratoOperacoes novaOperacao) {
+        if (posicao1 < tamanho) {
+            extratoOperacoes[posicao1] = novaOperacao;
+            posicao1++;
+        }
+    }
+
+    public ExtratoOperacoes[] retornarOperacoes() {
+        ExtratoOperacoes[] operacoes = new ExtratoOperacoes[posicao1];
+        for (int i = 0; i < posicao1; i++) {
+            operacoes[i] = extratoOperacoes[i];
+        }
+        return operacoes;
     }
 
     public AtivosFinanceiros[] getAtivosFinanceiros() {
@@ -153,6 +170,14 @@ public class CarteiraUsuario implements Serializable {
 
     public void setPosicao1(int posicao1) {
         this.posicao1 = posicao1;
+    }
+
+    public ExtratoOperacoes[] getExtratoOperacoes() {
+        return extratoOperacoes;
+    }
+
+    public void setExtratoOperacoes(ExtratoOperacoes[] extratoOperacoes) {
+        this.extratoOperacoes = extratoOperacoes;
     }
 
     @Override

@@ -7,6 +7,7 @@ import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.financas.AtivosFinanceiros;
 import br.com.investimentos.financas.EnumTipoMoeda;
+import br.com.investimentos.financas.ExtratoOperacoes;
 import br.com.investimentos.repositorios.RepositorioAtivos;
 import br.com.investimentos.repositorios.RepositorioCarteiras;
 import br.com.investimentos.usuarios.CarteiraUsuario;
@@ -480,27 +481,28 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             return;
         }
 
-        System.out.println(taxaCambio);
         double precoAtivoConvertido = ativoFinanceiro.getPrecoAtual() / taxaCambio;
-        double valorFinalOrigem = ativoFinanceiro.getPrecoAtual() * quantidade;
         double valorFinal = precoAtivoConvertido * quantidade;
 
         if (carteiraUsuario.getSaldoDisponivel() >= valorFinal) {
             carteiraUsuario.setSaldoDisponivel(carteiraUsuario.getSaldoDisponivel() - valorFinal);
             ControladorCarteirasUser.getInstancia().calcularPrecoMedioAtivo(carteiraUsuario, ativoFinanceiro, quantidade, precoAtivoConvertido);
 
-            carteiraUsuario.adicionarNoHistorico(
-                    "Compra - Data: " + java.time.LocalDate.now() +
-                            " | Ativo: " + ativoFinanceiro.getCodigo() +
-                            " | Quantidade: " + quantidade +
-                            " | Preço: " + ativoFinanceiro.getPrecoAtual()
+            ExtratoOperacoes operacaoCompra = new ExtratoOperacoes(
+                    "Compra",
+                    java.time.LocalDate.now(),
+                    "Ativo: "+ativoFinanceiro.getCodigo()+
+                            " | Quantidade: "+quantidade+
+                            " | Preço: "+String.format("%.2f", ativoFinanceiro.getPrecoAtual())+" "+ativoFinanceiro.getMoeda()
             );
+            carteiraUsuario.adicionarAoExtrato(operacaoCompra);
 
             ControladorGeral.alertaInformacao("Compra Realizada",
                     "Compra de " + quantidade + " unidades do ativo " + ativoFinanceiro.getCodigo() + " efetuada com sucesso.");
         } else {
             ControladorGeral.alertaErro("Saldo Insuficiente",
-                    "Saldo insuficiente para completar a compra. Valor necessário: " + String.format("%.2f", valorFinalOrigem) + " " + ativoFinanceiro.getMoeda());
+                    "Saldo insuficiente para completar a compra. Valor necessário: " +
+                            String.format("%.2f", valorFinal) + " " + ativoFinanceiro.getMoeda());
         }
     }
 
@@ -511,8 +513,9 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         }
 
         boolean ativoEncontrado = false;
+        double taxaCambio = getTaxaCambio(carteiraSelecionada().getEnumTipoMoeda().toString(), ativoFinanceiro.getMoeda());
 
-        for (int i = 0; i < carteiraUsuario.getTamanho(); i++) {
+        for (int i = 0; i < carteiraUsuario.getPosicao(); i++) {
             AtivosFinanceiros ativo = carteiraUsuario.getAtivosFinanceiros()[i];
 
             if (ativo.getCodigo().equals(ativoFinanceiro.getCodigo())) {
@@ -520,32 +523,38 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
                 if (ativo.getQuantidade() >= quantidade) {
                     ativo.removerQuantidade(quantidade);
-                    double valorRecebido = ativoFinanceiro.getPrecoAtual() * quantidade;
+                    double valorRecebido = (ativoFinanceiro.getPrecoAtual() / taxaCambio) * quantidade;
                     carteiraUsuario.setSaldoDisponivel(carteiraUsuario.getSaldoDisponivel() + valorRecebido);
 
-                    carteiraUsuario.adicionarNoHistorico(
-                            "Venda - Data: " + java.time.LocalDate.now() +
-                                    " | Ativo: " + ativoFinanceiro.getCodigo() +
-                                    " | Quantidade: " + quantidade +
-                                    " | Preço: " + ativoFinanceiro.getPrecoAtual()
+                    ExtratoOperacoes operacaoVenda = new ExtratoOperacoes(
+                            "Venda",
+                            java.time.LocalDate.now(),
+                            "Ativo: "+ativoFinanceiro.getCodigo()+
+                                    " | Quantidade: "+quantidade+
+                                    " | Preço: "+String.format("%.2f", ativoFinanceiro.getPrecoAtual())+" "+ativoFinanceiro.getMoeda()
                     );
+                    carteiraUsuario.adicionarAoExtrato(operacaoVenda);
 
                     if (ativo.getQuantidade() == 0) {
                         carteiraUsuario.removerAtivoDaCarteira(i);
                     }
 
-                    ControladorGeral.alertaInformacao("Venda Realizada", "Venda de " + quantidade + " unidades do ativo " + ativoFinanceiro.getCodigo() + " efetuada com sucesso.");
+                    ControladorGeral.alertaInformacao("Venda Realizada",
+                            "Venda de " + quantidade + " unidades do ativo " + ativoFinanceiro.getCodigo() + " efetuada com sucesso.");
                 } else {
-                    ControladorGeral.alertaErro("Quantidade Insuficiente", "Você não possui quantidade suficiente do ativo para realizar a venda.");
+                    ControladorGeral.alertaErro("Quantidade Insuficiente",
+                            "Você não possui quantidade suficiente do ativo para realizar a venda.");
                 }
                 break;
             }
         }
 
         if (!ativoEncontrado) {
-            ControladorGeral.alertaErro("Ativo Não Encontrado", "O ativo " + ativoFinanceiro.getCodigo() + " não foi encontrado na sua carteira.");
+            ControladorGeral.alertaErro("Ativo Não Encontrado",
+                    "O ativo " + ativoFinanceiro.getCodigo() + " não foi encontrado na sua carteira.");
         }
     }
+
 
     public String infoAtivoComprar() {
         AtivosFinanceiros ativoFinanceiro = acoesDisponiveisTable.getSelectionModel().getSelectedItem();

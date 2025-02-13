@@ -2,6 +2,7 @@ package br.com.investimentos.usuarios;
 
 import br.com.investimentos.financas.AtivosFinanceiros;
 import br.com.investimentos.financas.EnumTipoMoeda;
+import br.com.investimentos.financas.ExtratoOperacoes;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -20,7 +21,6 @@ public class CarteiraUsuario implements Serializable {
     private int posicao1 = 0;
     private int tamanho = 400;
     private AtivosFinanceiros[] ativosFinanceiros;
-    private String[] historicoOperacoes;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -34,7 +34,6 @@ public class CarteiraUsuario implements Serializable {
         this.enumTipoMoeda = enumTipoMoeda;
         this.usuario = usuario;
         this.ativosFinanceiros = new AtivosFinanceiros[tamanho];
-        this.historicoOperacoes = new String[tamanho];
     }
 
     public void depositarDinheiro(double valorDeposito) {
@@ -50,23 +49,6 @@ public class CarteiraUsuario implements Serializable {
             ativosFinanceiros[i] = ativosFinanceiros[i + 1];
         }
         ativosFinanceiros[--posicao] = null;
-    }
-
-    public void adicionarNoHistorico(String operacao) {
-        if (posicao1 < tamanho) {
-            historicoOperacoes[posicao1] = operacao;
-            posicao1++;
-        }
-    }
-
-    public String getOperacoesDaCarteira() {
-        StringBuilder operacoes = new StringBuilder();
-        for (int i = 0; i < posicao1; i++) {
-            if (historicoOperacoes[i] != null) {
-                operacoes.append(historicoOperacoes[i]).append("\n");
-            }
-        }
-        return operacoes.toString().isEmpty() ? "Nenhuma operação registrada." : operacoes.toString();
     }
 
     public AtivosFinanceiros[] getAtivosFinanceiros() {
@@ -163,14 +145,6 @@ public class CarteiraUsuario implements Serializable {
 
     public void setPosicao(int posicao) {
         this.posicao = posicao;
-    }
-
-    public String[] getHistoricoOperacoes() {
-        return historicoOperacoes;
-    }
-
-    public void setHistoricoOperacoes(String[] historicoOperacoes) {
-        this.historicoOperacoes = historicoOperacoes;
     }
 
     public int getPosicao1() {

@@ -10,6 +10,14 @@ public class Relatorio {
     private String tipo;
     private String descricao;
 
+    public Relatorio(String titulo, LocalDate dataGeracao, String conteudo, String tipo, String descricao) {
+        this.titulo = titulo;
+        this.dataGeracao = dataGeracao;
+        this.conteudo = conteudo;
+        this.tipo = tipo;
+        this.descricao = descricao;
+    }
+
     public String getTitulo() {
         return titulo;
     }

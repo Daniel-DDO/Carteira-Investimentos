@@ -66,6 +66,9 @@ public class ControladorCarteiras implements MudancaTela {
     private Button visualizarCarteirasBotao;
 
     @FXML
+    private Button extratoCarteiraBotao;
+
+    @FXML
     void voltarBotao05(ActionEvent event) {
         trocarTela(5);
     }
@@ -89,6 +92,16 @@ public class ControladorCarteiras implements MudancaTela {
     void botaoVisualizarCarteiras(ActionEvent event) {
         if (ControladorCarteirasUser.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
             trocarTela(14);
+        } else {
+            ControladorGeral.alertaErro("Visualizar carteiras",
+                    "Ops! Você não tem carteiras. Crie uma para visualizá-la ou gerenciá-la.");
+        }
+    }
+
+    @FXML
+    public void botaoExtratoCarteira(ActionEvent actionEvent) {
+        if (ControladorCarteirasUser.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
+            trocarTela(20);
         } else {
             ControladorGeral.alertaErro("Visualizar carteiras",
                     "Ops! Você não tem carteiras. Crie uma para visualizá-la ou gerenciá-la.");

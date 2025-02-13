@@ -244,13 +244,18 @@ public class ControladorSimularInvestimentos implements MudancaTela {
             return;
         }
 
-        System.out.println("Iniciando simulação para o ativo: " + ativo.nomeAtivo());
-        System.out.println("Moeda selecionada: " + moedaSelecionada);
-        System.out.println("Valor inicial: " + valorInicial + ", Aporte Mensal: " + aporteMensal);
-        System.out.println("Preço Atual: " + precoAtual + ", Preço Abertura: " + precoAbertura);
+        System.out.println("Iniciando simulação para o ativo: "+ativo.nomeAtivo());
+        System.out.println("Moeda selecionada: "+moedaSelecionada);
+        System.out.println("Valor inicial: "+valorInicial+", Aporte Mensal: "+aporteMensal);
+        System.out.println("Preço Atual: "+precoAtual+", Preço Abertura: "+precoAbertura);
+
+        valorInicial = converterMoeda(valorInicial, moedaSelecionada, moedaSelecionada);
+        aporteMensal = converterMoeda(aporteMensal, moedaSelecionada, moedaSelecionada);
+        precoAtual = converterMoeda(precoAtual, moedaSelecionada, moedaSelecionada);
+        precoAbertura = converterMoeda(precoAbertura, moedaSelecionada, moedaSelecionada);
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Evolução do Investimento em " + moedaSelecionada);
+        series.setName("Evolução do Investimento em "+moedaSelecionada);
 
         double saldo = valorInicial;
         double variacao = (precoAtual - precoAbertura) / precoAbertura;
@@ -266,8 +271,19 @@ public class ControladorSimularInvestimentos implements MudancaTela {
 
         graficoEvolucao.getData().clear();
         graficoEvolucao.getData().add(series);
-    }
 
+        yAxis.setTickLabelFormatter(new StringConverter<Number>() {
+            @Override
+            public String toString(Number object) {
+                return String.format("%.2f", object.doubleValue());
+            }
+
+            @Override
+            public Number fromString(String string) {
+                return Double.parseDouble(string);
+            }
+        });
+    }
 
     @FXML
     void confirmarBotao05(ActionEvent event) {

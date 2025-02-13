@@ -17,6 +17,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class ControladorSimularInvestimentos implements MudancaTela {
 
@@ -112,36 +118,6 @@ public class ControladorSimularInvestimentos implements MudancaTela {
         });
     }
 
-    @FXML
-    void simularInvestBotao(ActionEvent event) {
-        AtivosFinanceiros ativoSelecionado = cboxSelecionarAtivo.getValue();
-        EnumTempo tempo = cboxSelecionarTempo.getValue();
-
-        try {
-            double valorInicial = Double.parseDouble(fieldValorInicial.getText().replace(",", "."));
-            double aporteMensal = Double.parseDouble(fieldAporteMensal.getText().replace(",", "."));
-            int periodo = Integer.parseInt(fieldPeriodo.getText());
-
-            if (ativoSelecionado != null && tempo != null) {
-                double precoAtual = ativoSelecionado.getPrecoAtual();
-                double precoAbertura = ativoSelecionado.getPrecoAbertura();
-
-                if (precoAbertura > 0) {
-                    int periodoAjustado = ajustarPeriodoComBaseNoTempo(tempo, periodo);
-
-                    simularInvestimento(ativoSelecionado, valorInicial, aporteMensal, periodoAjustado, precoAtual, precoAbertura);
-                } else {
-                    ControladorGeral.alertaErro("Erro", "Não foi possível obter os dados do ativo selecionado.");
-                }
-            } else {
-                ControladorGeral.alertaErro("Erro", "Selecione um ativo e um período.");
-            }
-        } catch (NumberFormatException e) {
-            ControladorGeral.alertaErro("Erro", "Preencha apenas com números.");
-            System.out.println("Erro: Certifique-se de preencher os campos corretamente.");
-        }
-    }
-
     private int ajustarPeriodoComBaseNoTempo(EnumTempo tempo, int periodo) {
         switch (tempo) {
             case Semanas:
@@ -155,13 +131,126 @@ public class ControladorSimularInvestimentos implements MudancaTela {
         }
     }
 
-    private void simularInvestimento(AtivosFinanceiros ativo, double valorInicial, double aporteMensal, int periodo, double precoAtual, double precoAbertura) {
+    private double converterMoeda(double valor, EnumTipoMoeda moedaOrigem, EnumTipoMoeda moedaDestino) {
+        if (moedaOrigem == null || moedaDestino == null) {
+            System.out.println("Erro: Moeda de origem ou destino inválida.");
+            return valor;
+        }
+
+        if (moedaOrigem == moedaDestino) {
+            return valor;
+        }
+
+        double taxaCambio = getTaxaCambio(moedaOrigem.toString(), moedaDestino.toString());
+        System.out.println("Taxa câmbio: "+taxaCambio);
+
+        if (taxaCambio > 0) {
+            return valor / taxaCambio;
+        } else {
+            System.out.println("Erro ao obter taxa de câmbio. Mantendo valor original.");
+            return valor;
+        }
+    }
+
+    private double getTaxaCambio(String moedaOrigem, String moedaDestino) {
+        System.out.println("Consultando taxa de câmbio: " + moedaOrigem + " para " + moedaDestino);
+
+        try {
+            String url = "https://economia.awesomeapi.com.br/last/" + moedaOrigem + "-" + moedaDestino;
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("GET");
+
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String inputLine;
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+
+                in.close();
+
+                JSONObject jsonObject = new JSONObject(response.toString());
+                String key = moedaOrigem + moedaDestino;
+
+                if (jsonObject.has(key)) {
+                    return jsonObject.getJSONObject(key).getDouble("bid");
+                } else {
+                    System.out.println("Erro: Chave não encontrada no JSON retornado.");
+                }
+            } else {
+                System.out.println("Erro na conexão com a API. Código: " + connection.getResponseCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 1.0;
+    }
+
+    @FXML
+    void simularInvestBotao(ActionEvent event) {
+        AtivosFinanceiros ativoSelecionado = cboxSelecionarAtivo.getValue();
+        EnumTempo tempo = cboxSelecionarTempo.getValue();
+
+        if (ativoSelecionado == null || tempo == null) {
+            ControladorGeral.alertaErro("Erro", "Selecione um ativo e um período.");
+            return;
+        }
+
+        EnumTipoMoeda moedaOrigem;
+        try {
+            moedaOrigem = EnumTipoMoeda.valueOf(ativoSelecionado.getMoeda());
+        } catch (IllegalArgumentException | NullPointerException e) {
+            ControladorGeral.alertaErro("Erro", "Moeda do ativo inválida.");
+            return;
+        }
+
+        EnumTipoMoeda moedaDestino = cboxSelecionarMoeda.getValue();
+        if (moedaDestino == null) {
+            ControladorGeral.alertaErro("Erro", "Selecione uma moeda de destino.");
+            return;
+        }
+
+        try {
+            double valorInicial = Double.parseDouble(fieldValorInicial.getText().replace(",", "."));
+            double aporteMensal = Double.parseDouble(fieldAporteMensal.getText().replace(",", "."));
+            int periodo = Integer.parseInt(fieldPeriodo.getText());
+
+            double precoAtual = ativoSelecionado.getPrecoAtual();
+            double precoAbertura = ativoSelecionado.getPrecoAbertura();
+
+            if (precoAbertura > 0) {
+                double valorInicialConvertido = converterMoeda(valorInicial, moedaOrigem, moedaDestino);
+                double aporteMensalConvertido = converterMoeda(aporteMensal, moedaOrigem, moedaDestino);
+                double precoAtualConvertido = converterMoeda(precoAtual, moedaOrigem, moedaDestino);
+                double precoAberturaConvertido = converterMoeda(precoAbertura, moedaOrigem, moedaDestino);
+
+                int periodoAjustado = ajustarPeriodoComBaseNoTempo(tempo, periodo);
+
+                simularInvestimento(ativoSelecionado, valorInicialConvertido, aporteMensalConvertido, periodoAjustado, precoAtualConvertido, precoAberturaConvertido, moedaDestino);
+            } else {
+                ControladorGeral.alertaErro("Erro", "Não foi possível obter os dados do ativo selecionado.");
+            }
+        } catch (NumberFormatException e) {
+            ControladorGeral.alertaErro("Erro", "Preencha apenas com números.");
+            System.out.println("Erro: Certifique-se de preencher os campos corretamente.");
+        }
+    }
+
+    private void simularInvestimento(AtivosFinanceiros ativo, double valorInicial, double aporteMensal, int periodo, double precoAtual, double precoAbertura, EnumTipoMoeda moedaSelecionada) {
+        if (moedaSelecionada == null) {
+            ControladorGeral.alertaErro("Erro", "Selecione uma moeda.");
+            return;
+        }
+
         System.out.println("Iniciando simulação para o ativo: " + ativo.nomeAtivo());
-        System.out.println("Valor inicial: "+valorInicial+", Aporte Mensal: "+aporteMensal+", Período: "+periodo);
-        System.out.println("Preço Atual: "+precoAtual+", Preço Abertura: "+precoAbertura);
+        System.out.println("Moeda selecionada: " + moedaSelecionada);
+        System.out.println("Valor inicial: " + valorInicial + ", Aporte Mensal: " + aporteMensal);
+        System.out.println("Preço Atual: " + precoAtual + ", Preço Abertura: " + precoAbertura);
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Evolução do Investimento");
+        series.setName("Evolução do Investimento em " + moedaSelecionada);
 
         double saldo = valorInicial;
         double variacao = (precoAtual - precoAbertura) / precoAbertura;
@@ -178,6 +267,7 @@ public class ControladorSimularInvestimentos implements MudancaTela {
         graficoEvolucao.getData().clear();
         graficoEvolucao.getData().add(series);
     }
+
 
     @FXML
     void confirmarBotao05(ActionEvent event) {

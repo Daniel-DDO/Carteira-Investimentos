@@ -621,10 +621,11 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         }
     }
 
-    public ObservableList<AtivosFinanceiros> obterAtivos(EnumTipoMoeda enumTipoMoeda) {
+    public ObservableList<AtivosFinanceiros> obterAtivos() {
         ObservableList<AtivosFinanceiros> ativosList = FXCollections.observableArrayList();
         AtivosFinanceiros[] ativosFinanceirosDoArquivo = RepositorioAtivos.lerAtivos();
         String apiKeyEmUso = API_KEY1;
+        String moedaPadrao = "USD";
 
         for (String symbol : SYMBOLS) {
             String apiUrl = "https://api.tiingo.com/tiingo/daily/" + symbol + "/prices?token=" + apiKeyEmUso;
@@ -667,9 +668,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                         double maiorPreco = firstEntry.get("high").getAsDouble();
                         double menorPreco = firstEntry.get("low").getAsDouble();
 
-                        String moeda = enumTipoMoeda.name();
-
-                        AtivosFinanceiros novoAtivo = new AtivosFinanceiros(symbol, precoAtual, precoAbertura, maiorPreco, menorPreco, moeda);
+                        AtivosFinanceiros novoAtivo = new AtivosFinanceiros(symbol, precoAtual, precoAbertura, maiorPreco, menorPreco, moedaPadrao);
 
                         boolean ativoAtualizado = false;
                         for (int i = 0; i < ativosFinanceirosDoArquivo.length; i++) {

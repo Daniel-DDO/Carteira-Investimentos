@@ -4,10 +4,7 @@ import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.adm.ControladorAtivosAdm;
 import br.com.investimentos.controladores.gui.adm.ControladorGerenciarAtivosAdm;
 import br.com.investimentos.controladores.gui.adm.ControladorPerfilAdm;
-import br.com.investimentos.controladores.gui.comum.ControladorCarteiras;
-import br.com.investimentos.controladores.gui.comum.ControladorGerenciarCarteiras;
-import br.com.investimentos.controladores.gui.comum.ControladorPerfil;
-import br.com.investimentos.controladores.gui.comum.ControladorVerCarteiras;
+import br.com.investimentos.controladores.gui.comum.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -66,31 +63,41 @@ public class Programa extends Application {
         Parent fxmlTelaCadastro04 = FXMLLoader.load(getClass().getResource(localFxml+"04-cadastro-adm.fxml"));
         cadastroAdmin = new Scene(fxmlTelaCadastro04, 1000, 600);
 
-        Parent fxmlTelaPrincipalComum = FXMLLoader.load(getClass().getResource(localFxml+"05-principal-comum.fxml"));
+        FXMLLoader loaderPrincipalComum = new FXMLLoader(getClass().getResource(localFxml+"05-principal-comum.fxml"));
+        Parent fxmlTelaPrincipalComum = loaderPrincipalComum.load();
         principalComum = new Scene(fxmlTelaPrincipalComum, 1000, 600);
 
-        Parent fxmlTelaPrincipalAdm = FXMLLoader.load(getClass().getResource(localFxml+"06-principal-adm.fxml"));
+        FXMLLoader loaderPrincipalAdm = new FXMLLoader(getClass().getResource(localFxml+"06-principal-adm.fxml"));
+        Parent fxmlTelaPrincipalAdm = loaderPrincipalAdm.load();
         principalAdm = new Scene(fxmlTelaPrincipalAdm, 1000, 600);
 
-        Parent fxmlTelaSimularInvestimentos = FXMLLoader.load(getClass().getResource(localFxml+"05-1-simular-investimentos.fxml"));
+        FXMLLoader loaderSimularInvestimentos = new FXMLLoader(getClass().getResource(localFxml+"05-1-simular-investimentos.fxml"));
+        Parent fxmlTelaSimularInvestimentos = loaderSimularInvestimentos.load();
         simularInvestimentosTela = new Scene(fxmlTelaSimularInvestimentos, 1000, 600);
+        ControladorSimularInvestimentos controladorSimularInvestimentos = loaderSimularInvestimentos.getController();
+        adicionarMudancaTela(controladorSimularInvestimentos);
 
-        Parent fxmlTelaMinhasCarteiras = FXMLLoader.load(getClass().getResource(localFxml+"05-2-minhas-carteiras.fxml"));
+        FXMLLoader loaderMinhasCarteiras = new FXMLLoader(getClass().getResource(localFxml+"05-2-minhas-carteiras.fxml"));
+        Parent fxmlTelaMinhasCarteiras = loaderMinhasCarteiras.load();
         minhasCarteirasTela = new Scene(fxmlTelaMinhasCarteiras, 1000, 600);
 
-        Parent fxmlTelaProjecoesRentabilidade = FXMLLoader.load(getClass().getResource(localFxml+"05-3-projecoes-rentabilidade.fxml"));
+        FXMLLoader loaderProjecoesRentabilidade = new FXMLLoader(getClass().getResource(localFxml+"05-3-projecoes-rentabilidade.fxml"));
+        Parent fxmlTelaProjecoesRentabilidade = loaderProjecoesRentabilidade.load();
         projecoesRentabilidadeTela = new Scene(fxmlTelaProjecoesRentabilidade, 1000, 600);
 
-        Parent fxmlTelaFundosImobiliarios = FXMLLoader.load(getClass().getResource(localFxml+"05-4-fundos-imobiliarios.fxml"));
+        FXMLLoader loaderFundosImobiliarios = new FXMLLoader(getClass().getResource(localFxml+"05-4-fundos-imobiliarios.fxml"));
+        Parent fxmlTelaFundosImobiliarios = loaderFundosImobiliarios.load();
         fundosImobiliariosTela = new Scene(fxmlTelaFundosImobiliarios, 1000, 600);
 
-        Parent fxmlTelaRenda = FXMLLoader.load(getClass().getResource(localFxml+"05-5-renda.fxml"));
+        FXMLLoader loaderRenda = new FXMLLoader(getClass().getResource(localFxml+"05-5-renda.fxml"));
+        Parent fxmlTelaRenda = loaderRenda.load();
         rendaTela = new Scene(fxmlTelaRenda, 1000, 600);
 
         FXMLLoader loaderPerfilComum = new FXMLLoader(getClass().getResource(localFxml+"05-6-perfil-comum.fxml"));
         Parent fxmlTelaPerfilComum = loaderPerfilComum.load();
         perfilComumTela = new Scene(fxmlTelaPerfilComum, 1000, 600);
         controladorPerfil = loaderPerfilComum.getController();
+        adicionarMudancaTela(controladorPerfil);
 
         FXMLLoader loaderCriarCarteira = new FXMLLoader(getClass().getResource(localFxml+"05-2-1-criar-carteira.fxml"));
         Parent fxmlCriarCarteira = loaderCriarCarteira.load();

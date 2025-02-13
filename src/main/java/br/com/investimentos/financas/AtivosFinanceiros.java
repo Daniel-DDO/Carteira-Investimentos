@@ -71,6 +71,10 @@ public class AtivosFinanceiros implements Serializable {
         return "ATIVO FINANCEIRO\n"+"Código/Nome ação: "+codigo+"\nPreço atual: "+precoAtual+"\nMoeda: "+moeda;
     }
 
+    public String nomeAtivo() {
+        return codigo;
+    }
+
     public void adicionarQuantidade(int quantidade) {
         this.quantidade += quantidade;
     }

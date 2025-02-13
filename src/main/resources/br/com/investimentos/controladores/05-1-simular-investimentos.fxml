@@ -33,10 +33,10 @@
                      <children>
                         <LineChart fx:id="graficoEvolucao" title="Evolução do Investimento" GridPane.columnIndex="1">
                           <xAxis>
-                            <CategoryAxis label="Tempo" side="BOTTOM" />
+                            <CategoryAxis label="Tempo" side="BOTTOM" fx:id="xAxis" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis label="Valor" side="LEFT" />
+                            <NumberAxis fx:id="yAxis" label="Valor" side="LEFT" />
                           </yAxis>
                         </LineChart>
                      </children>

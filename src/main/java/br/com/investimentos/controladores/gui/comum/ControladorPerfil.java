@@ -1,6 +1,7 @@
 package br.com.investimentos.controladores.gui.comum;
 
 import br.com.investimentos.controladores.gui.ControladorGeral;
+import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.repositorios.RepositorioContaUsuario;
@@ -9,7 +10,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class ControladorPerfil {
+public class ControladorPerfil implements MudancaTela {
+
+    @Override
+    public void mudancaTela(int novaTela, Object objeto) {
+
+    }
 
     @FXML
     private Button botaoExcluirConta;

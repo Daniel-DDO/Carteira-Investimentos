@@ -471,7 +471,6 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         }
     }
 
-
     public void comprarAtivos(AtivosFinanceiros ativoFinanceiro, CarteiraUsuario carteiraUsuario) {
         int quantidade = Integer.parseInt(quantidadeCompVendField.getText());
 
@@ -488,8 +487,14 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
         if (carteiraUsuario.getSaldoDisponivel() >= valorFinal) {
             carteiraUsuario.setSaldoDisponivel(carteiraUsuario.getSaldoDisponivel() - valorFinal);
-
             ControladorCarteirasUser.getInstancia().calcularPrecoMedioAtivo(carteiraUsuario, ativoFinanceiro, quantidade, precoAtivoConvertido);
+
+            carteiraUsuario.adicionarNoHistorico(
+                    "Compra - Data: " + java.time.LocalDate.now() +
+                            " | Ativo: " + ativoFinanceiro.getCodigo() +
+                            " | Quantidade: " + quantidade +
+                            " | Preço: " + ativoFinanceiro.getPrecoAtual()
+            );
 
             ControladorGeral.alertaInformacao("Compra Realizada",
                     "Compra de " + quantidade + " unidades do ativo " + ativoFinanceiro.getCodigo() + " efetuada com sucesso.");
@@ -498,7 +503,6 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                     "Saldo insuficiente para completar a compra. Valor necessário: " + String.format("%.2f", valorFinalOrigem) + " " + ativoFinanceiro.getMoeda());
         }
     }
-
 
     public void venderAtivos(AtivosFinanceiros ativoFinanceiro, CarteiraUsuario carteiraUsuario, int quantidade) {
         if (quantidade <= 0) {
@@ -519,6 +523,13 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                     double valorRecebido = ativoFinanceiro.getPrecoAtual() * quantidade;
                     carteiraUsuario.setSaldoDisponivel(carteiraUsuario.getSaldoDisponivel() + valorRecebido);
 
+                    carteiraUsuario.adicionarNoHistorico(
+                            "Venda - Data: " + java.time.LocalDate.now() +
+                                    " | Ativo: " + ativoFinanceiro.getCodigo() +
+                                    " | Quantidade: " + quantidade +
+                                    " | Preço: " + ativoFinanceiro.getPrecoAtual()
+                    );
+
                     if (ativo.getQuantidade() == 0) {
                         carteiraUsuario.removerAtivoDaCarteira(i);
                     }
@@ -535,7 +546,6 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             ControladorGeral.alertaErro("Ativo Não Encontrado", "O ativo " + ativoFinanceiro.getCodigo() + " não foi encontrado na sua carteira.");
         }
     }
-
 
     public String infoAtivoComprar() {
         AtivosFinanceiros ativoFinanceiro = acoesDisponiveisTable.getSelectionModel().getSelectedItem();

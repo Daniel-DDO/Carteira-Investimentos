@@ -1,9 +1,7 @@
 package br.com.investimentos.usuarios;
 
-import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.financas.AtivosFinanceiros;
 import br.com.investimentos.financas.EnumTipoMoeda;
-import br.com.investimentos.financas.Investimentos;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -19,8 +17,10 @@ public class CarteiraUsuario implements Serializable {
     private UsuarioComum usuario;
     private EnumTipoMoeda enumTipoMoeda;
     private int posicao = 0;
+    private int posicao1 = 0;
     private int tamanho = 400;
     private AtivosFinanceiros[] ativosFinanceiros;
+    private String[] historicoOperacoes;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -34,71 +34,12 @@ public class CarteiraUsuario implements Serializable {
         this.enumTipoMoeda = enumTipoMoeda;
         this.usuario = usuario;
         this.ativosFinanceiros = new AtivosFinanceiros[tamanho];
+        this.historicoOperacoes = new String[tamanho];
     }
 
     public void depositarDinheiro(double valorDeposito) {
         this.saldoDisponivel = this.saldoDisponivel + valorDeposito;
     }
-
-    public void comprarAtivos(AtivosFinanceiros ativoFinanceiro, int quantidade) {
-        if (quantidade <= 0) {
-            ControladorGeral.alertaErro("Quantidade Inválida", "A quantidade de ativos deve ser maior que zero.");
-            return;
-        }
-
-        boolean ativoEncontrado = false;
-
-        for (int i = 0; i < posicao; i++) {
-            if (ativosFinanceiros[i].getCodigo().equals(ativoFinanceiro.getCodigo())) {
-                ativosFinanceiros[i].adicionarQuantidade(quantidade);
-                ativoEncontrado = true;
-                break;
-            }
-        }
-
-        System.out.println(ativosFinanceiros.length);
-
-        if (!ativoEncontrado) {
-            if (posicao < ativosFinanceiros.length) {
-                ativoFinanceiro.setQuantidade(quantidade);
-                ativosFinanceiros[posicao++] = ativoFinanceiro;
-            } else {
-                ControladorGeral.alertaErro("Limite da Carteira", "Não há espaço para novos ativos na carteira.");
-            }
-        }
-    }
-
-    public void venderAtivos(AtivosFinanceiros ativoFinanceiro, int quantidade) {
-        if (quantidade <= 0) {
-            ControladorGeral.alertaErro("Quantidade Inválida", "A quantidade de ativos deve ser maior que zero.");
-            return;
-        }
-
-        boolean ativoEncontrado = false;
-
-        for (int i = 0; i < posicao; i++) {
-            if (ativosFinanceiros[i].getCodigo().equals(ativoFinanceiro.getCodigo())) {
-                ativoEncontrado = true;
-
-                if (ativosFinanceiros[i].getQuantidade() >= quantidade) {
-                    ativosFinanceiros[i].removerQuantidade(quantidade);
-                    if (ativosFinanceiros[i].getQuantidade() == 0) {
-                        removerAtivoDaCarteira(i);
-                    }
-
-                    ControladorGeral.alertaInformacao("Venda Realizada", "Venda de " + quantidade + " unidades do ativo " + ativoFinanceiro.getCodigo() + " efetuada com sucesso.");
-                } else {
-                    ControladorGeral.alertaErro("Quantidade Insuficiente", "Você não possui quantidade suficiente do ativo para realizar a venda.");
-                }
-                break;
-            }
-        }
-
-        if (!ativoEncontrado) {
-            ControladorGeral.alertaErro("Ativo Não Encontrado", "O ativo " + ativoFinanceiro.getCodigo() + " não foi encontrado na sua carteira.");
-        }
-    }
-
 
     public String informacoesCarteira() {
         return "Carteira "+nomeCarteira+"\nSaldo disponível: "+String.format("%.2f", saldoDisponivel)+" "+enumTipoMoeda;
@@ -111,6 +52,22 @@ public class CarteiraUsuario implements Serializable {
         ativosFinanceiros[--posicao] = null;
     }
 
+    public void adicionarNoHistorico(String operacao) {
+        if (posicao1 < tamanho) {
+            historicoOperacoes[posicao1] = operacao;
+            posicao1++;
+        }
+    }
+
+    public String getOperacoesDaCarteira() {
+        StringBuilder operacoes = new StringBuilder();
+        for (int i = 0; i < posicao1; i++) {
+            if (historicoOperacoes[i] != null) {
+                operacoes.append(historicoOperacoes[i]).append("\n");
+            }
+        }
+        return operacoes.toString().isEmpty() ? "Nenhuma operação registrada." : operacoes.toString();
+    }
 
     public AtivosFinanceiros[] getAtivosFinanceiros() {
         return ativosFinanceiros;
@@ -206,6 +163,22 @@ public class CarteiraUsuario implements Serializable {
 
     public void setPosicao(int posicao) {
         this.posicao = posicao;
+    }
+
+    public String[] getHistoricoOperacoes() {
+        return historicoOperacoes;
+    }
+
+    public void setHistoricoOperacoes(String[] historicoOperacoes) {
+        this.historicoOperacoes = historicoOperacoes;
+    }
+
+    public int getPosicao1() {
+        return posicao1;
+    }
+
+    public void setPosicao1(int posicao1) {
+        this.posicao1 = posicao1;
     }
 
     @Override

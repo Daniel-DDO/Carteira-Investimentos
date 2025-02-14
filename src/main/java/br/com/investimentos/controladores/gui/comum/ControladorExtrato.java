@@ -1,6 +1,8 @@
 package br.com.investimentos.controladores.gui.comum;
 
 import br.com.investimentos.controladores.ControladorCarteirasUser;
+import br.com.investimentos.controladores.ControladorRelatorios;
+import br.com.investimentos.controladores.Fachada;
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.usuarios.CarteiraUsuario;
@@ -11,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -56,7 +59,13 @@ public class ControladorExtrato implements MudancaTela {
 
     @FXML
     void confirmarBotao0524(ActionEvent event) {
-
+        CarteiraUsuario carteiraSelecionada = cboxSelecionarCarteira.getValue();
+        if (carteiraSelecionada != null) {
+            Stage stage = (Stage) tableExtrato.getScene().getWindow();
+            Fachada.getInstancia().criarNovoRelatorio(carteiraSelecionada, stage);
+        } else {
+            System.err.println("Nenhuma carteira foi selecionada.");
+        }
     }
 
     @FXML

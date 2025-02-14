@@ -4,6 +4,7 @@ import br.com.investimentos.financas.EnumTipoMoeda;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import br.com.investimentos.usuarios.EnumTipoInvestidor;
 import br.com.investimentos.usuarios.UsuarioComum;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Fachada {
     private ControladorAtivosFinanceiros controladorAtivosFinanceiros  = ControladorAtivosFinanceiros.getInstancia();
     private ControladorCarteirasUser controladorCarteirasUser = ControladorCarteirasUser.getInstancia();
     private ControladorContaUsuario controladorContaUsuario = ControladorContaUsuario.getInstancia();
+    private ControladorRelatorios controladorRelatorios = ControladorRelatorios.getInstancia();
 
     //Carteiras
 
@@ -48,6 +50,12 @@ public class Fachada {
 
     public static double converter(String moedaOrigem, String moedaDestino, double valor) throws Exception {
         return ControladorAtivosFinanceiros.converter(moedaOrigem, moedaDestino, valor);
+    }
+
+    //Relatório
+
+    public void criarNovoRelatorio(CarteiraUsuario carteira, Stage stage) {
+        controladorRelatorios.gerarRelatorioExtrato(carteira, stage);
     }
 
     /*

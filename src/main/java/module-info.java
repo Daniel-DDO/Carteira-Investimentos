@@ -4,6 +4,8 @@ module br.com.investimentos.controladores {
     requires java.sql.rowset;
     requires com.google.gson;
     requires org.json;
+    requires kernel;
+    requires layout;
 
 
     opens br.com.investimentos.controladores to javafx.fxml;

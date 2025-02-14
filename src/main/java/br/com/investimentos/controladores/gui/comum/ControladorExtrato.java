@@ -70,6 +70,9 @@ public class ControladorExtrato implements MudancaTela {
 
     @FXML
     void voltarBotao05224(ActionEvent event) {
+        if (tableExtrato != null) {
+            tableExtrato.getItems().clear();
+        }
         trocarTela(8);
     }
 

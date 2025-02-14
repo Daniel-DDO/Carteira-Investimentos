@@ -43,6 +43,7 @@ public class ControladorPerfil implements MudancaTela {
     void excluirContaBotao(ActionEvent event) {
         ControladorGeral.alertaConfirmacao("Conta excluída", "A sua conta foi excluída e tudo associado a ela também foi deletado.");
         RepositorioContaUsuario.getInstancia().excluirConta(UsuarioLogado.getInstancia().getUsuarioComum());
+        UsuarioLogado.getInstancia().getUsuarioComum().setQuantidadeCarteiras(UsuarioLogado.getInstancia().getUsuarioComum().getQuantidadeCarteiras() - 1);
         Programa.trocarTela(1);
     }
 

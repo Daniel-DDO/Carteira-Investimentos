@@ -29,6 +29,13 @@ public class ControladorMetas implements MudancaTela {
                 visualizarCarteirasCbox();
             }
             if (novaTela == 21) {
+                if (rentabilidadeField != null) {
+                    rentabilidadeField.textProperty().addListener((observable, oldValue, newValue) -> {
+                        if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                            rentabilidadeField.setText(oldValue);
+                        }
+                    });
+                }
                 if (cboxSelecionarCarteira1 == null) {
                     cboxSelecionarCarteira1 = new ComboBox<CarteiraUsuario>();
                 }

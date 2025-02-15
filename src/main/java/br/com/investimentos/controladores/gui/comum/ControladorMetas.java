@@ -18,14 +18,16 @@ public class ControladorMetas implements MudancaTela {
     public void mudancaTela(int novaTela, Object objeto) {
         if (UsuarioLogado.getInstancia().getUsuarioComum() != null) {
             if (novaTela == 9) {
-                System.out.println("9");
-                cboxSelecionarCarteira.getItems().clear();
+                if (cboxSelecionarCarteira == null) {
+                    cboxSelecionarCarteira = new ComboBox<CarteiraUsuario>();
+                }
                 visualizarCarteirasCbox();
             }
             if (novaTela == 21) {
-                System.out.println("21");
-                cboxSelecionarCarteira.getItems().clear();
-                visualizarCarteirasCbox();
+                if (cboxSelecionarCarteira1 == null) {
+                    cboxSelecionarCarteira1 = new ComboBox<CarteiraUsuario>();
+                }
+                visualizarCarteirasCbox1();
             }
         }
     }
@@ -60,7 +62,7 @@ public class ControladorMetas implements MudancaTela {
 
     @FXML
     void selecionarCarteiraCbox(ActionEvent event) {
-
+        System.out.println("Selecionado");
     }
 
     public void visualizarCarteirasCbox() {
@@ -98,6 +100,23 @@ public class ControladorMetas implements MudancaTela {
 
     @FXML
     private TextField rentabilidadeField;
+
+    @FXML
+    private ComboBox<CarteiraUsuario> cboxSelecionarCarteira1;
+
+    public void visualizarCarteirasCbox1() {
+        ArrayList<CarteiraUsuario> carteiraUsuarios = ControladorCarteirasUser.getInstancia()
+                .exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
+
+        if (!carteiraUsuarios.isEmpty()) {
+            cboxSelecionarCarteira1.getItems().clear();
+            cboxSelecionarCarteira1.setPromptText("Selecione uma carteira");
+            cboxSelecionarCarteira1.getItems().addAll(carteiraUsuarios);
+        } else {
+            System.out.println(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario() + " não tem carteiras.");
+        }
+    }
+
 
     @FXML
     void criarMetaBotao(ActionEvent event) {

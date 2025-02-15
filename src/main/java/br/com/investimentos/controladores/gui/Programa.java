@@ -86,6 +86,8 @@ public class Programa extends Application {
         FXMLLoader loaderProjecoesRentabilidade = new FXMLLoader(getClass().getResource(localFxml+"05-3-projecoes-rentabilidade.fxml"));
         Parent fxmlTelaProjecoesRentabilidade = loaderProjecoesRentabilidade.load();
         projecoesRentabilidadeTela = new Scene(fxmlTelaProjecoesRentabilidade, 1000, 600);
+        ControladorMetas controladorMetas1 = loaderProjecoesRentabilidade.getController();
+        adicionarMudancaTela(controladorMetas1);
 
         FXMLLoader loaderFundosImobiliarios = new FXMLLoader(getClass().getResource(localFxml+"05-4-fundos-imobiliarios.fxml"));
         Parent fxmlTelaFundosImobiliarios = loaderFundosImobiliarios.load();

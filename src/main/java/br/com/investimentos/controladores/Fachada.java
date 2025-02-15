@@ -23,6 +23,7 @@ public class Fachada {
     private ControladorCarteirasUser controladorCarteirasUser = ControladorCarteirasUser.getInstancia();
     private ControladorContaUsuario controladorContaUsuario = ControladorContaUsuario.getInstancia();
     private ControladorRelatorios controladorRelatorios = ControladorRelatorios.getInstancia();
+    private ControladorMetasRentabilidade controladorMetasRentabilidade = ControladorMetasRentabilidade.getInstancia();
 
     //Carteiras
 
@@ -60,6 +61,12 @@ public class Fachada {
 
     public void criarNovoRelatorio(CarteiraUsuario carteira, Stage stage) {
         controladorRelatorios.gerarRelatorioExtrato(carteira, stage);
+    }
+
+    //Metas Rentabilidade
+
+    public void atualizarMetasCarteira(CarteiraUsuario carteira) {
+        controladorMetasRentabilidade.atualizarMetasCarteira(carteira);
     }
 
     /*

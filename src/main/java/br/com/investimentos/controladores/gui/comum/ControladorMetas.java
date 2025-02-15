@@ -1,6 +1,7 @@
 package br.com.investimentos.controladores.gui.comum;
 
 import br.com.investimentos.controladores.ControladorCarteirasUser;
+import br.com.investimentos.controladores.Fachada;
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.controladores.gui.MudancaTela;
@@ -79,6 +80,7 @@ public class ControladorMetas implements MudancaTela {
 
         if (carteiraSelecionada != null) {
             if (carteiraSelecionada.getMetasRentabilidade() != null) {
+                Fachada.getInstancia().atualizarMetasCarteira(carteiraSelecionada);
                 statusMetaLabel.setText(carteiraSelecionada.getMetasRentabilidade().getStatus().toString());
                 informacoesMetaLabel.setText(carteiraSelecionada.getMetasRentabilidade().exibirInformacoes());
             } else {
@@ -103,6 +105,10 @@ public class ControladorMetas implements MudancaTela {
 
     @FXML
     void voltarBotao053(ActionEvent event) {
+        if (statusMetaLabel != null && informacoesMetaLabel != null) {
+            statusMetaLabel.setText("Status da meta referente a carteira selecionada");
+            informacoesMetaLabel.setText("Informações da meta");
+        }
         trocarTela(5);
     }
 

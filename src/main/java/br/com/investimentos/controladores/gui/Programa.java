@@ -39,6 +39,7 @@ public class Programa extends Application {
     private static Scene criarAtivosAdmTela;
     private static Scene gerenciarAtivosAdmTela;
     private static Scene extratoCarteirasTela;
+    private static Scene criarMetaTela;
 
     private static ControladorPerfil controladorPerfil;
     private static ControladorPerfilAdm controladorPerfilAdm;
@@ -148,6 +149,12 @@ public class Programa extends Application {
         ControladorExtrato controladorExtrato = loaderExtratoCarteiras.getController();
         adicionarMudancaTela(controladorExtrato);
 
+        FXMLLoader loaderCriarMeta = new FXMLLoader(getClass().getResource(localFxml+"05-3-1-criar-meta.fxml"));
+        Parent fxmlCriarMeta = loaderCriarMeta.load();
+        criarMetaTela = new Scene(fxmlCriarMeta, 1000, 600);
+        ControladorMetas controladorMetas = loaderCriarMeta.getController();
+        adicionarMudancaTela(controladorMetas);
+
         stage.setScene(telaInicial01);
         stage.show();
     }
@@ -234,6 +241,11 @@ public class Programa extends Application {
             case 20:
                 stage.setScene(extratoCarteirasTela);
                 informarMudancaTela(20, objeto);
+                break;
+            case 21:
+                stage.setScene(criarMetaTela);
+                informarMudancaTela(21, objeto);
+                break;
         }
     }
 

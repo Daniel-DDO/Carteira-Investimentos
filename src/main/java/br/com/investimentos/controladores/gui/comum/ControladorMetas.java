@@ -1,5 +1,6 @@
 package br.com.investimentos.controladores.gui.comum;
 
+import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,7 +8,17 @@ import javafx.scene.control.*;
 
 import static br.com.investimentos.controladores.gui.Programa.trocarTela;
 
-public class ControladorMetas {
+public class ControladorMetas implements MudancaTela {
+
+    @Override
+    public void mudancaTela(int novaTela, Object objeto) {
+        if (novaTela == 9) {
+
+        }
+        if (novaTela == 21) {
+
+        }
+    }
 
     @FXML
     private Button botaoConfirmar053;
@@ -29,7 +40,7 @@ public class ControladorMetas {
 
     @FXML
     void botaoCriarNovasMetas(ActionEvent event) {
-
+        trocarTela(21);
     }
 
     @FXML
@@ -72,6 +83,7 @@ public class ControladorMetas {
 
     @FXML
     void voltarBotao0531(ActionEvent event) {
-
+        trocarTela(9);
     }
+
 }

@@ -132,5 +132,12 @@ public class ControladorCarteirasUser {
         }
     }
 
+    public void excluirCarteira(CarteiraUsuario carteiraUsuario) {
+        RepositorioCarteiras.getInstancia().excluirCarteira(carteiraUsuario);
+
+        UsuarioLogado.getInstancia().getUsuarioComum().setQuantidadeCarteiras(UsuarioLogado.getInstancia().getUsuarioComum().getQuantidadeCarteiras() - 1);
+        RepositorioContaUsuario.getInstancia().atualizarContas(UsuarioLogado.getInstancia().getUsuarioComum());
+        exibirTodasCarteiras();
+    }
 
 }

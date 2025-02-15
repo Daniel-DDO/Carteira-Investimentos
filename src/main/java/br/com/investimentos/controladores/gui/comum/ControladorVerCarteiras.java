@@ -17,6 +17,8 @@ import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 
+import static br.com.investimentos.controladores.gui.Programa.trocarTela;
+
 public class ControladorVerCarteiras implements MudancaTela {
 
     @Override
@@ -43,6 +45,8 @@ public class ControladorVerCarteiras implements MudancaTela {
     private Button adicionarSaldoBotao;
     @FXML
     private TextField salddAddField;
+    @FXML
+    private Button excluirCarteiraBotao;
 
     public void selecionarCarteiraCbox(ActionEvent actionEvent){
         infoCarteiraSelecionadaLabel.setText("Detalhes da carteira selecionada:\n\n"
@@ -57,7 +61,7 @@ public class ControladorVerCarteiras implements MudancaTela {
     public void voltarBotao0522(ActionEvent actionEvent) {
         cboxSelecionarCarteira.getItems().clear();
         cboxSelecionarCarteira.setPromptText("Selecione uma carteira");
-        Programa.trocarTela(8);
+        trocarTela(8);
     }
 
     public String infoCarteira() {
@@ -122,5 +126,24 @@ public class ControladorVerCarteiras implements MudancaTela {
         Fachada.getInstancia().adicionarSaldo(novoSaldo, cboxSelecionarCarteira.getValue());
         RepositorioCarteiras.getInstancia().atualizarCarteira(cboxSelecionarCarteira.getValue());
         infoCarteira();
+    }
+
+    @FXML
+    public void botaoExcluirCarteira(ActionEvent actionEvent) {
+        if (cboxSelecionarCarteira.getValue() != null) {
+            boolean confirmar = ControladorGeral.alertaConfirmacaoComRes("Excluir carteira", "Ao confirmar a operação, tudo referente a carteira selecionada será excluído e perdido. É um processo irreversível. Se deseja continuar, clique em OK. Se deseja abortar a operação, clique em CANCELAR.");
+            if (confirmar) {
+                CarteiraUsuario carteiraUsuario = cboxSelecionarCarteira.getValue();
+                confirmarExclusaoCarteira(carteiraUsuario);
+                trocarTela(8);
+                ControladorGeral.alertaInformacao("Carteira excluída", "Exclusão feita com sucesso.");
+            }
+        } else {
+            ControladorGeral.alertaErro("Atenção", "Para excluir uma carteira, primeiro selecione.");
+        }
+    }
+
+    public void confirmarExclusaoCarteira(CarteiraUsuario carteiraUsuario) {
+        Fachada.getInstancia().excluirCarteira(carteiraUsuario);
     }
 }

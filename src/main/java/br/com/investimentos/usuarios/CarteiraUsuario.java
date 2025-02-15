@@ -13,6 +13,7 @@ public class CarteiraUsuario implements Serializable {
     private long carteiraID;
     private String nomeCarteira;
     private double saldoDisponivel;
+    private double saldoInicial;
     private LocalDate dataCriacao;
     private String objetivoInvestimento;
     private EnumTipoInvestidor enumTipoInvestidor;
@@ -30,6 +31,7 @@ public class CarteiraUsuario implements Serializable {
 
     public CarteiraUsuario(String nomeCarteira, double saldoDisponivel, LocalDate dataCriacao, String objetivoInvestimento, EnumTipoInvestidor enumTipoInvestidor, EnumTipoMoeda enumTipoMoeda, UsuarioComum usuario) {
         this.nomeCarteira = nomeCarteira;
+        this.saldoInicial = saldoDisponivel;
         this.saldoDisponivel = saldoDisponivel;
         this.dataCriacao = dataCriacao;
         this.objetivoInvestimento = objetivoInvestimento;
@@ -69,6 +71,17 @@ public class CarteiraUsuario implements Serializable {
         }
         return operacoes;
     }
+
+    public double calcularRentabilidade() {
+        double valorInicial = this.saldoInicial;
+        double valorAtual = this.saldoDisponivel;
+
+        if (valorInicial == 0) {
+            return 0;
+        }
+        return ((valorAtual - valorInicial) / valorInicial) * 100;
+    }
+
 
     public AtivosFinanceiros[] getAtivosFinanceiros() {
         return ativosFinanceiros;
@@ -188,6 +201,14 @@ public class CarteiraUsuario implements Serializable {
 
     public void setMetasRentabilidade(MetasRentabilidade metasRentabilidade) {
         this.metasRentabilidade = metasRentabilidade;
+    }
+
+    public double getSaldoInicial() {
+        return saldoInicial;
+    }
+
+    public void setSaldoInicial(double saldoInicial) {
+        this.saldoInicial = saldoInicial;
     }
 
     @Override

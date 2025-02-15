@@ -46,6 +46,10 @@ public class Fachada {
         controladorCarteirasUser.adicionarSaldo(novoSaldo, carteira);
     }
 
+    public void excluirCarteira(CarteiraUsuario carteiraUsuario) {
+        controladorCarteirasUser.excluirCarteira(carteiraUsuario);
+    }
+
     //Ativos
 
     public static double converter(String moedaOrigem, String moedaDestino, double valor) throws Exception {

@@ -27,6 +27,11 @@ public class MetasRentabilidade implements Serializable {
         this.rentabilidadeAtual = rentabilidadeAtual;
     }
 
+    public String exibirInformacoes() {
+        return "Meta definida\n\nPercentual meta: "+percentualMeta+"\nPrazo meta: "+prazoMeta+"\nRentabilidade atual: "+rentabilidadeAtual+
+                "\n\nObservações: "+observacoes;
+    }
+
     public double getPercentualMeta() {
         return percentualMeta;
     }

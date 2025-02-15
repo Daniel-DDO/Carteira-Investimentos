@@ -68,7 +68,17 @@ public class ControladorMetas implements MudancaTela {
 
     @FXML
     void selecionarCarteiraCbox(ActionEvent event) {
-        System.out.println("Selecionado");
+        CarteiraUsuario carteiraSelecionada = cboxSelecionarCarteira.getValue();
+
+        if (carteiraSelecionada != null) {
+            if (carteiraSelecionada.getMetasRentabilidade() != null) {
+                statusMetaLabel.setText(carteiraSelecionada.getMetasRentabilidade().getStatus().toString());
+                informacoesMetaLabel.setText(carteiraSelecionada.getMetasRentabilidade().exibirInformacoes());
+            } else {
+                statusMetaLabel.setText("Não há status disponível.");
+                informacoesMetaLabel.setText("Crie uma meta para visualizar as informações aqui.");
+            }
+        }
     }
 
     public void visualizarCarteirasCbox() {
@@ -172,10 +182,13 @@ public class ControladorMetas implements MudancaTela {
         trocarTela(9);
     }
 
+    @FXML
+    public void selecionarCarteiraCbox1(ActionEvent actionEvent) {
+
+    }
 
     @FXML
     void voltarBotao0531(ActionEvent event) {
         trocarTela(9);
     }
-
 }

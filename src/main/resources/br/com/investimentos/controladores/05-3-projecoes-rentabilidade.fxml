@@ -38,7 +38,7 @@
                         <Button fx:id="criarNovasMetasBotao" mnemonicParsing="false" onAction="#botaoCriarNovasMetas" prefHeight="38.0" prefWidth="312.0" styleClass="medio-button" stylesheets="@design.css" text="Criar novas metas" />
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                            <children>
-                              <Label fx:id="statusMetaLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="172.0" layoutY="14.0" prefHeight="26.0" prefWidth="468.0" text="Status da meta referente a carteira selecionada" textAlignment="CENTER" wrapText="true">
+                              <Label fx:id="statusMetaLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="172.0" layoutY="14.0" prefHeight="26.0" prefWidth="468.0" text="Status da meta referente a carteira selecionada" textAlignment="CENTER" textFill="#1f00b0" wrapText="true">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

@@ -3,9 +3,7 @@ package br.com.investimentos.controladores.gui.comum;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 import static br.com.investimentos.controladores.gui.Programa.trocarTela;
 
@@ -49,4 +47,31 @@ public class ControladorMetas {
         trocarTela(5);
     }
 
+
+    //Tela 05-3-1
+
+    @FXML
+    private Button botaoCriarMeta;
+
+    @FXML
+    private Button botaoVoltar0531;
+
+    @FXML
+    private DatePicker dataMetaPicker;
+
+    @FXML
+    private TextArea observacoesMetaField;
+
+    @FXML
+    private TextField rentabilidadeField;
+
+    @FXML
+    void criarMetaBotao(ActionEvent event) {
+
+    }
+
+    @FXML
+    void voltarBotao0531(ActionEvent event) {
+
+    }
 }

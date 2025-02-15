@@ -3,6 +3,7 @@ package br.com.investimentos.usuarios;
 import br.com.investimentos.financas.AtivosFinanceiros;
 import br.com.investimentos.financas.EnumTipoMoeda;
 import br.com.investimentos.financas.ExtratoOperacoes;
+import br.com.investimentos.financas.MetasRentabilidade;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -22,6 +23,7 @@ public class CarteiraUsuario implements Serializable {
     private int tamanho = 400;
     private AtivosFinanceiros[] ativosFinanceiros;
     private ExtratoOperacoes[] extratoOperacoes;
+    private MetasRentabilidade metasRentabilidade;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -178,6 +180,14 @@ public class CarteiraUsuario implements Serializable {
 
     public void setExtratoOperacoes(ExtratoOperacoes[] extratoOperacoes) {
         this.extratoOperacoes = extratoOperacoes;
+    }
+
+    public MetasRentabilidade getMetasRentabilidade() {
+        return metasRentabilidade;
+    }
+
+    public void setMetasRentabilidade(MetasRentabilidade metasRentabilidade) {
+        this.metasRentabilidade = metasRentabilidade;
     }
 
     @Override

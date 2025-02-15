@@ -2,12 +2,17 @@ package br.com.investimentos.controladores.gui.comum;
 
 import br.com.investimentos.controladores.ControladorCarteirasUser;
 import br.com.investimentos.controladores.UsuarioLogado;
+import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.controladores.gui.MudancaTela;
+import br.com.investimentos.financas.EnumStatusMetas;
+import br.com.investimentos.financas.MetasRentabilidade;
+import br.com.investimentos.repositorios.RepositorioCarteiras;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static br.com.investimentos.controladores.gui.Programa.trocarTela;
@@ -53,6 +58,7 @@ public class ControladorMetas implements MudancaTela {
     @FXML
     void botaoCriarNovasMetas(ActionEvent event) {
         trocarTela(21);
+        ControladorGeral.alertaInformacao("Atenção!", "Se você já tem uma meta definida na carteira selecionada, ao criar uma nova meta para ela, a antiga será substituida. Após criar, o processo é irreversível.");
     }
 
     @FXML
@@ -117,11 +123,53 @@ public class ControladorMetas implements MudancaTela {
         }
     }
 
-
     @FXML
-    void criarMetaBotao(ActionEvent event) {
+    public void criarMetaBotao(ActionEvent event) {
+        if (rentabilidadeField.getText().isEmpty()) {
+            ControladorGeral.alertaErro("Rentabilidade", "Digite um valor para a rentabilidade.");
+            return;
+        }
+        double rentabilidadeDesejada;
+        try {
+            rentabilidadeDesejada = Double.parseDouble(rentabilidadeField.getText());
+        } catch (NumberFormatException e) {
+            ControladorGeral.alertaErro("Rentabilidade", "Digite um número válido para a rentabilidade.");
+            return;
+        }
+        if (rentabilidadeDesejada <= 0) {
+            ControladorGeral.alertaErro("Rentabilidade", "Você não pode colocar uma rentabilidade negativa ou igual a 0.");
+            return;
+        }
+        else if (dataMetaPicker.getValue() == null) {
+            ControladorGeral.alertaErro("Data", "Você precisa selecionar uma data para continuar.");
+            return;
+        }
 
+        LocalDate dataSelecionada = dataMetaPicker.getValue();
+        LocalDate hoje = LocalDate.now();
+
+        if (!dataSelecionada.isAfter(hoje)) {
+            ControladorGeral.alertaErro("Data", "A data precisa ser futura.");
+            return;
+        }
+        else if (observacoesMetaField.getText().isEmpty() || observacoesMetaField.getText().length() < 10) {
+            ControladorGeral.alertaErro("Observações", "Você deve digitar pelo menos 10 caracteres na observação.");
+            return;
+        }
+        else if (cboxSelecionarCarteira1.getValue() == null) {
+            ControladorGeral.alertaErro("Carteira", "Selecione uma carteira para prosseguir.");
+            return;
+        }
+
+        String observacoesMeta = observacoesMetaField.getText();
+        CarteiraUsuario carteiraSelecionada = cboxSelecionarCarteira1.getValue();
+
+        MetasRentabilidade metasRentabilidade = new MetasRentabilidade(rentabilidadeDesejada, dataSelecionada, observacoesMeta, carteiraSelecionada, EnumStatusMetas.EM_ANDAMENTO, 0.0);
+        carteiraSelecionada.setMetasRentabilidade(metasRentabilidade);
+
+        RepositorioCarteiras.getInstancia().atualizarCarteira(carteiraSelecionada);
     }
+
 
     @FXML
     void voltarBotao0531(ActionEvent event) {

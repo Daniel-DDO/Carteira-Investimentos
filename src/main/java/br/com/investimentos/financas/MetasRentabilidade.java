@@ -1,9 +1,12 @@
 package br.com.investimentos.financas;
 
 import br.com.investimentos.usuarios.CarteiraUsuario;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class MetasRentabilidade {
+public class MetasRentabilidade implements Serializable {
 
     private double percentualMeta;
     private LocalDate prazoMeta;
@@ -11,6 +14,9 @@ public class MetasRentabilidade {
     private CarteiraUsuario carteira;
     private EnumStatusMetas status;
     private double rentabilidadeAtual;
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public MetasRentabilidade(double percentualMeta, LocalDate prazoMeta, String observacoes, CarteiraUsuario carteira, EnumStatusMetas status, double rentabilidadeAtual) {
         this.percentualMeta = percentualMeta;

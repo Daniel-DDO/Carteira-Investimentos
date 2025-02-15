@@ -1,29 +1,64 @@
 package br.com.investimentos.financas;
 
+import br.com.investimentos.usuarios.CarteiraUsuario;
+import java.time.LocalDate;
+
 public class MetasRentabilidade {
 
-    private double metaMensal;
-    private double metaAnual;
+    private double percentualMeta;
+    private LocalDate prazoMeta;
+    private String observacoes;
+    private CarteiraUsuario carteira;
+    private EnumStatusMetas status;
     private double rentabilidadeAtual;
-    private double percentualMetaAtingida;
-    private double prazoMeta;
-    private double valorInvestimentoInicial;
-    private double valorMeta;
 
-    public double getMetaMensal() {
-        return metaMensal;
+    public MetasRentabilidade(double percentualMeta, LocalDate prazoMeta, String observacoes, CarteiraUsuario carteira, EnumStatusMetas status, double rentabilidadeAtual) {
+        this.percentualMeta = percentualMeta;
+        this.prazoMeta = prazoMeta;
+        this.observacoes = observacoes;
+        this.carteira = carteira;
+        this.status = status;
+        this.rentabilidadeAtual = rentabilidadeAtual;
     }
 
-    public void setMetaMensal(double metaMensal) {
-        this.metaMensal = metaMensal;
+    public double getPercentualMeta() {
+        return percentualMeta;
     }
 
-    public double getMetaAnual() {
-        return metaAnual;
+    public void setPercentualMeta(double percentualMeta) {
+        this.percentualMeta = percentualMeta;
     }
 
-    public void setMetaAnual(double metaAnual) {
-        this.metaAnual = metaAnual;
+    public LocalDate getPrazoMeta() {
+        return prazoMeta;
+    }
+
+    public void setPrazoMeta(LocalDate prazoMeta) {
+        this.prazoMeta = prazoMeta;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
+    public CarteiraUsuario getCarteira() {
+        return carteira;
+    }
+
+    public void setCarteira(CarteiraUsuario carteira) {
+        this.carteira = carteira;
+    }
+
+    public EnumStatusMetas getStatus() {
+        return status;
+    }
+
+    public void setStatus(EnumStatusMetas status) {
+        this.status = status;
     }
 
     public double getRentabilidadeAtual() {
@@ -32,37 +67,5 @@ public class MetasRentabilidade {
 
     public void setRentabilidadeAtual(double rentabilidadeAtual) {
         this.rentabilidadeAtual = rentabilidadeAtual;
-    }
-
-    public double getPercentualMetaAtingida() {
-        return percentualMetaAtingida;
-    }
-
-    public void setPercentualMetaAtingida(double percentualMetaAtingida) {
-        this.percentualMetaAtingida = percentualMetaAtingida;
-    }
-
-    public double getPrazoMeta() {
-        return prazoMeta;
-    }
-
-    public void setPrazoMeta(double prazoMeta) {
-        this.prazoMeta = prazoMeta;
-    }
-
-    public double getValorInvestimentoInicial() {
-        return valorInvestimentoInicial;
-    }
-
-    public void setValorInvestimentoInicial(double valorInvestimentoInicial) {
-        this.valorInvestimentoInicial = valorInvestimentoInicial;
-    }
-
-    public double getValorMeta() {
-        return valorMeta;
-    }
-
-    public void setValorMeta(double valorMeta) {
-        this.valorMeta = valorMeta;
     }
 }

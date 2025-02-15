@@ -36,7 +36,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="cboxSelecionarCarteira" onAction="#selecionarCarteiraCbox" prefHeight="33.0" prefWidth="312.0" promptText="Selecione uma carteira" stylesheets="@design.css" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cboxSelecionarCarteira1" onAction="#selecionarCarteiraCbox" prefHeight="33.0" prefWidth="312.0" promptText="Selecione uma carteira" stylesheets="@design.css" GridPane.rowIndex="1" />
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                            <children>
                               <GridPane layoutX="63.0" layoutY="28.0" prefHeight="256.0" prefWidth="609.0">

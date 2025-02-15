@@ -1,10 +1,14 @@
 package br.com.investimentos.controladores.gui.comum;
 
+import br.com.investimentos.controladores.ControladorCarteirasUser;
+import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.util.ArrayList;
 
 import static br.com.investimentos.controladores.gui.Programa.trocarTela;
 
@@ -12,11 +16,17 @@ public class ControladorMetas implements MudancaTela {
 
     @Override
     public void mudancaTela(int novaTela, Object objeto) {
-        if (novaTela == 9) {
-
-        }
-        if (novaTela == 21) {
-
+        if (UsuarioLogado.getInstancia().getUsuarioComum() != null) {
+            if (novaTela == 9) {
+                System.out.println("9");
+                cboxSelecionarCarteira.getItems().clear();
+                visualizarCarteirasCbox();
+            }
+            if (novaTela == 21) {
+                System.out.println("21");
+                cboxSelecionarCarteira.getItems().clear();
+                visualizarCarteirasCbox();
+            }
         }
     }
 
@@ -51,6 +61,19 @@ public class ControladorMetas implements MudancaTela {
     @FXML
     void selecionarCarteiraCbox(ActionEvent event) {
 
+    }
+
+    public void visualizarCarteirasCbox() {
+        ArrayList<CarteiraUsuario> carteiraUsuarios = ControladorCarteirasUser.getInstancia()
+                .exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
+
+        if (!carteiraUsuarios.isEmpty()) {
+            cboxSelecionarCarteira.getItems().clear();
+            cboxSelecionarCarteira.setPromptText("Selecione uma carteira");
+            cboxSelecionarCarteira.getItems().addAll(carteiraUsuarios);
+        } else {
+            System.out.println(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario() + " não tem carteiras.");
+        }
     }
 
     @FXML

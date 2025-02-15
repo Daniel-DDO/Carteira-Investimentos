@@ -168,6 +168,8 @@ public class ControladorMetas implements MudancaTela {
         carteiraSelecionada.setMetasRentabilidade(metasRentabilidade);
 
         RepositorioCarteiras.getInstancia().atualizarCarteira(carteiraSelecionada);
+        ControladorGeral.alertaInformacao("Metas", "Nova meta criada com sucesso.");
+        trocarTela(9);
     }
 
 

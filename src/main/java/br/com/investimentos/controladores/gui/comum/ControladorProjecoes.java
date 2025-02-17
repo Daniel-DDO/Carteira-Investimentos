@@ -96,6 +96,7 @@ public class ControladorProjecoes implements MudancaTela {
     @FXML
     void selecionarCarteiraCbox(ActionEvent event) {
         setCarteiraSelecionada(cboxSelecionarCarteira.getValue());
+        infoSaldoLabel.setText("Saldo carteira"+getCarteiraSelecionada().getEnumTipoMoeda()+": "+String.format("%.2f",getCarteiraSelecionada().getSaldoDisponivel()));
     }
 
     @FXML
@@ -105,20 +106,14 @@ public class ControladorProjecoes implements MudancaTela {
 
     @FXML
     void voltarBotao054(ActionEvent event) {
+        setCarteiraSelecionada(null);
+        infoSaldoLabel.setText("Saldo carteira");
+        cboxSelecionarTempo.getItems().clear();
+        aporteMensalField.clear();
+        taxaRetField.clear();
+        prazoField.clear();
+        infoSaldoLabel.setText("Informações atuais.");
         trocarTela(5);
-    }
-
-    private int ajustarPeriodoComBaseNoTempo(EnumTempo tempo, int periodo) {
-        switch (tempo) {
-            case Semanas:
-                return periodo * 4;
-            case Meses:
-                return periodo;
-            case Anos:
-                return periodo * 12;
-            default:
-                return periodo;
-        }
     }
 
     public void visualizarCarteirasCbox() {
@@ -245,7 +240,7 @@ public class ControladorProjecoes implements MudancaTela {
 
             String ipca = obterIPCA();
             String selic = obterSELIC();
-            String dolar = obterDolar();
+            String dolar = String.format("%.2f", converterMoeda(1, getCarteiraSelecionada().getEnumTipoMoeda(), EnumTipoMoeda.USD));
 
             double ipcaValor = Double.parseDouble(ipca.replace(",", "."));
             double selicValor = Double.parseDouble(selic.replace(",", "."));
@@ -327,31 +322,5 @@ public class ControladorProjecoes implements MudancaTela {
         }
         return "Erro ao obter SELIC";
     }
-
-    private String obterDolar() {
-        try {
-            String url = "https://economia.awesomeapi.com.br/last/USD-BRL";
-            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setRequestMethod("GET");
-
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String inputLine;
-
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-
-                JSONObject jsonObject = new JSONObject(response.toString());
-                return jsonObject.getJSONObject("USDBRL").getString("bid");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "Erro ao obter cotação do dólar";
-    }
-
 
 }

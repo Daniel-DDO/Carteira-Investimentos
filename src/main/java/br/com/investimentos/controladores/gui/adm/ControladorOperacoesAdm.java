@@ -10,10 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.ArrayList;
@@ -59,10 +56,10 @@ public class ControladorOperacoesAdm implements MudancaTela {
     @FXML
     private TableView<ExtratoOperacoes> tableExtrato;
 
-    @FXML
-    private TableColumn<UsuarioComum, String> usuarioColuna;
-
     private final ObservableList<ExtratoOperacoes> extratos = FXCollections.observableArrayList();
+
+    @FXML
+    private Label usuarioReferente;
 
     @FXML
     void confirmarBotao0524(ActionEvent event) {

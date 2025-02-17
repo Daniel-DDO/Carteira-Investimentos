@@ -233,8 +233,11 @@ public class ControladorProjecoes implements MudancaTela {
             int prazo = Integer.parseInt(prazoField.getText());
             String tempoSelecionado = String.valueOf(cboxSelecionarTempo.getValue());
 
+
             EnumTipoMoeda tipoMoeda = getCarteiraSelecionada().getEnumTipoMoeda();
             double saldoDisp = getCarteiraSelecionada().getSaldoDisponivel();
+
+            aporteMensal = converterMoeda(aporteMensal, EnumTipoMoeda.USD, tipoMoeda);
 
             double saldoInicial = converterMoeda(saldoDisp, EnumTipoMoeda.USD, tipoMoeda);
             System.out.println(saldoDisp);

@@ -96,7 +96,7 @@ public class ControladorProjecoes implements MudancaTela {
     @FXML
     void selecionarCarteiraCbox(ActionEvent event) {
         setCarteiraSelecionada(cboxSelecionarCarteira.getValue());
-        infoSaldoLabel.setText("Saldo carteira"+getCarteiraSelecionada().getEnumTipoMoeda()+": "+String.format("%.2f",getCarteiraSelecionada().getSaldoDisponivel()));
+        infoSaldoLabel.setText("Saldo carteira "+getCarteiraSelecionada().getEnumTipoMoeda()+": "+String.format("%.2f",getCarteiraSelecionada().getSaldoDisponivel()));
     }
 
     @FXML
@@ -236,7 +236,7 @@ public class ControladorProjecoes implements MudancaTela {
             EnumTipoMoeda tipoMoeda = getCarteiraSelecionada().getEnumTipoMoeda();
             double saldoDisp = getCarteiraSelecionada().getSaldoDisponivel();
 
-            double saldoDolar = converterMoeda(saldoDisp, tipoMoeda, EnumTipoMoeda.USD);
+            double saldoInicial = converterMoeda(saldoDisp, tipoMoeda, EnumTipoMoeda.USD);
 
             String ipca = obterIPCA();
             String selic = obterSELIC();
@@ -246,18 +246,19 @@ public class ControladorProjecoes implements MudancaTela {
             double selicValor = Double.parseDouble(selic.replace(",", "."));
             double dolarValor = Double.parseDouble(dolar.replace(",", "."));
 
-            double valorFuturo = calcularValorFuturo(saldoDolar, aporteMensal, taxaRetorno, prazo, tempoSelecionado);
+            double taxaDeRetornoMensal = taxaRetorno / 12;
+            double valorFuturo = calcularValorFuturoCrescimentoComposto(saldoInicial, aporteMensal, taxaDeRetornoMensal, prazo, tempoSelecionado);
 
             String informacoes = String.format(
-                    "IPCA: %.2f%%\nSELIC: %.2f%%\nDólar: "+getCarteiraSelecionada().getEnumTipoMoeda()+" %.2f\nRentabilidade futura: %.2f",
-                    ipcaValor, selicValor, dolarValor, valorFuturo
+                    "IPCA: %.2f%%\nSELIC: %.2f%%\nDólar: %.2f %s\nRentabilidade futura: %.2f",
+                    ipcaValor, selicValor, dolarValor, getCarteiraSelecionada().getEnumTipoMoeda(), valorFuturo
             );
 
             informacoesGeraisLabel.setText(informacoes);
         }
     }
 
-    private double calcularValorFuturo(double saldoInicial, double aporteMensal, double taxaRetorno, int prazo, String tempoSelecionado) {
+    private double calcularValorFuturoCrescimentoComposto(double saldoInicial, double aporteMensal, double taxaRetornoMensal, int prazo, String tempoSelecionado) {
         double valorFuturo = saldoInicial;
 
         if (tempoSelecionado.equalsIgnoreCase("anos")) {
@@ -266,9 +267,7 @@ public class ControladorProjecoes implements MudancaTela {
             prazo *= 4;
         }
 
-        for (int i = 0; i < prazo; i++) {
-            valorFuturo = valorFuturo * (1 + taxaRetorno) + aporteMensal;
-        }
+        valorFuturo = saldoInicial * Math.pow(1 + taxaRetornoMensal, prazo) + (aporteMensal * (Math.pow(1 + taxaRetornoMensal, prazo) - 1)) / taxaRetornoMensal;
 
         return valorFuturo;
     }
@@ -322,5 +321,6 @@ public class ControladorProjecoes implements MudancaTela {
         }
         return "Erro ao obter SELIC";
     }
+
 
 }

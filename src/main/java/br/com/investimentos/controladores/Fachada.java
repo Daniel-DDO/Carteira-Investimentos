@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Fachada {
     private static Fachada instancia;
@@ -43,7 +44,11 @@ public class Fachada {
         controladorCarteirasUser.exibirTodasCarteiras();
     }
 
-    public void adicionarSaldo(double novoSaldo, CarteiraUsuario carteira) {
+    public ArrayList<CarteiraUsuario> exibirCarteirasAll() {
+        return controladorCarteirasUser.exibirCarteirasAll();
+    }
+
+        public void adicionarSaldo(double novoSaldo, CarteiraUsuario carteira) {
         controladorCarteirasUser.adicionarSaldo(novoSaldo, carteira);
     }
 
@@ -61,6 +66,10 @@ public class Fachada {
 
     public void criarNovoRelatorio(CarteiraUsuario carteira, Stage stage) {
         controladorRelatorios.gerarRelatorioExtrato(carteira, stage);
+    }
+
+    public void gerarRelatorioGeral(List<CarteiraUsuario> carteiras, Stage stage) {
+        controladorRelatorios.gerarRelatorioTodasCarteiras(carteiras, stage);
     }
 
     //Metas Rentabilidade

@@ -1,7 +1,9 @@
 package br.com.investimentos.controladores.gui.adm;
 
 import br.com.investimentos.controladores.ControladorCarteirasUser;
+import br.com.investimentos.controladores.Fachada;
 import br.com.investimentos.controladores.UsuarioLogado;
+import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.financas.ExtratoOperacoes;
 import br.com.investimentos.usuarios.CarteiraUsuario;
@@ -10,10 +12,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static br.com.investimentos.controladores.gui.Programa.trocarTela;
 
@@ -42,6 +47,9 @@ public class ControladorOperacoesAdm implements MudancaTela {
     private Button botaoVoltar0524;
 
     @FXML
+    private Button botaoCriarRelatGeral;
+
+    @FXML
     private ComboBox<CarteiraUsuario> cboxSelecionarCarteira;
 
     @FXML
@@ -63,7 +71,14 @@ public class ControladorOperacoesAdm implements MudancaTela {
 
     @FXML
     void confirmarBotao0524(ActionEvent event) {
-
+        CarteiraUsuario carteiraSelecionada = cboxSelecionarCarteira.getValue();
+        if (carteiraSelecionada != null) {
+            Stage stage = (Stage) tableExtrato.getScene().getWindow();
+            Fachada.getInstancia().criarNovoRelatorio(carteiraSelecionada, stage);
+        } else {
+            ControladorGeral.alertaErro("Erro", "Nenhuma carteira foi selecionada");
+            System.err.println("Nenhuma carteira foi selecionada.");
+        }
     }
 
     @FXML
@@ -89,6 +104,7 @@ public class ControladorOperacoesAdm implements MudancaTela {
         CarteiraUsuario carteiraSelecionada = cboxSelecionarCarteira.getValue();
         if (carteiraSelecionada != null) {
             atualizarExtrato(carteiraSelecionada);
+            usuarioReferente.setText("Usuário referente: "+carteiraSelecionada.getUsuario().getNomeUsuario());
         }
     }
 
@@ -104,4 +120,12 @@ public class ControladorOperacoesAdm implements MudancaTela {
 
         tableExtrato.setItems(extratos);
     }
+
+    @FXML
+    void criarRelatGeralBotao(ActionEvent event) {
+        List<CarteiraUsuario> carteiras = Fachada.getInstancia().exibirCarteirasAll();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Fachada.getInstancia().gerarRelatorioGeral(carteiras, stage);
+    }
+
 }

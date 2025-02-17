@@ -38,14 +38,14 @@
                         <ComboBox fx:id="cboxSelecionarCarteira" onAction="#selecionarCarteiraCbox" prefHeight="33.0" prefWidth="312.0" promptText="Selecione uma carteira" stylesheets="@design.css" GridPane.rowIndex="1" />
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                            <children>
-                              <TableView fx:id="tableExtrato" layoutX="7.0" layoutY="17.0" prefHeight="241.0" prefWidth="799.0">
+                              <TableView fx:id="tableExtrato" layoutX="7.0" layoutY="17.0" prefHeight="227.0" prefWidth="799.0">
                                 <columns>
                                   <TableColumn fx:id="operacoesColuna" prefWidth="106.0" text="Operação" />
                                   <TableColumn fx:id="dataColuna" prefWidth="113.0" text="Data" />
-                                    <TableColumn fx:id="informacoesColuna" prefWidth="443.0" text="Informações" />
-                                    <TableColumn fx:id="usuarioColuna" prefWidth="136.0" text="Usuário" />
+                                    <TableColumn fx:id="informacoesColuna" prefWidth="579.0" text="Informações" />
                                 </columns>
                               </TableView>
+                              <Label fx:id="usuarioReferente" alignment="CENTER" layoutX="127.0" layoutY="250.0" prefHeight="17.0" prefWidth="559.0" text="Usuário referente" />
                            </children>
                         </Pane>
                      </children>
@@ -70,6 +70,7 @@
          <children>
             <Button fx:id="botaoVoltar0524" layoutX="859.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#voltarBotao05224" prefHeight="35.0" prefWidth="121.0" stylesheets="@design.css" text="Voltar" textAlignment="CENTER" wrapText="true" />
             <Button fx:id="botaoConfirmar0524" layoutX="607.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#confirmarBotao0524" prefHeight="35.0" prefWidth="240.0" stylesheets="@design.css" text="Criar Relatório da Carteira" textAlignment="CENTER" wrapText="true" />
+            <Button fx:id="botaoCriarRelatGeral" layoutX="356.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#criarRelatGeralBotao" prefHeight="35.0" prefWidth="240.0" stylesheets="@design.css" text="Criar Relatório geral" textAlignment="CENTER" wrapText="true" />
          </children>
       </Pane>
    </bottom>

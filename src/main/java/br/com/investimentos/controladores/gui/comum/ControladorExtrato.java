@@ -4,6 +4,7 @@ import br.com.investimentos.controladores.ControladorCarteirasUser;
 import br.com.investimentos.controladores.ControladorRelatorios;
 import br.com.investimentos.controladores.Fachada;
 import br.com.investimentos.controladores.UsuarioLogado;
+import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import br.com.investimentos.financas.ExtratoOperacoes;
@@ -64,6 +65,7 @@ public class ControladorExtrato implements MudancaTela {
             Stage stage = (Stage) tableExtrato.getScene().getWindow();
             Fachada.getInstancia().criarNovoRelatorio(carteiraSelecionada, stage);
         } else {
+            ControladorGeral.alertaErro("Erro", "Nenhuma carteira foi selecionada");
             System.err.println("Nenhuma carteira foi selecionada.");
         }
     }

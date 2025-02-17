@@ -47,6 +47,7 @@ public class ControladorSimularInvestimentos implements MudancaTela {
         ObservableList<AtivosFinanceiros> ativos = ControladorGerenciarCarteiras.getInstancia().obterAtivos();
 
         if (cboxSelecionarAtivo != null && ativos != null) {
+            cboxSelecionarAtivo.getItems().clear();
             cboxSelecionarAtivo.getItems().addAll(ativos);
             cboxSelecionarAtivo.setConverter(new StringConverter<AtivosFinanceiros>() {
                 @Override
@@ -64,7 +65,6 @@ public class ControladorSimularInvestimentos implements MudancaTela {
             });
         }
     }
-
 
     @FXML
     private Button botaoConfirmar05;
@@ -121,7 +121,7 @@ public class ControladorSimularInvestimentos implements MudancaTela {
     private int ajustarPeriodoComBaseNoTempo(EnumTempo tempo, int periodo) {
         switch (tempo) {
             case Semanas:
-                return periodo * 4;
+                return periodo / 4;
             case Meses:
                 return periodo;
             case Anos:
@@ -192,13 +192,14 @@ public class ControladorSimularInvestimentos implements MudancaTela {
     void simularInvestBotao(ActionEvent event) {
         AtivosFinanceiros ativoSelecionado = cboxSelecionarAtivo.getValue();
         EnumTempo tempo = cboxSelecionarTempo.getValue();
+        EnumTipoMoeda moedaOrigem;
+        EnumTipoMoeda moedaDestino = cboxSelecionarMoeda.getValue();
 
         if (ativoSelecionado == null || tempo == null) {
             ControladorGeral.alertaErro("Erro", "Selecione um ativo e um período.");
             return;
         }
 
-        EnumTipoMoeda moedaOrigem;
         try {
             moedaOrigem = EnumTipoMoeda.valueOf(ativoSelecionado.getMoeda());
         } catch (IllegalArgumentException | NullPointerException e) {
@@ -206,7 +207,6 @@ public class ControladorSimularInvestimentos implements MudancaTela {
             return;
         }
 
-        EnumTipoMoeda moedaDestino = cboxSelecionarMoeda.getValue();
         if (moedaDestino == null) {
             ControladorGeral.alertaErro("Erro", "Selecione uma moeda de destino.");
             return;
@@ -255,7 +255,7 @@ public class ControladorSimularInvestimentos implements MudancaTela {
         precoAbertura = converterMoeda(precoAbertura, moedaSelecionada, moedaSelecionada);
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Evolução do Investimento em "+moedaSelecionada);
+        series.setName("Evolução do Investimento em "+ativo.getMoeda());
 
         double saldo = valorInicial;
         double variacao = (precoAtual - precoAbertura) / precoAbertura;
@@ -269,7 +269,6 @@ public class ControladorSimularInvestimentos implements MudancaTela {
 
         System.out.println("Total de pontos adicionados ao gráfico: " + series.getData().size());
 
-        graficoEvolucao.getData().clear();
         graficoEvolucao.getData().add(series);
 
         yAxis.setTickLabelFormatter(new StringConverter<Number>() {
@@ -292,6 +291,10 @@ public class ControladorSimularInvestimentos implements MudancaTela {
 
     @FXML
     void voltarBotao05(ActionEvent event) {
+        graficoEvolucao.getData().clear();
+        fieldAporteMensal.clear();
+        fieldPeriodo.clear();
+        fieldValorInicial.clear();
         Programa.trocarTela(5);
     }
 }

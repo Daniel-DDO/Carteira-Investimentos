@@ -236,7 +236,9 @@ public class ControladorProjecoes implements MudancaTela {
             EnumTipoMoeda tipoMoeda = getCarteiraSelecionada().getEnumTipoMoeda();
             double saldoDisp = getCarteiraSelecionada().getSaldoDisponivel();
 
-            double saldoInicial = converterMoeda(saldoDisp, tipoMoeda, EnumTipoMoeda.USD);
+            double saldoInicial = converterMoeda(saldoDisp, EnumTipoMoeda.USD, tipoMoeda);
+            System.out.println(saldoDisp);
+            System.out.println(saldoInicial);
 
             String ipca = obterIPCA();
             String selic = obterSELIC();
@@ -249,9 +251,12 @@ public class ControladorProjecoes implements MudancaTela {
             double taxaDeRetornoMensal = taxaRetorno / 12;
             double valorFuturo = calcularValorFuturoCrescimentoComposto(saldoInicial, aporteMensal, taxaDeRetornoMensal, prazo, tempoSelecionado);
 
+            double valorFuturoConvertido = converterMoeda(valorFuturo, tipoMoeda, EnumTipoMoeda.USD);
             String informacoes = String.format(
-                    "IPCA: %.2f%%\nSELIC: %.2f%%\nDólar: %.2f %s\nRentabilidade futura: %.2f",
-                    ipcaValor, selicValor, dolarValor, getCarteiraSelecionada().getEnumTipoMoeda(), valorFuturo
+                    "IPCA: %.2f%%\nSELIC: %.2f%%\nDólar: %.2f %s\nRentabilidade futura: %.2f %s",
+                    ipcaValor, selicValor, dolarValor,
+                    getCarteiraSelecionada().getEnumTipoMoeda(),
+                    valorFuturoConvertido, tipoMoeda
             );
 
             informacoesGeraisLabel.setText(informacoes);
@@ -259,7 +264,7 @@ public class ControladorProjecoes implements MudancaTela {
     }
 
     private double calcularValorFuturoCrescimentoComposto(double saldoInicial, double aporteMensal, double taxaRetornoMensal, int prazo, String tempoSelecionado) {
-        double valorFuturo = saldoInicial;
+        double valorFuturo;
 
         if (tempoSelecionado.equalsIgnoreCase("anos")) {
             prazo *= 12;

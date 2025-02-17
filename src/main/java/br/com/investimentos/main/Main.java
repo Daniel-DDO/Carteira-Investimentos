@@ -1,6 +1,7 @@
 package br.com.investimentos.main;
 
 import br.com.investimentos.controladores.ControladorContaUsuario;
+import br.com.investimentos.controladores.Fachada;
 import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.excecoes.ContaNaoExisteException;
 import br.com.investimentos.repositorios.RepositorioContaUsuario;
@@ -66,7 +67,7 @@ public class Main extends Programa {
                     repositorioContaUsuario.inserirConta(usuarioAdm);
                     break;
                 case 3:
-                    ControladorContaUsuario.getInstancia().exibirContas();
+                    Fachada.getInstancia().exibirContas();
                     break;
                 case 4:
                     String usuarioOuEmail;
@@ -90,7 +91,7 @@ public class Main extends Programa {
                     System.out.print("Senha: ");
                     senha = scanner.nextLine();
                     try {
-                        ControladorContaUsuario.getInstancia().buscarContaParaLogar(usuarioOuEmail, senha, enumTipoConta);
+                        Fachada.getInstancia().buscarContaParaLogar(usuarioOuEmail, senha, enumTipoConta);
                     } catch (ContaNaoExisteException contaNaoExisteException) {
                         contaNaoExisteException.printStackTrace();
                     }

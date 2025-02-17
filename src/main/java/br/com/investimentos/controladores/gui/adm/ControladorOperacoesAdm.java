@@ -90,7 +90,7 @@ public class ControladorOperacoesAdm implements MudancaTela {
     }
 
     public void visualizarCarteirasCbox() {
-        ArrayList<CarteiraUsuario> carteiraUsuarios = ControladorCarteirasUser.getInstancia().exibirCarteirasAll();
+        ArrayList<CarteiraUsuario> carteiraUsuarios = Fachada.getInstancia().exibirCarteirasAll();
 
         if (!carteiraUsuarios.isEmpty()) {
             cboxSelecionarCarteira.getItems().clear();

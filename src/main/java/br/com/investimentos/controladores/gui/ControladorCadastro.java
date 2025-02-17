@@ -1,6 +1,7 @@
 package br.com.investimentos.controladores.gui;
 
 import br.com.investimentos.controladores.ControladorContaUsuario;
+import br.com.investimentos.controladores.Fachada;
 import br.com.investimentos.repositorios.RepositorioContaUsuario;
 import br.com.investimentos.usuarios.ContaUsuario;
 import br.com.investimentos.usuarios.UsuarioAdministrador;
@@ -126,7 +127,7 @@ public class ControladorCadastro {
             ControladorGeral.alertaErro("Erro", "Verifique se o CPF é válido.");
         }
         else {
-            ControladorContaUsuario.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
+            Fachada.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
 
             ContaUsuario contaUsuarioUsuarioComum = new UsuarioComum(nome, nomeUsuario, email, senha, telefone, cpf);
             ((UsuarioComum) contaUsuarioUsuarioComum).setQuantidadeCarteiras(0);
@@ -151,7 +152,7 @@ public class ControladorCadastro {
 
             Programa.trocarTela(1);
             System.out.println("\nCONTAS CRIADAS\n");
-            ControladorContaUsuario.getInstancia().exibirContas(); //pra ver se tá criando no array
+            Fachada.getInstancia().exibirContas(); //pra ver se tá criando no array
         }
     }
 
@@ -234,7 +235,7 @@ public class ControladorCadastro {
             ControladorGeral.alertaErro("Erro", "Digite um CPF válido.");
             System.err.println("Digite um CPF válido.");
         } else {
-            ControladorContaUsuario.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
+            Fachada.getInstancia().verificarInformacoes(nomeUsuario, email, cpf);
 
             ContaUsuario contaUsuarioAdm = new UsuarioAdministrador(nome, nomeUsuario, email, senha, telefone, cpf);
 
@@ -252,7 +253,7 @@ public class ControladorCadastro {
             fieldTelefoneAdm.clear();
             fieldCpfAdm.clear();
 
-            ControladorContaUsuario.getInstancia().exibirContas();
+            Fachada.getInstancia().exibirContas();
             Programa.trocarTela(1);
         }
     }

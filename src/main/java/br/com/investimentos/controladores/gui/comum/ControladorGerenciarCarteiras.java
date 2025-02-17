@@ -1,6 +1,7 @@
 package br.com.investimentos.controladores.gui.comum;
 
 import br.com.investimentos.controladores.ControladorCarteirasUser;
+import br.com.investimentos.controladores.Fachada;
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.controladores.gui.MudancaTela;
@@ -486,7 +487,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
         if (carteiraUsuario.getSaldoDisponivel() >= valorFinal) {
             carteiraUsuario.setSaldoDisponivel(carteiraUsuario.getSaldoDisponivel() - valorFinal);
-            ControladorCarteirasUser.getInstancia().calcularPrecoMedioAtivo(carteiraUsuario, ativoFinanceiro, quantidade, precoAtivoConvertido);
+            Fachada.getInstancia().calcularPrecoMedioAtivo(carteiraUsuario, ativoFinanceiro, quantidade, precoAtivoConvertido);
 
             ExtratoOperacoes operacaoCompra = new ExtratoOperacoes(
                     "Compra",

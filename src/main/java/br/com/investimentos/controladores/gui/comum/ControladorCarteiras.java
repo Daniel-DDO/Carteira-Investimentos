@@ -80,7 +80,7 @@ public class ControladorCarteiras implements MudancaTela {
 
     @FXML
     void botaoGerenciarCarteiras(ActionEvent event) {
-        if (ControladorCarteirasUser.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
+        if (Fachada.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
             trocarTela(15);
         } else {
             ControladorGeral.alertaErro("Visualizar carteiras",
@@ -90,7 +90,7 @@ public class ControladorCarteiras implements MudancaTela {
 
     @FXML
     void botaoVisualizarCarteiras(ActionEvent event) {
-        if (ControladorCarteirasUser.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
+        if (Fachada.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
             trocarTela(14);
         } else {
             ControladorGeral.alertaErro("Visualizar carteiras",
@@ -100,7 +100,7 @@ public class ControladorCarteiras implements MudancaTela {
 
     @FXML
     public void botaoExtratoCarteira(ActionEvent actionEvent) {
-        if (ControladorCarteirasUser.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
+        if (Fachada.getInstancia().verificarSeTemCarteira(UsuarioLogado.getInstancia().getUsuarioComum())) {
             trocarTela(20);
         } else {
             ControladorGeral.alertaErro("Visualizar carteiras",
@@ -136,8 +136,6 @@ public class ControladorCarteiras implements MudancaTela {
 
     @FXML
     private ComboBox<EnumTipoMoeda> tipoMoedaComboBox;
-
-
 
     public void criarNovaCarteira() {
         String nomeCarteira = nomeCarteiraField.getText();

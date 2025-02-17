@@ -41,11 +41,11 @@ public class ControladorPerfil implements MudancaTela {
 
     @FXML
     void excluirContaBotao(ActionEvent event) {
-        ControladorGeral.alertaConfirmacao("Conta excluída", "A sua conta foi excluída e tudo associado a ela também foi deletado.");
-        RepositorioContaUsuario.getInstancia().excluirConta(UsuarioLogado.getInstancia().getUsuarioComum());
-        UsuarioLogado.getInstancia().getUsuarioComum().setQuantidadeCarteiras(UsuarioLogado.getInstancia().getUsuarioComum().getQuantidadeCarteiras() - 1);
-        Programa.trocarTela(1);
+        boolean confirmar = ControladorGeral.alertaConfirmacaoComRes("Excluir conta", "Deseja excluir a sua conta? Essa é uma operação irreversível e não há como desfazer. Ao clicar em OK, tudo associado a sua conta será excluido e apagado permanentemente.");
+        if (confirmar) {
+            Programa.trocarTela(1);
+            RepositorioContaUsuario.getInstancia().excluirConta(UsuarioLogado.getInstancia().getUsuarioComum());
+            ControladorGeral.alertaConfirmacao("Conta excluída", "A sua conta foi excluída e tudo associado a ela também foi deletado.");
+        }
     }
-
-
 }

@@ -1,9 +1,10 @@
 package br.com.investimentos.controladores;
 
+import br.com.investimentos.excecoes.ContaJaExisteExcepction;
+import br.com.investimentos.excecoes.ContaNaoExisteException;
+import br.com.investimentos.financas.AtivosFinanceiros;
 import br.com.investimentos.financas.EnumTipoMoeda;
-import br.com.investimentos.usuarios.CarteiraUsuario;
-import br.com.investimentos.usuarios.EnumTipoInvestidor;
-import br.com.investimentos.usuarios.UsuarioComum;
+import br.com.investimentos.usuarios.*;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -26,7 +27,25 @@ public class Fachada {
     private ControladorRelatorios controladorRelatorios = ControladorRelatorios.getInstancia();
     private ControladorMetasRentabilidade controladorMetasRentabilidade = ControladorMetasRentabilidade.getInstancia();
 
-    //Carteiras
+    //ContaUsuario
+
+    public void verificarInformacoes(String nomeUsuario, String email, String cpf) throws ContaJaExisteExcepction {
+        controladorContaUsuario.verificarInformacoes(nomeUsuario, email, cpf);
+    }
+
+    public boolean buscarContaParaLogar(String usuarioOuEmail, String senha, EnumTipoConta enumTipoConta) throws ContaNaoExisteException {
+        return controladorContaUsuario.buscarContaParaLogar(usuarioOuEmail, senha, enumTipoConta);
+    }
+
+    public ContaUsuario obterContaParaLogar(String usuarioOuEmail, String senha, EnumTipoConta enumTipoConta) throws ContaNaoExisteException {
+        return controladorContaUsuario.obterContaParaLogar(usuarioOuEmail, senha, enumTipoConta);
+    }
+
+    public void exibirContas() {
+        controladorContaUsuario.exibirContas();
+    }
+
+        //Carteiras
 
     public void criarNovaCarteira(String nomeCarteira, double saldoDisponivel, LocalDate dataCriacao, String objetivoInvestimento, EnumTipoInvestidor enumTipoInvestidor, EnumTipoMoeda enumTipoMoeda, UsuarioComum usuario) {
         controladorCarteirasUser.criarNovaCarteira(nomeCarteira, saldoDisponivel, dataCriacao, objetivoInvestimento, enumTipoInvestidor, enumTipoMoeda, usuario);
@@ -48,7 +67,11 @@ public class Fachada {
         return controladorCarteirasUser.exibirCarteirasAll();
     }
 
-        public void adicionarSaldo(double novoSaldo, CarteiraUsuario carteira) {
+    public void calcularPrecoMedioAtivo(CarteiraUsuario carteira, AtivosFinanceiros ativoFinanceiro, int quantidadeCompra, double precoCompra) {
+        controladorCarteirasUser.calcularPrecoMedioAtivo(carteira, ativoFinanceiro, quantidadeCompra, precoCompra);
+    }
+
+    public void adicionarSaldo(double novoSaldo, CarteiraUsuario carteira) {
         controladorCarteirasUser.adicionarSaldo(novoSaldo, carteira);
     }
 

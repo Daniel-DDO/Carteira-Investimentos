@@ -1,6 +1,8 @@
 package br.com.investimentos.controladores;
 
+import br.com.investimentos.financas.AtivosFinanceiros;
 import br.com.investimentos.financas.ExtratoOperacoes;
+import br.com.investimentos.repositorios.RepositorioAtivos;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -11,11 +13,11 @@ import com.itextpdf.layout.element.Table;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ControladorRelatorios {
 

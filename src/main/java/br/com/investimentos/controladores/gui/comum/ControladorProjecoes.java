@@ -2,6 +2,7 @@ package br.com.investimentos.controladores.gui.comum;
 
 import br.com.investimentos.controladores.ControladorCarteirasUser;
 import br.com.investimentos.controladores.UsuarioLogado;
+import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.financas.EnumTempo;
 import br.com.investimentos.financas.EnumTipoMoeda;
@@ -77,6 +78,16 @@ public class ControladorProjecoes implements MudancaTela {
     @FXML
     private TextField taxaRetField;
 
+    private CarteiraUsuario carteiraSelecionada;
+
+    public CarteiraUsuario getCarteiraSelecionada() {
+        return carteiraSelecionada;
+    }
+
+    public void setCarteiraSelecionada(CarteiraUsuario carteiraSelecionada) {
+        this.carteiraSelecionada = carteiraSelecionada;
+    }
+
     @FXML
     void confirmarBotao054(ActionEvent event) {
 
@@ -84,10 +95,7 @@ public class ControladorProjecoes implements MudancaTela {
 
     @FXML
     void selecionarCarteiraCbox(ActionEvent event) {
-        CarteiraUsuario carteiraUsuario = cboxSelecionarCarteira.getValue();
-        double saldoDisponivel = carteiraUsuario.getSaldoDisponivel();
-        EnumTipoMoeda tipoMoeda = carteiraUsuario.getEnumTipoMoeda();
-
+        setCarteiraSelecionada(cboxSelecionarCarteira.getValue());
     }
 
     @FXML
@@ -214,15 +222,60 @@ public class ControladorProjecoes implements MudancaTela {
 
     @FXML
     void botaoSimular(ActionEvent event) {
-        String ipca = obterIPCA();
-        String selic = obterSELIC();
-        String dolar = obterDolar();
+        if (cboxSelecionarCarteira.getValue() == null) {
+            ControladorGeral.alertaErro("Carteira", "Selecione uma carteira para continuar.");
+        } else if (aporteMensalField.getText() == null || aporteMensalField.getText().isEmpty()) {
+            ControladorGeral.alertaErro("Aporte mensal", "Digite algum valor para o aporte mensal, ou seja, um depósito recorrente que você pretende fazer.");
+        } else if (taxaRetField.getText() == null || taxaRetField.getText().isEmpty()) {
+            ControladorGeral.alertaErro("Taxa de retorno", "Digite uma taxa de retorno.");
+        } else if (prazoField.getText() == null || prazoField.getText().isEmpty()) {
+            ControladorGeral.alertaErro("Prazo", "Digite um prazo. (Apenas números).");
+        } else if (cboxSelecionarTempo.getValue() == null) {
+            ControladorGeral.alertaErro("Prazo", "Selecione se o prazo deve ser calculado em semanas, meses ou anos.");
+        } else {
+            double aporteMensal = Double.parseDouble(aporteMensalField.getText());
+            double taxaRetorno = Double.parseDouble(taxaRetField.getText()) / 100;
+            int prazo = Integer.parseInt(prazoField.getText());
+            String tempoSelecionado = String.valueOf(cboxSelecionarTempo.getValue());
 
-        String informacoes = "IPCA: " + ipca + "%\n" +
-                "SELIC: " + selic + "%\n" +
-                "Dólar: R$ " + dolar;
+            EnumTipoMoeda tipoMoeda = getCarteiraSelecionada().getEnumTipoMoeda();
+            double saldoDisp = getCarteiraSelecionada().getSaldoDisponivel();
 
-        informacoesGeraisLabel.setText(informacoes);
+            double saldoDolar = converterMoeda(saldoDisp, tipoMoeda, EnumTipoMoeda.USD);
+
+            String ipca = obterIPCA();
+            String selic = obterSELIC();
+            String dolar = obterDolar();
+
+            double ipcaValor = Double.parseDouble(ipca.replace(",", "."));
+            double selicValor = Double.parseDouble(selic.replace(",", "."));
+            double dolarValor = Double.parseDouble(dolar.replace(",", "."));
+
+            double valorFuturo = calcularValorFuturo(saldoDolar, aporteMensal, taxaRetorno, prazo, tempoSelecionado);
+
+            String informacoes = String.format(
+                    "IPCA: %.2f%%\nSELIC: %.2f%%\nDólar: "+getCarteiraSelecionada().getEnumTipoMoeda()+" %.2f\nRentabilidade futura: %.2f",
+                    ipcaValor, selicValor, dolarValor, valorFuturo
+            );
+
+            informacoesGeraisLabel.setText(informacoes);
+        }
+    }
+
+    private double calcularValorFuturo(double saldoInicial, double aporteMensal, double taxaRetorno, int prazo, String tempoSelecionado) {
+        double valorFuturo = saldoInicial;
+
+        if (tempoSelecionado.equalsIgnoreCase("anos")) {
+            prazo *= 12;
+        } else if (tempoSelecionado.equalsIgnoreCase("semanas")) {
+            prazo *= 4;
+        }
+
+        for (int i = 0; i < prazo; i++) {
+            valorFuturo = valorFuturo * (1 + taxaRetorno) + aporteMensal;
+        }
+
+        return valorFuturo;
     }
 
     private String obterIPCA() {

@@ -1,10 +1,7 @@
 package br.com.investimentos.controladores.gui;
 
 import br.com.investimentos.controladores.UsuarioLogado;
-import br.com.investimentos.controladores.gui.adm.ControladorAtivosAdm;
-import br.com.investimentos.controladores.gui.adm.ControladorGerenciarAtivosAdm;
-import br.com.investimentos.controladores.gui.adm.ControladorOperacoesAdm;
-import br.com.investimentos.controladores.gui.adm.ControladorPerfilAdm;
+import br.com.investimentos.controladores.gui.adm.*;
 import br.com.investimentos.controladores.gui.comum.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +39,7 @@ public class Programa extends Application {
     private static Scene extratoCarteirasTela;
     private static Scene criarMetaTela;
     private static Scene carteirasOperacoesAdmTela;
+    private static Scene verUsuariosAdmTela;
 
     private static ControladorPerfil controladorPerfil;
     private static ControladorPerfilAdm controladorPerfilAdm;
@@ -167,6 +165,12 @@ public class Programa extends Application {
         ControladorOperacoesAdm controladorOperacoesAdm = loaderCarteirasOperacoes.getController();
         adicionarMudancaTela(controladorOperacoesAdm);
 
+        FXMLLoader loaderVerUsuarios = new FXMLLoader(getClass().getResource(localFxml+"06-3-informacoes-users.fxml"));
+        Parent fxmlVerUsuarios = loaderVerUsuarios.load();
+        verUsuariosAdmTela = new Scene(fxmlVerUsuarios, 1000, 600);
+        ControladorVerUsuarios controladorVerUsuarios = loaderVerUsuarios.getController();
+        adicionarMudancaTela(controladorVerUsuarios);
+
         stage.setScene(telaInicial01);
         stage.show();
     }
@@ -261,6 +265,10 @@ public class Programa extends Application {
             case 22:
                 stage.setScene(carteirasOperacoesAdmTela);
                 informarMudancaTela(22, objeto);
+                break;
+            case 23:
+                stage.setScene(verUsuariosAdmTela);
+                informarMudancaTela(23, objeto);
                 break;
         }
     }

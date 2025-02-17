@@ -32,6 +32,7 @@
                            <children>
                               <Button fx:id="ativosFinanceirosBotao" mnemonicParsing="false" onAction="#botaoAtivosFinanceiros" prefHeight="53.0" prefWidth="258.0" styleClass="medio-button" stylesheets="@design.css" text="Ativos Financeiros" />
                               <Button fx:id="meuPerfilBotao" layoutX="34.0" layoutY="30.0" mnemonicParsing="false" onAction="#botaoMeuPerfil" prefHeight="53.0" prefWidth="258.0" styleClass="medio-button" stylesheets="@design.css" text="Acessar meu perfil" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button fx:id="carteirasBotao" layoutX="34.0" layoutY="30.0" mnemonicParsing="false" onAction="#botaoCarteiras" prefHeight="53.0" prefWidth="258.0" styleClass="medio-button" stylesheets="@design.css" text="Carteiras e operações" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children>

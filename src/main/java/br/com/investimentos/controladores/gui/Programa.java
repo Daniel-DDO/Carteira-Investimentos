@@ -3,6 +3,7 @@ package br.com.investimentos.controladores.gui;
 import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.adm.ControladorAtivosAdm;
 import br.com.investimentos.controladores.gui.adm.ControladorGerenciarAtivosAdm;
+import br.com.investimentos.controladores.gui.adm.ControladorOperacoesAdm;
 import br.com.investimentos.controladores.gui.adm.ControladorPerfilAdm;
 import br.com.investimentos.controladores.gui.comum.*;
 import javafx.application.Application;
@@ -40,6 +41,7 @@ public class Programa extends Application {
     private static Scene gerenciarAtivosAdmTela;
     private static Scene extratoCarteirasTela;
     private static Scene criarMetaTela;
+    private static Scene carteirasOperacoesAdmTela;
 
     private static ControladorPerfil controladorPerfil;
     private static ControladorPerfilAdm controladorPerfilAdm;
@@ -157,6 +159,12 @@ public class Programa extends Application {
         ControladorMetas controladorMetas = loaderCriarMeta.getController();
         adicionarMudancaTela(controladorMetas);
 
+        FXMLLoader loaderCarteirasOperacoes = new FXMLLoader(getClass().getResource(localFxml+"06-2-carteiras-operacoes.fxml"));
+        Parent fxmlCarteirasOperacoes = loaderCarteirasOperacoes.load();
+        carteirasOperacoesAdmTela = new Scene(fxmlCarteirasOperacoes, 1000, 600);
+        ControladorOperacoesAdm controladorOperacoesAdm = loaderCarteirasOperacoes.getController();
+        adicionarMudancaTela(controladorOperacoesAdm);
+
         stage.setScene(telaInicial01);
         stage.show();
     }
@@ -247,6 +255,10 @@ public class Programa extends Application {
             case 21:
                 stage.setScene(criarMetaTela);
                 informarMudancaTela(21, objeto);
+                break;
+            case 22:
+                stage.setScene(carteirasOperacoesAdmTela);
+                informarMudancaTela(22, objeto);
                 break;
         }
     }

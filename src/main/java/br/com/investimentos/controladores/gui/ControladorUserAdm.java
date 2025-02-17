@@ -22,6 +22,9 @@ public class ControladorUserAdm {
     private Button meuPerfilBotao;
 
     @FXML
+    private Button carteirasBotao;
+
+    @FXML
     void botaoAtivosFinanceiros(ActionEvent event) {
         Programa.trocarTela(17);
     }
@@ -38,6 +41,12 @@ public class ControladorUserAdm {
         } else {
             Programa.inserirTextoLabel(Programa.getControladorPerfilAdm().informacoesContaAdm, "Nenhum usuário está logado.");
         }
+    }
+
+
+    @FXML
+    void botaoCarteiras(ActionEvent event) {
+        Programa.trocarTela(22);
     }
 
     @FXML

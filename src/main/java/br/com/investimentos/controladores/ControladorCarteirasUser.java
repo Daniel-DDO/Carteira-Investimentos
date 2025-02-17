@@ -48,6 +48,19 @@ public class ControladorCarteirasUser {
         return carteirastemp;
     }
 
+    public ArrayList<CarteiraUsuario> exibirCarteirasAll() {
+        CarteiraUsuario[] carteiras = RepositorioCarteiras.getInstancia().getCarteiras();
+        ArrayList<CarteiraUsuario> carteirastemp = new ArrayList<CarteiraUsuario>();
+
+        for (int i = 0; i < RepositorioCarteiras.getInstancia().getTamanho(); i++) {
+            if (carteiras[i] != null) {
+                System.out.println(carteiras[i]);
+                carteirastemp.add(carteiras[i]);
+            }
+        }
+        return carteirastemp;
+    }
+
     public void exibirTodasCarteiras() {
         CarteiraUsuario[] carteiras = RepositorioCarteiras.getInstancia().getCarteiras();
 

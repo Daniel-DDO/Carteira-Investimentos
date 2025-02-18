@@ -45,7 +45,7 @@ public class Fachada {
         controladorContaUsuario.exibirContas();
     }
 
-        //Carteiras
+    //Carteiras
 
     public void criarNovaCarteira(String nomeCarteira, double saldoDisponivel, LocalDate dataCriacao, String objetivoInvestimento, EnumTipoInvestidor enumTipoInvestidor, EnumTipoMoeda enumTipoMoeda, UsuarioComum usuario) {
         controladorCarteirasUser.criarNovaCarteira(nomeCarteira, saldoDisponivel, dataCriacao, objetivoInvestimento, enumTipoInvestidor, enumTipoMoeda, usuario);

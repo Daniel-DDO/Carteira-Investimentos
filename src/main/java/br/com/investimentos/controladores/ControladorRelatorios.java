@@ -192,7 +192,7 @@ public class ControladorRelatorios {
             document.add(new Paragraph("Valor Total Investido: " + carteira.getEnumTipoMoeda() + " " + String.format("%.2f", valorInvestido)));
             document.add(new Paragraph("Saldo Atual: " + carteira.getEnumTipoMoeda() + " " + String.format("%.2f", saldoAtual)));
             document.add(new Paragraph("Rentabilidade da Carteira: " + String.format("%.2f", rentabilidadeCarteira) + "%"));
-            document.add(new Paragraph("Rentabilidade do IFIX: " + String.format("%.2f", rentabilidadeIndex) + "%"));
+            document.add(new Paragraph("Rentabilidade do IBOV: " + String.format("%.2f", rentabilidadeIndex) + "%"));
             document.add(new Paragraph("\n"));
 
             Table tabela = new Table(2);
@@ -220,10 +220,14 @@ public class ControladorRelatorios {
                     if (operacao != null) {
                         tabelaOperacoes.addCell(operacao.getDataOperacao().toString());
                         tabelaOperacoes.addCell(operacao.getOperacao());
-                        if (operacao.getAtivo().getCodigo() != null) {
+
+                        if (operacao.getAtivo() != null && operacao.getAtivo().getCodigo() != null) {
                             tabelaOperacoes.addCell(operacao.getAtivo().getCodigo());
-                            tabelaOperacoes.addCell(String.valueOf(operacao.getQuantidade()));
+                        } else {
+                            tabelaOperacoes.addCell("N/A");
                         }
+
+                        tabelaOperacoes.addCell(String.valueOf(operacao.getQuantidade()));
                     }
                 }
             }

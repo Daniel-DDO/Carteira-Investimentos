@@ -4,16 +4,20 @@ import br.com.investimentos.financas.AtivosFinanceiros;
 import br.com.investimentos.financas.EnumTipoMoeda;
 import br.com.investimentos.financas.ExtratoOperacoes;
 import br.com.investimentos.financas.MetasRentabilidade;
+import br.com.investimentos.repositorios.RepositorioCarteiras;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Random;
 
 public class CarteiraUsuario implements Serializable {
-    private long carteiraID;
+    private String carteiraID;
     private String nomeCarteira;
     private double saldoDisponivel;
     private double saldoInicial;
+    private double totalInvestido = 0.0;
+    private double totalDepositos = 0.0;
     private LocalDate dataCriacao;
     private String objetivoInvestimento;
     private EnumTipoInvestidor enumTipoInvestidor;
@@ -33,6 +37,7 @@ public class CarteiraUsuario implements Serializable {
         this.nomeCarteira = nomeCarteira;
         this.saldoInicial = saldoDisponivel;
         this.saldoDisponivel = saldoDisponivel;
+        this.totalInvestido = saldoDisponivel;
         this.dataCriacao = dataCriacao;
         this.objetivoInvestimento = objetivoInvestimento;
         this.enumTipoInvestidor = enumTipoInvestidor;
@@ -40,10 +45,69 @@ public class CarteiraUsuario implements Serializable {
         this.usuario = usuario;
         this.ativosFinanceiros = new AtivosFinanceiros[tamanho];
         this.extratoOperacoes = new ExtratoOperacoes[tamanho];
+        this.carteiraID = gerarCarteiraIDUnico(RepositorioCarteiras.getInstancia());
+    }
+
+    private String gerarCarteiraIDUnico(RepositorioCarteiras repositorio) {
+        String idNova;
+        do {
+            idNova = gerarCarteiraID();
+        } while (repositorio.verificarIdCriarCarteira(idNova));
+        return idNova;
+    }
+
+    private String gerarCarteiraID() {
+        String ano = String.valueOf(dataCriacao.getYear());
+        String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+        StringBuilder sb = new StringBuilder(11);
+        sb.append(ano);
+        Random random = new Random();
+        for (int i = 4; i < 11; i++) {
+            sb.append(caracteres.charAt(random.nextInt(caracteres.length())));
+        }
+        return sb.toString();
     }
 
     public void depositarDinheiro(double valorDeposito) {
-        this.saldoDisponivel = this.saldoDisponivel + valorDeposito;
+        this.saldoDisponivel += valorDeposito;
+        this.totalDepositos += valorDeposito;
+    }
+
+    public void adicionarAoExtrato(ExtratoOperacoes novaOperacao) {
+        if (posicao1 < tamanho) {
+            extratoOperacoes[posicao1] = novaOperacao;
+            posicao1++;
+            if ("Compra".equalsIgnoreCase(novaOperacao.getOperacao())) {
+                totalInvestido += novaOperacao.getPrecoUn() * novaOperacao.getQuantidade();
+            }
+        }
+    }
+
+    public double calcularRentabilidade() {
+        if (totalInvestido == 0) {
+            return 0;
+        }
+        double valorAtual = saldoDisponivel + calcularValorAtivos();
+        double lucro = valorAtual - totalInvestido;
+        return (lucro / totalInvestido) * 100;
+    }
+
+    private double calcularValorAtivos() {
+        double valorAtivos = 0.0;
+        for (int i = 0; i < posicao; i++) {
+            if (ativosFinanceiros[i] != null) {
+                valorAtivos += ativosFinanceiros[i].getPrecoAtual();
+            }
+        }
+        return valorAtivos;
+    }
+
+    public double getTotalInvestido() {
+        return totalInvestido;
+    }
+
+    public double getTotalDepositos() {
+        return totalDepositos;
     }
 
     public String informacoesCarteira() {
@@ -57,29 +121,12 @@ public class CarteiraUsuario implements Serializable {
         ativosFinanceiros[--posicao] = null;
     }
 
-    public void adicionarAoExtrato(ExtratoOperacoes novaOperacao) {
-        if (posicao1 < tamanho) {
-            extratoOperacoes[posicao1] = novaOperacao;
-            posicao1++;
-        }
-    }
-
     public ExtratoOperacoes[] retornarOperacoes() {
         ExtratoOperacoes[] operacoes = new ExtratoOperacoes[posicao1];
         for (int i = 0; i < posicao1; i++) {
             operacoes[i] = extratoOperacoes[i];
         }
         return operacoes;
-    }
-
-    public double calcularRentabilidade() {
-        double valorInicial = this.saldoInicial;
-        double valorAtual = this.saldoDisponivel;
-
-        if (valorInicial == 0) {
-            return 0;
-        }
-        return ((valorAtual - valorInicial) / valorInicial) * 100;
     }
 
     public double calcularValorInvestido() {
@@ -103,11 +150,11 @@ public class CarteiraUsuario implements Serializable {
         this.ativosFinanceiros = ativosFinanceiros;
     }
 
-    public long getCarteiraID() {
+    public String getCarteiraID() {
         return carteiraID;
     }
 
-    public void setCarteiraID(long carteiraID) {
+    public void setCarteiraID(String carteiraID) {
         this.carteiraID = carteiraID;
     }
 

@@ -71,13 +71,13 @@ public class ControladorCarteirasUser {
         }
     }
 
-    public ArrayList<CarteiraUsuario> exibirCarteiraSelecionada(UsuarioComum usuario, long idCarteira) {
+    public ArrayList<CarteiraUsuario> exibirCarteiraSelecionada(UsuarioComum usuario, String idCarteira) {
         CarteiraUsuario[] carteiras = RepositorioCarteiras.getInstancia().getCarteiras();
         ArrayList<CarteiraUsuario> carteiraSelecionada = new ArrayList<>();
 
         for (int i = 0; i < RepositorioCarteiras.getInstancia().getTamanho(); i++) {
             if (carteiras[i] != null && carteiras[i].getUsuario().getNomeUsuario().equals(usuario.getNomeUsuario())) {
-                if (carteiras[i].getCarteiraID() == idCarteira) {
+                if (carteiras[i].getCarteiraID().equals(idCarteira)) {
                     carteiraSelecionada.add(carteiras[i]);
                 }
             }

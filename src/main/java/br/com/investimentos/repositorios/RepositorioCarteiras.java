@@ -65,6 +65,18 @@ public class RepositorioCarteiras {
         atualizarCarteiras(carteiras);
     }
 
+    public boolean verificarIdCriarCarteira(String idNova) {
+        boolean idIgual = false;
+        for (int a = 0; a < tamanho; a++) {
+            if (carteiras[a] != null) {
+                if (idNova.equals(carteiras[a].getCarteiraID())) {
+                    idIgual = true;
+                }
+            }
+        }
+        return idIgual;
+    }
+
     public static RepositorioCarteiras getInstancia() {
         if (instancia == null) {
             instancia = new RepositorioCarteiras();

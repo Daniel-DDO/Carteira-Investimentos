@@ -167,7 +167,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     private static final String API_KEY1 = "176d06fe91ded98c0dbd428b9fc1d45311bf34ea";
     private static final String API_KEY2 = "d24000f8cfa3e553854f164e1ffe7308eacd7be4";
     private static final String[] SYMBOLS = {
-            "AAPL", "GOOGL"
+            "AAPL", "GOOGL", "AMZN", "MSFT"
     };
 
     /*

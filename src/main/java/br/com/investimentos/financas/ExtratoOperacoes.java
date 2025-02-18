@@ -12,6 +12,7 @@ public class ExtratoOperacoes implements Serializable {
     private AtivosFinanceiros ativo;
     private int quantidade;
     private double precoUn;
+    private double valorTotal;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -23,6 +24,13 @@ public class ExtratoOperacoes implements Serializable {
         this.ativo = ativo;
         this.precoUn = precoUn;
         this.quantidade = quantidade;
+    }
+
+    public ExtratoOperacoes(String operacao, LocalDate dataOperacao, String informacoes, double valorTotal) {
+        this.operacao = operacao;
+        this.dataOperacao = dataOperacao;
+        this.informacoes = informacoes;
+        this.valorTotal = valorTotal;
     }
 
     public String getOperacao() {
@@ -71,5 +79,13 @@ public class ExtratoOperacoes implements Serializable {
 
     public void setPrecoUn(double precoUn) {
         this.precoUn = precoUn;
+    }
+
+    public double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
     }
 }

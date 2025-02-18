@@ -220,8 +220,10 @@ public class ControladorRelatorios {
                     if (operacao != null) {
                         tabelaOperacoes.addCell(operacao.getDataOperacao().toString());
                         tabelaOperacoes.addCell(operacao.getOperacao());
-                        tabelaOperacoes.addCell(operacao.getAtivo().getCodigo());
-                        tabelaOperacoes.addCell(String.valueOf(operacao.getQuantidade()));
+                        if (operacao.getAtivo().getCodigo() != null) {
+                            tabelaOperacoes.addCell(operacao.getAtivo().getCodigo());
+                            tabelaOperacoes.addCell(String.valueOf(operacao.getQuantidade()));
+                        }
                     }
                 }
             }

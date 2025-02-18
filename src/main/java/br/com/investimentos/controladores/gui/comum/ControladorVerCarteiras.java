@@ -6,6 +6,7 @@ import br.com.investimentos.controladores.UsuarioLogado;
 import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.controladores.gui.MudancaTela;
 import br.com.investimentos.controladores.gui.Programa;
+import br.com.investimentos.financas.ExtratoOperacoes;
 import br.com.investimentos.repositorios.RepositorioCarteiras;
 import br.com.investimentos.usuarios.CarteiraUsuario;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static br.com.investimentos.controladores.gui.Programa.trocarTela;
@@ -122,10 +124,21 @@ public class ControladorVerCarteiras implements MudancaTela {
     @FXML
     public void botaoAdicionarSaldo(ActionEvent event) {
         double novoSaldo = Double.parseDouble(salddAddField.getText());
+        CarteiraUsuario carteiraUsuario = cboxSelecionarCarteira.getValue();
 
-        Fachada.getInstancia().adicionarSaldo(novoSaldo, cboxSelecionarCarteira.getValue());
-        RepositorioCarteiras.getInstancia().atualizarCarteira(cboxSelecionarCarteira.getValue());
+        if (novoSaldo <= 0) {
+            ControladorGeral.alertaErro("Depósito na carteira", "O valor para depósito deve ser positivo.");
+            return;
+        }
+
+        ExtratoOperacoes operacaoDeposito = new ExtratoOperacoes("Depósito", LocalDate.now(), "Depósito na carteira: "+carteiraUsuario.getCarteiraID()+" | Valor: "+String.format("%.2f", novoSaldo)+" "+carteiraUsuario.getEnumTipoMoeda(), novoSaldo);
+
+        carteiraUsuario.adicionarAoExtrato(operacaoDeposito);
+        Fachada.getInstancia().adicionarSaldo(novoSaldo, carteiraUsuario);
+        RepositorioCarteiras.getInstancia().atualizarCarteira(carteiraUsuario);
         infoCarteira();
+        ControladorGeral.alertaInformacao("Depósito na carteira", "Depósito de "+String.format("%.2f",novoSaldo)+" "+carteiraUsuario.getEnumTipoMoeda()+" realizado com sucesso.");
+        salddAddField.clear();
     }
 
     @FXML

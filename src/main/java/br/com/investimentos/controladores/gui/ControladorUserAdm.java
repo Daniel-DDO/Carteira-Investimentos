@@ -25,6 +25,9 @@ public class ControladorUserAdm {
     private Button carteirasBotao;
 
     @FXML
+    private Button informacoesUserBotao;
+
+    @FXML
     void botaoAtivosFinanceiros(ActionEvent event) {
         Programa.trocarTela(17);
     }
@@ -43,10 +46,14 @@ public class ControladorUserAdm {
         }
     }
 
-
     @FXML
     void botaoCarteiras(ActionEvent event) {
         Programa.trocarTela(22);
+    }
+
+    @FXML
+    void botaoInformacoesUser(ActionEvent event) {
+        Programa.trocarTela(23);
     }
 
     @FXML

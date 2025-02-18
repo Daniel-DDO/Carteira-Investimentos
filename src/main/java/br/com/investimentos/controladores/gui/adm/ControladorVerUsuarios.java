@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.util.StringConverter;
 
 import java.util.ArrayList;
 
@@ -72,6 +73,18 @@ public class ControladorVerUsuarios implements MudancaTela {
         }
         cboxSelecionarUser.getItems().clear();
         cboxSelecionarUser.getItems().addAll(contaUsuarios);
+
+        cboxSelecionarUser.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(ContaUsuario usuario) {
+                return usuario != null ? usuario.getNomeUsuario() : "";
+            }
+
+            @Override
+            public ContaUsuario fromString(String string) {
+                return null;
+            }
+        });
     }
 
 }

@@ -82,6 +82,18 @@ public class CarteiraUsuario implements Serializable {
         return ((valorAtual - valorInicial) / valorInicial) * 100;
     }
 
+    public double calcularValorInvestido() {
+        double valorTotal = 0.0;
+
+        for (int i = 0; i < posicao1; i++) {
+            ExtratoOperacoes operacao = extratoOperacoes[i];
+            if (operacao != null && "Compra".equalsIgnoreCase(operacao.getOperacao())) {
+                valorTotal += operacao.getPrecoUn() * operacao.getQuantidade();
+            }
+        }
+
+        return valorTotal;
+    }
 
     public AtivosFinanceiros[] getAtivosFinanceiros() {
         return ativosFinanceiros;

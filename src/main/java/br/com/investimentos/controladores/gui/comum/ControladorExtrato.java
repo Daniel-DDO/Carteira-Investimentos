@@ -42,6 +42,9 @@ public class ControladorExtrato implements MudancaTela {
     private Button botaoVoltar;
 
     @FXML
+    private Button botaoRelatorioComp;
+
+    @FXML
     private ComboBox<CarteiraUsuario> cboxSelecionarCarteira;
 
     @FXML
@@ -110,5 +113,17 @@ public class ControladorExtrato implements MudancaTela {
         }
 
         tableExtrato.setItems(extratos);
+    }
+
+    @FXML
+    public void relatorioCompBotao(ActionEvent event) {
+        CarteiraUsuario carteiraSelecionada = cboxSelecionarCarteira.getValue();
+        if (carteiraSelecionada != null) {
+            Stage stage = (Stage) tableExtrato.getScene().getWindow();
+            Fachada.getInstancia().criarRelatorioComp(carteiraSelecionada, stage);
+        } else {
+            ControladorGeral.alertaErro("Erro", "Nenhuma carteira foi selecionada");
+            System.err.println("Nenhuma carteira foi selecionada.");
+        }
     }
 }

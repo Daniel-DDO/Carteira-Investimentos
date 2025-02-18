@@ -95,6 +95,10 @@ public class Fachada {
         controladorRelatorios.gerarRelatorioTodasCarteiras(carteiras, stage);
     }
 
+    public void criarRelatorioComp(CarteiraUsuario carteira, Stage stage) {
+        controladorRelatorios.gerarRelatorioComparativo(carteira, stage);
+    }
+
     //Metas Rentabilidade
 
     public void atualizarMetasCarteira(CarteiraUsuario carteira) {

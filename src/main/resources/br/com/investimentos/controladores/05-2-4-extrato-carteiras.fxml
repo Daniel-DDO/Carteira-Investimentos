@@ -69,6 +69,7 @@
          <children>
             <Button fx:id="botaoVoltar0524" layoutX="859.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#voltarBotao05224" prefHeight="35.0" prefWidth="121.0" stylesheets="@design.css" text="Voltar" textAlignment="CENTER" wrapText="true" />
             <Button fx:id="botaoConfirmar0524" layoutX="607.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#confirmarBotao0524" prefHeight="35.0" prefWidth="240.0" stylesheets="@design.css" text="Criar Relatório da Carteira" textAlignment="CENTER" wrapText="true" />
+            <Button fx:id="botaoRelatorioComp" layoutX="356.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#relatorioCompBotao" prefHeight="35.0" prefWidth="240.0" stylesheets="@design.css" text="Criar Relatório Comparativo" textAlignment="CENTER" wrapText="true" />
          </children>
       </Pane>
    </bottom>

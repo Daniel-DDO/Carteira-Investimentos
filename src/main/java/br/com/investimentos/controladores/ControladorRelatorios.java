@@ -157,6 +157,7 @@ public class ControladorRelatorios {
             System.err.println("Erro: Arquivo não pôde ser criado.");
         }
     }
+
     public void gerarRelatorioComparativo(CarteiraUsuario carteira, Stage stage) {
         if (carteira == null) {
             System.err.println("Erro: Nenhuma carteira selecionada.");
@@ -186,7 +187,7 @@ public class ControladorRelatorios {
             double valorInvestido = carteira.calcularValorInvestido();
             double saldoAtual = carteira.getSaldoDisponivel();
             double rentabilidadeCarteira = carteira.calcularRentabilidade();
-            double rentabilidadeIndex = obterRentabilidadeIndex(); // Alterado para um índice diferente
+            double rentabilidadeIndex = obterRentabilidadeIndex();
 
             document.add(new Paragraph("Valor Total Investido: " + carteira.getEnumTipoMoeda() + " " + String.format("%.2f", valorInvestido)));
             document.add(new Paragraph("Saldo Atual: " + carteira.getEnumTipoMoeda() + " " + String.format("%.2f", saldoAtual)));
@@ -201,7 +202,7 @@ public class ControladorRelatorios {
             tabela.addCell("Rentabilidade da Carteira");
             tabela.addCell(String.format("%.2f", rentabilidadeCarteira) + "%");
 
-            tabela.addCell("Rentabilidade do IFIX");
+            tabela.addCell("Rentabilidade do IBOV");
             tabela.addCell(String.format("%.2f", rentabilidadeIndex) + "%");
 
             document.add(tabela);
@@ -214,7 +215,6 @@ public class ControladorRelatorios {
             tabelaOperacoes.addCell("Ativo");
             tabelaOperacoes.addCell("Quantidade");
 
-            // Verificação das operações
             if (carteira.getExtratoOperacoes() != null) {
                 for (ExtratoOperacoes operacao : carteira.getExtratoOperacoes()) {
                     if (operacao != null) {
@@ -229,7 +229,7 @@ public class ControladorRelatorios {
             document.add(tabelaOperacoes);
 
             document.close();
-            System.out.println("Relatório Comparativo gerado com sucesso: " + arquivoSelecionado.getAbsolutePath());
+            System.out.println("Relatório comparativo gerado com sucesso: " + arquivoSelecionado.getAbsolutePath());
 
         } catch (FileNotFoundException e) {
             System.err.println("Erro: Arquivo não pôde ser criado.");
@@ -238,9 +238,7 @@ public class ControladorRelatorios {
 
     private double obterRentabilidadeIndex() {
         String apiKey = "hMags41aWmaF7Df4yoeZAN";
-        String ticker = "IFIX"; // Alterado para o índice IFIX
-        LocalDate dataInicio = LocalDate.now().minusMonths(1);
-        LocalDate dataAtual = LocalDate.now();
+        String ticker = "^BVSP";
 
         try {
             String urlString = "https://brapi.dev/api/quote/" + ticker + "?token=" + apiKey;
@@ -250,21 +248,37 @@ public class ControladorRelatorios {
             conn.setRequestProperty("Content-Type", "application/json");
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
-            String jsonResposta = reader.readLine();
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
             reader.close();
 
-            if (jsonResposta != null && !jsonResposta.isEmpty()) {
-                JSONObject json = new JSONObject(jsonResposta);
-                double precoAtual = json.getDouble("close");
-                double precoInicio = json.getDouble("open");
-
-                return ((precoAtual - precoInicio) / precoInicio) * 100;
+            String jsonResposta = response.toString();
+            if (!jsonResposta.startsWith("{")) {
+                System.err.println("Erro: Resposta da API não está no formato esperado.");
+                return 0.0;
             }
+
+            JSONObject json = new JSONObject(jsonResposta);
+            if (json.has("results")) {
+                JSONArray resultados = json.getJSONArray("results");
+                if (resultados.length() > 0) {
+                    JSONObject dadosTicker = resultados.getJSONObject(0);
+
+                    if (dadosTicker.has("regularMarketPreviousClose") && dadosTicker.has("regularMarketPrice")) {
+                        double precoAnterior = dadosTicker.getDouble("regularMarketPreviousClose");
+                        double precoAtual = dadosTicker.getDouble("regularMarketPrice");
+
+                        return ((precoAtual - precoAnterior) / precoAnterior) * 100;
+                    }
+                }
+            }
+            System.err.println("Erro: Dados do IBOV não encontrados.");
         } catch (Exception e) {
-            System.err.println("Erro ao obter rentabilidade do IFIX: " + e.getMessage());
+            System.err.println("Erro ao obter rentabilidade do IBOV: " + e.getMessage());
         }
         return 0.0;
     }
-
-
 }

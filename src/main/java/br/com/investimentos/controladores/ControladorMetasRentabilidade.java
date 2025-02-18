@@ -1,5 +1,6 @@
 package br.com.investimentos.controladores;
 
+import br.com.investimentos.controladores.gui.ControladorGeral;
 import br.com.investimentos.financas.EnumStatusMetas;
 import br.com.investimentos.financas.MetasRentabilidade;
 import br.com.investimentos.usuarios.CarteiraUsuario;
@@ -30,7 +31,16 @@ public class ControladorMetasRentabilidade {
 
         if (novaRentabilidade >= meta.getPercentualMeta()) {
             meta.setStatus(EnumStatusMetas.ATINGIDA);
+            exibirAlerta("Parabéns! Você atingiu sua meta de rentabilidade: "+meta.getPercentualMeta()+"%.");
+        } else if (novaRentabilidade < meta.getPercentualMeta() * 0.8) {
+            meta.setStatus(EnumStatusMetas.ABAIXO_DO_ESPERADO);
+            exibirAlerta("Atenção! Sua rentabilidade está muito abaixo da meta. Atual: "
+                    +String.format("%.2f", novaRentabilidade) + "%, Meta: "+meta.getPercentualMeta()+"%.");
         }
+    }
+
+    private void exibirAlerta(String mensagem) {
+        ControladorGeral.alertaInformacao("Alerta de Rentabilidade", mensagem);
     }
 
     public void atualizarTodasMetas(List<CarteiraUsuario> carteiras) {

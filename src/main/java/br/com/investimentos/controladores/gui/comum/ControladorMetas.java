@@ -71,8 +71,12 @@ public class ControladorMetas implements MudancaTela {
 
     @FXML
     void confirmarBotao053(ActionEvent event) {
-
+        ControladorGeral.alertaInformacao("Informações importantes",
+                "Se a sua rentabilidade está negativa, o ideal é avaliar os ativos da sua carteira e identificar possíveis ajustes. "+
+                        "Considere diversificar seus investimentos, revisar sua estratégia e acompanhar o mercado para tomar decisões mais assertivas. "+
+                        "Se precisar, busque orientação profissional.");
     }
+
 
     @FXML
     void selecionarCarteiraCbox(ActionEvent event) {

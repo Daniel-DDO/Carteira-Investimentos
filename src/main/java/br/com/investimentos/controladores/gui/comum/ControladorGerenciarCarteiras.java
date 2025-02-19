@@ -64,13 +64,13 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             codigoAcao.setCellValueFactory(cellData ->
                     new SimpleStringProperty(cellData.getValue().getCodigo()));
             precoAtual.setCellValueFactory(cellData ->
-                    new SimpleDoubleProperty(cellData.getValue().getPrecoAtual()).asObject());
+                    new SimpleDoubleProperty(Double.parseDouble(String.format("%.2f", cellData.getValue().getPrecoAtual()).replace(",", "."))).asObject());
             precoAbertura.setCellValueFactory(cellData ->
-                    new SimpleDoubleProperty(cellData.getValue().getPrecoAbertura()).asObject());
+                    new SimpleDoubleProperty(Double.parseDouble(String.format("%.2f", cellData.getValue().getPrecoAbertura()).replace(",", "."))).asObject());
             precoMaior.setCellValueFactory(cellData ->
-                    new SimpleDoubleProperty(cellData.getValue().getMaiorPreco()).asObject());
+                    new SimpleDoubleProperty(Double.parseDouble(String.format("%.2f", cellData.getValue().getMaiorPreco()).replace(",", "."))).asObject());
             precoMenor.setCellValueFactory(cellData ->
-                    new SimpleDoubleProperty(cellData.getValue().getMenorPreco()).asObject());
+                    new SimpleDoubleProperty(Double.parseDouble(String.format("%.2f", cellData.getValue().getMenorPreco()).replace(",", "."))).asObject());
             moedaLocal.setCellValueFactory(cellData ->
                     new SimpleStringProperty(cellData.getValue().getMoeda()));
 

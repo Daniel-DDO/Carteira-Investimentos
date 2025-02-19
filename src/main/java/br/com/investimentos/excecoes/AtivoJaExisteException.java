@@ -7,7 +7,7 @@ public class AtivoJaExisteException extends RuntimeException {
     }
 
     public AtivoJaExisteException(String nomeAtivo) {
-      super("Já existe um ativo com o nome "+nomeAtivo+". Tente outro.");
-      ControladorGeral.alertaErro("Nome ativo", "Já existe um ativo com o nome"+nomeAtivo+". Tente outro.");
+        super("Já existe um ativo com o nome "+nomeAtivo+". Tente outro.");
+        ControladorGeral.alertaErro("Nome ativo", "Já existe um ativo com o nome"+nomeAtivo+". Tente outro.");
     }
 }

@@ -1,8 +1,5 @@
 package br.com.investimentos.usuarios;
 
-import br.com.investimentos.financas.Investimentos;
-import br.com.investimentos.financas.RiscosFinanceiros;
-
 import java.time.LocalDate;
 
 public class UsuarioComum extends ContaUsuario {
@@ -10,7 +7,6 @@ public class UsuarioComum extends ContaUsuario {
     private double orcamentoMensal;
     private LocalDate tempoInvestimento;
     private double reservaEmergencia;
-    private RiscosFinanceiros riscosFinanceiros;
     private double rendaFixa;
     private int quantidadeCarteiras;
 
@@ -27,14 +23,13 @@ public class UsuarioComum extends ContaUsuario {
     }
 
     public UsuarioComum(String nome, String nomeUsuario, String email, String senha,
-                        String telefone, String cpf, Investimentos tipoInvestimento,
+                        String telefone, String cpf,
                         double orcamentoMensal, LocalDate tempoInvestimento,
-                        double reservaEmergencia, RiscosFinanceiros riscosFinanceiros, double rendaFixa) {
+                        double reservaEmergencia, double rendaFixa) {
         super(nome, nomeUsuario, email, senha, telefone, cpf, EnumTipoConta.COMUM);
         this.orcamentoMensal = orcamentoMensal;
         this.tempoInvestimento = tempoInvestimento;
         this.reservaEmergencia = reservaEmergencia;
-        this.riscosFinanceiros = riscosFinanceiros;
         this.rendaFixa = rendaFixa;
     }
 
@@ -64,14 +59,6 @@ public class UsuarioComum extends ContaUsuario {
 
     public void setReservaEmergencia(double reservaEmergencia) {
         this.reservaEmergencia = reservaEmergencia;
-    }
-
-    public RiscosFinanceiros getRiscosFinanceiros() {
-        return riscosFinanceiros;
-    }
-
-    public void setRiscosFinanceiros(RiscosFinanceiros riscosFinanceiros) {
-        this.riscosFinanceiros = riscosFinanceiros;
     }
 
     public double getRendaFixa() {

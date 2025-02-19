@@ -44,7 +44,11 @@ public class ControladorUserComum {
 
     @FXML
     void fundosImobiliariosBotao(ActionEvent event) {
-        Programa.trocarTela(10);
+        if (UsuarioLogado.getInstancia().getUsuarioComum().getQuantidadeCarteiras() == 0) {
+            ControladorGeral.alertaInformacao("Projeções", "Para fazer a simulação de projeções financeiras é necessário ter ao menos 1 carteira cadastrada. Crie uma carteira na aba 'Minhas carteiras'.");
+        } else {
+            Programa.trocarTela(10);
+        }
     }
 
     @FXML

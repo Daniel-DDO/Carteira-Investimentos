@@ -218,67 +218,86 @@ public class ControladorProjecoes implements MudancaTela {
 
     @FXML
     void botaoSimular(ActionEvent event) {
-        if (cboxSelecionarCarteira.getValue() == null) {
-            ControladorGeral.alertaErro("Carteira", "Selecione uma carteira para continuar.");
-        } else if (aporteMensalField.getText() == null || aporteMensalField.getText().isEmpty()) {
-            ControladorGeral.alertaErro("Aporte mensal", "Digite algum valor para o aporte mensal, ou seja, um depósito recorrente que você pretende fazer.");
-        } else if (taxaRetField.getText() == null || taxaRetField.getText().isEmpty()) {
-            ControladorGeral.alertaErro("Taxa de retorno", "Digite uma taxa de retorno.");
-        } else if (prazoField.getText() == null || prazoField.getText().isEmpty()) {
-            ControladorGeral.alertaErro("Prazo", "Digite um prazo. (Apenas números).");
-        } else if (cboxSelecionarTempo.getValue() == null) {
-            ControladorGeral.alertaErro("Prazo", "Selecione se o prazo deve ser calculado em semanas, meses ou anos.");
-        } else {
+        try {
+            if (cboxSelecionarCarteira.getValue() == null) {
+                ControladorGeral.alertaErro("Carteira", "Selecione uma carteira para continuar.");
+                return;
+            }
+            if (aporteMensalField.getText() == null || aporteMensalField.getText().isEmpty()) {
+                ControladorGeral.alertaErro("Aporte mensal", "Digite algum valor para o aporte mensal.");
+                return;
+            }
+            if (taxaRetField.getText() == null || taxaRetField.getText().isEmpty()) {
+                ControladorGeral.alertaErro("Taxa de retorno", "Digite uma taxa de retorno.");
+                return;
+            }
+            if (prazoField.getText() == null || prazoField.getText().isEmpty()) {
+                ControladorGeral.alertaErro("Prazo", "Digite um prazo. (Apenas números).");
+                return;
+            }
+            if (cboxSelecionarTempo.getValue() == null) {
+                ControladorGeral.alertaErro("Prazo", "Selecione se o prazo deve ser calculado em semanas, meses ou anos.");
+                return;
+            }
+
             double aporteMensal = Double.parseDouble(aporteMensalField.getText());
             double taxaRetorno = Double.parseDouble(taxaRetField.getText()) / 100;
             int prazo = Integer.parseInt(prazoField.getText());
             String tempoSelecionado = String.valueOf(cboxSelecionarTempo.getValue());
 
-
             EnumTipoMoeda tipoMoeda = getCarteiraSelecionada().getEnumTipoMoeda();
             double saldoDisp = getCarteiraSelecionada().getSaldoDisponivel();
 
             aporteMensal = converterMoeda(aporteMensal, EnumTipoMoeda.USD, tipoMoeda);
-
             double saldoInicial = converterMoeda(saldoDisp, EnumTipoMoeda.USD, tipoMoeda);
+
             System.out.println(saldoDisp);
             System.out.println(saldoInicial);
 
             String ipca = obterIPCA();
             String selic = obterSELIC();
-            String dolar = String.format("%.2f", converterMoeda(1, getCarteiraSelecionada().getEnumTipoMoeda(), EnumTipoMoeda.USD));
+            String dolar = String.format("%.2f", converterMoeda(1, tipoMoeda, EnumTipoMoeda.USD));
 
-            double ipcaValor = Double.parseDouble(ipca.replace(",", "."));
-            double selicValor = Double.parseDouble(selic.replace(",", "."));
-            double dolarValor = Double.parseDouble(dolar.replace(",", "."));
+            double ipcaValor, selicValor, dolarValor;
+
+            try {
+                ipcaValor = Double.parseDouble(ipca.replace(",", "."));
+            } catch (NumberFormatException e) {
+                ipcaValor = 0.0;
+                System.out.println("Erro ao converter IPCA: " + ipca);
+            }
+
+            try {
+                selicValor = Double.parseDouble(selic.replace(",", "."));
+            } catch (NumberFormatException e) {
+                selicValor = 0.0;
+                System.out.println("Erro ao converter SELIC: " + selic);
+            }
+
+            try {
+                dolarValor = Double.parseDouble(dolar.replace(",", "."));
+            } catch (NumberFormatException e) {
+                dolarValor = 0.0;
+                System.out.println("Erro ao converter Dólar: " + dolar);
+            }
 
             double taxaDeRetornoMensal = taxaRetorno / 12;
             double valorFuturo = calcularValorFuturoCrescimentoComposto(saldoInicial, aporteMensal, taxaDeRetornoMensal, prazo, tempoSelecionado);
-
             double valorFuturoConvertido = converterMoeda(valorFuturo, tipoMoeda, EnumTipoMoeda.USD);
+
             String informacoes = String.format(
                     "IPCA: %.2f%%\nSELIC: %.2f%%\nDólar: %.2f %s\nRentabilidade futura: %.2f %s",
                     ipcaValor, selicValor, dolarValor,
-                    getCarteiraSelecionada().getEnumTipoMoeda(),
+                    tipoMoeda,
                     valorFuturoConvertido, tipoMoeda
             );
-
             informacoesGeraisLabel.setText(informacoes);
+        } catch (NumberFormatException e) {
+            ControladorGeral.alertaErro("Erro de Conversão", "Certifique-se de que todos os valores numéricos foram digitados corretamente.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            ControladorGeral.alertaErro("Erro inesperado", "Ocorreu um erro durante a simulação. Tente novamente.");
         }
-    }
-
-    private double calcularValorFuturoCrescimentoComposto(double saldoInicial, double aporteMensal, double taxaRetornoMensal, int prazo, String tempoSelecionado) {
-        double valorFuturo;
-
-        if (tempoSelecionado.equalsIgnoreCase("anos")) {
-            prazo *= 12;
-        } else if (tempoSelecionado.equalsIgnoreCase("semanas")) {
-            prazo *= 4;
-        }
-
-        valorFuturo = saldoInicial * Math.pow(1 + taxaRetornoMensal, prazo) + (aporteMensal * (Math.pow(1 + taxaRetornoMensal, prazo) - 1)) / taxaRetornoMensal;
-
-        return valorFuturo;
     }
 
     private String obterIPCA() {
@@ -302,8 +321,9 @@ public class ControladorProjecoes implements MudancaTela {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Erro ao obter IPCA");
         }
-        return "Erro ao obter IPCA";
+        return "0.0";
     }
 
     private String obterSELIC() {
@@ -327,9 +347,24 @@ public class ControladorProjecoes implements MudancaTela {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Erro ao obter SELIC");
         }
-        return "Erro ao obter SELIC";
+        return "0.0";
     }
 
+
+    private double calcularValorFuturoCrescimentoComposto(double saldoInicial, double aporteMensal, double taxaRetornoMensal, int prazo, String tempoSelecionado) {
+        double valorFuturo;
+
+        if (tempoSelecionado.equalsIgnoreCase("anos")) {
+            prazo *= 12;
+        } else if (tempoSelecionado.equalsIgnoreCase("semanas")) {
+            prazo *= 4;
+        }
+
+        valorFuturo = saldoInicial * Math.pow(1 + taxaRetornoMensal, prazo) + (aporteMensal * (Math.pow(1 + taxaRetornoMensal, prazo) - 1)) / taxaRetornoMensal;
+
+        return valorFuturo;
+    }
 
 }

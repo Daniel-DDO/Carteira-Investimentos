@@ -113,6 +113,7 @@ public class ControladorProjecoes implements MudancaTela {
         taxaRetField.clear();
         prazoField.clear();
         infoSaldoLabel.setText("Informações atuais.");
+        informacoesGeraisLabel.setText("Informações");
         trocarTela(5);
     }
 

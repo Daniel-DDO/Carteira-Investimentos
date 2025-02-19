@@ -130,6 +130,12 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
     @FXML
     public void voltarBotao0523(ActionEvent actionEvent) {
+        compraVendaLabel.setText("Informações do ativo");
+        informacoesCambioLabel.setText("Informações de dinheiro");
+        quantidadeCompVendField.clear();
+        this.carteiraSelecionada = null;
+        this.ativoSelecionado = null;
+        mihasAcoesTable.getItems().clear();
         Programa.trocarTela(8);
     }
 
@@ -167,7 +173,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     private static final String API_KEY1 = "176d06fe91ded98c0dbd428b9fc1d45311bf34ea";
     private static final String API_KEY2 = "d24000f8cfa3e553854f164e1ffe7308eacd7be4";
     private static final String[] SYMBOLS = {
-            "AAPL", "GOOGL", "AMZN", "MSFT"
+            "AAPL"
     };
 
     /*
@@ -492,19 +498,19 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             ExtratoOperacoes operacaoCompra = new ExtratoOperacoes(
                     "Compra",
                     java.time.LocalDate.now(),
-                    "Ativo: " + ativoFinanceiro.getCodigo() +
-                            " | Quantidade: " + quantidade +
-                            " | Preço: " + String.format("%.2f", ativoFinanceiro.getPrecoAtual()) + " " + ativoFinanceiro.getMoeda(),
+                    "Ativo: " + ativoFinanceiro.getCodigo()+
+                            " | Quantidade: "+quantidade+
+                            " | Preço: "+String.format("%.2f", ativoFinanceiro.getPrecoAtual())+" "+ativoFinanceiro.getMoeda(),
                     ativoFinanceiro, precoAtivoConvertido, quantidade
             );
             carteiraUsuario.adicionarAoExtrato(operacaoCompra);
 
             ControladorGeral.alertaInformacao("Compra Realizada",
-                    "Compra de " + quantidade + " unidades do ativo " + ativoFinanceiro.getCodigo() + " efetuada com sucesso.");
+                    "Compra de "+quantidade+" unidades do ativo "+ativoFinanceiro.getCodigo()+" efetuada com sucesso.");
         } else {
             ControladorGeral.alertaErro("Saldo Insuficiente",
                     "Saldo insuficiente para completar a compra. Valor necessário: " +
-                            String.format("%.2f", valorFinal) + " " + ativoFinanceiro.getMoeda());
+                            String.format("%.2f", valorFinal)+" "+carteiraUsuario.getEnumTipoMoeda()+"\n");
         }
     }
 
@@ -531,9 +537,9 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                     ExtratoOperacoes operacaoVenda = new ExtratoOperacoes(
                             "Venda",
                             java.time.LocalDate.now(),
-                            "Ativo: " + ativoFinanceiro.getCodigo() +
-                                    " | Quantidade: " + quantidade +
-                                    " | Preço: " + String.format("%.2f", ativoFinanceiro.getPrecoAtual())+" "+ativoFinanceiro.getMoeda(),
+                            "Ativo: "+ativoFinanceiro.getCodigo()+
+                                    " | Quantidade: "+quantidade+
+                                    " | Preço: "+String.format("%.2f", ativoFinanceiro.getPrecoAtual())+" "+ativoFinanceiro.getMoeda(),
                             ativoFinanceiro, valorRecebido, quantidade
                     );
                     carteiraUsuario.adicionarAoExtrato(operacaoVenda);

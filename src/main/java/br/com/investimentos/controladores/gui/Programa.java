@@ -98,6 +98,8 @@ public class Programa extends Application {
         FXMLLoader loaderRenda = new FXMLLoader(getClass().getResource(localFxml+"05-5-renda.fxml"));
         Parent fxmlTelaRenda = loaderRenda.load();
         rendaTela = new Scene(fxmlTelaRenda, 1000, 600);
+        ControladorAnaliseAtivos controladorAnaliseAtivos = loaderRenda.getController();
+        adicionarMudancaTela(controladorAnaliseAtivos);
 
         FXMLLoader loaderPerfilComum = new FXMLLoader(getClass().getResource(localFxml+"05-6-perfil-comum.fxml"));
         Parent fxmlTelaPerfilComum = loaderPerfilComum.load();

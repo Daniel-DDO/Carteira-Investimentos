@@ -50,7 +50,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
     private static ControladorGerenciarCarteiras controladorGerenciarCarteiras;
 
     public static ControladorGerenciarCarteiras getInstancia() {
-        if (controladorGerenciarCarteiras == null){
+        if (controladorGerenciarCarteiras == null) {
             controladorGerenciarCarteiras = new ControladorGerenciarCarteiras();
         }
         return controladorGerenciarCarteiras;
@@ -103,9 +103,9 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             );
 
             moedaMinhasAcoes.setCellValueFactory(cellData -> {
-                AtivosFinanceiros ativo = cellData.getValue();
-                String moeda = (ativo != null && ativo.getMoeda() != null) ? ativo.getMoeda() : "USD";
-                return new SimpleStringProperty(moeda);
+                CarteiraUsuario carteiraSelecionada = cboxSelecionarCarteira.getValue();
+                String moedaCarteira = (carteiraSelecionada != null) ? carteiraSelecionada.getEnumTipoMoeda().toString() : "USD";
+                return new SimpleStringProperty(moedaCarteira);
             });
 
             carregarDadosAtivo();
@@ -361,18 +361,18 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
 
     public void abrirCompraVenda(AtivosFinanceiros ativoFinanceiro, CarteiraUsuario carteira, boolean compra) {
         setDadosCompraVenda(ativoFinanceiro, carteira, compra);
-            Label informacoesCambioLabel =  this.informacoesCambioLabel;
-            Label compraVendaLabel = this.compraVendaLabel;
+        Label informacoesCambioLabel = this.informacoesCambioLabel;
+        Label compraVendaLabel = this.compraVendaLabel;
 
-            if (compraVendaLabel != null) {
-                String operacao;
-                if (compra) {
-                    operacao = "Comprar";
-                } else {
-                    operacao = "Vender";
-                }
-                compraVendaLabel.setText(operacao + ": " + ativoFinanceiro.informacoesDoAtivo());
-                informacoesCambioLabel.setText(carteira.informacoesCarteira()+precoCambio(ativoFinanceiro, carteira));
+        if (compraVendaLabel != null) {
+            String operacao;
+            if (compra) {
+                operacao = "Comprar";
+            } else {
+                operacao = "Vender";
+            }
+            compraVendaLabel.setText(operacao + ": " + ativoFinanceiro.informacoesDoAtivo());
+            informacoesCambioLabel.setText(carteira.informacoesCarteira() + precoCambio(ativoFinanceiro, carteira));
         }
     }
 
@@ -390,17 +390,17 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             precoPosConversao = String.format("%.2f", ativoFinanceiro.getPrecoAtual() / taxaCambio);
         } else {
             saldoPosConversao = "Não foi possível obter o câmbio";
-            precoPosConversao = "Não foi possível obter o preço em "+moedaDestino;
+            precoPosConversao = "Não foi possível obter o preço em " + moedaDestino;
         }
 
-        return "\n\nPreço ativo (unidade): "+precoPosConversao+" "+moedaOrigem+
-                "\nCâmbio "+moedaOrigem+" para "+moedaDestino+
-                "\nPreço ativo (unidade): "+ativoFinanceiro.getPrecoAtual()+" "+ativoFinanceiro.getMoeda()+"\n\n"+
-                "Seu saldo atual em "+moedaDestino+": "+saldoPosConversao;
+        return "\n\nPreço ativo (unidade): " + precoPosConversao + " " + moedaOrigem +
+                "\nCâmbio " + moedaOrigem + " para " + moedaDestino +
+                "\nPreço ativo (unidade): " + ativoFinanceiro.getPrecoAtual() + " " + ativoFinanceiro.getMoeda() + "\n\n" +
+                "Seu saldo atual em " + moedaDestino + ": " + saldoPosConversao;
     }
 
     private double getTaxaCambio(String moedaOrigem, String moedaDestino) {
-        System.out.println(moedaOrigem+" "+moedaDestino);
+        System.out.println(moedaOrigem + " " + moedaDestino);
 
         try {
             String url = "https://economia.awesomeapi.com.br/last/" + moedaOrigem + "-" + moedaDestino;
@@ -492,9 +492,9 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             ExtratoOperacoes operacaoCompra = new ExtratoOperacoes(
                     "Compra",
                     java.time.LocalDate.now(),
-                    "Ativo: "+ativoFinanceiro.getCodigo()+
-                            " | Quantidade: "+quantidade+
-                            " | Preço: "+String.format("%.2f", ativoFinanceiro.getPrecoAtual())+" "+ativoFinanceiro.getMoeda(),
+                    "Ativo: " + ativoFinanceiro.getCodigo() +
+                            " | Quantidade: " + quantidade +
+                            " | Preço: " + String.format("%.2f", ativoFinanceiro.getPrecoAtual()) + " " + ativoFinanceiro.getMoeda(),
                     ativoFinanceiro, precoAtivoConvertido, quantidade
             );
             carteiraUsuario.adicionarAoExtrato(operacaoCompra);
@@ -531,9 +531,9 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                     ExtratoOperacoes operacaoVenda = new ExtratoOperacoes(
                             "Venda",
                             java.time.LocalDate.now(),
-                            "Ativo: "+ativoFinanceiro.getCodigo()+
-                                    " | Quantidade: "+quantidade+
-                                    " | Preço: "+String.format("%.2f", ativoFinanceiro.getPrecoAtual())+" "+ativoFinanceiro.getMoeda(),
+                            "Ativo: " + ativoFinanceiro.getCodigo() +
+                                    " | Quantidade: " + quantidade +
+                                    " | Preço: " + String.format("%.2f", ativoFinanceiro.getPrecoAtual())+" "+ativoFinanceiro.getMoeda(),
                             ativoFinanceiro, valorRecebido, quantidade
                     );
                     carteiraUsuario.adicionarAoExtrato(operacaoVenda);
@@ -543,7 +543,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
                     }
 
                     ControladorGeral.alertaInformacao("Venda Realizada",
-                            "Venda de " + quantidade + " unidades do ativo " + ativoFinanceiro.getCodigo() + " efetuada com sucesso.");
+                            "Venda de "+quantidade+" unidades do ativo "+ativoFinanceiro.getCodigo()+" efetuada com sucesso.");
                 } else {
                     ControladorGeral.alertaErro("Quantidade Insuficiente",
                             "Você não possui quantidade suficiente do ativo para realizar a venda.");
@@ -556,23 +556,6 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
             ControladorGeral.alertaErro("Ativo Não Encontrado",
                     "O ativo " + ativoFinanceiro.getCodigo() + " não foi encontrado na sua carteira.");
         }
-    }
-
-    public String infoAtivoComprar() {
-        AtivosFinanceiros ativoFinanceiro = acoesDisponiveisTable.getSelectionModel().getSelectedItem();
-        String informacoes;
-
-        if (ativoFinanceiro != null) {
-            informacoes = ativoFinanceiro.informacoesDoAtivo();
-            compraVendaLabel.setText(informacoes);
-        } else {
-            informacoes = "Selecione um ativo.";
-        }
-        return informacoes;
-    }
-
-    public String infoAtivoVender() {
-        return "a";
     }
 
     public String infoCarteira() {
@@ -588,7 +571,6 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         }
         return informacoes;
     }
-
 
     public void visualizarCarteirasCbox() {
         ArrayList<CarteiraUsuario> carteiraUsuarios = ControladorCarteirasUser.getInstancia().exibirCarteirasDoUser(UsuarioLogado.getInstancia().getUsuarioComum());
@@ -621,7 +603,7 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         }
 
         if (!temCarteira) {
-            System.out.println(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario()+" não tem carteiras.");
+            System.out.println(UsuarioLogado.getInstancia().getUsuarioComum().getNomeUsuario() + " não tem carteiras.");
         }
     }
 
@@ -741,168 +723,4 @@ public class ControladorGerenciarCarteiras implements MudancaTela {
         System.out.println("Dados carregados: " + ativosList.size());
         return ativosList;
     }
-
-
-    /* ALPHA VANTAGE
-    @Override
-    public void mudancaTela(int novaTela, Object objeto) {
-        if (novaTela == 15) {
-            inicializarComboBox();
-
-            codigoAcao.setCellValueFactory(cellData ->
-                    new SimpleStringProperty(cellData.getValue().getCodigo()));
-            precoAtual.setCellValueFactory(cellData ->
-                    new SimpleDoubleProperty(cellData.getValue().getPrecoAtual()).asObject());
-            precoAbertura.setCellValueFactory(cellData ->
-                    new SimpleDoubleProperty(cellData.getValue().getPrecoAbertura()).asObject());
-            precoMaior.setCellValueFactory(cellData ->
-                    new SimpleDoubleProperty(cellData.getValue().getMaiorPreco()).asObject());
-            precoMenor.setCellValueFactory(cellData ->
-                    new SimpleDoubleProperty(cellData.getValue().getMenorPreco()).asObject());
-            moedaLocal.setCellValueFactory(cellData ->
-                    new SimpleStringProperty(cellData.getValue().getMoeda()));
-
-            carregarDadosAtivo();
-
-        }
-    }
-
-    @FXML
-    public ComboBox<CarteiraUsuario> cboxSelecionarCarteira;
-    @FXML
-    public Label infoCarteiraSelecionadaLabel;
-    @FXML
-    public Button botaoVoltar0523;
-    @FXML
-    public Button botaoConfirmar0523;
-
-    @FXML
-    public void voltarBotao0523(ActionEvent actionEvent) {
-        Programa.trocarTela(8);
-    }
-
-    @FXML
-    public void confirmarBotao0523(ActionEvent actionEvent) {
-    }
-
-    @FXML
-    public void selecionarCarteiraCbox(ActionEvent actionEvent) {
-        infoCarteiraSelecionadaLabel.setText(infoCarteira());
-    }
-
-    @FXML
-    private TableView<AtivosFinanceiros> acoesDisponiveisTable;
-
-    @FXML
-    private TableColumn<AtivosFinanceiros, String> codigoAcao;
-
-    @FXML
-    private TableColumn<AtivosFinanceiros, Double> precoAtual;
-
-    @FXML
-    private TableColumn<AtivosFinanceiros, Double> precoAbertura;
-
-    @FXML
-    private TableColumn<AtivosFinanceiros, Double> precoMaior;
-
-    @FXML
-    private TableColumn<AtivosFinanceiros, Double> precoMenor;
-
-    @FXML
-    private TableColumn<AtivosFinanceiros, String> moedaLocal;
-    private static final String API_KEY1 = "PZRJA4TYHQXYDI9H";
-    private static final String API_KEY2 = "5FNWTKTBXYGGMC65";
-    private static final String API_KEY3 = "13BA91QBJXYKU9E6";
-    private static final String[] SYMBOLS = {
-            "AAPL", "GOOGL", "AMZN", "MSFT", "TSLA", "META", "NFLX", "NVDA", "INTC", "AMD",
-            "SPY", "QQQ", "V", "MA", "DIS", "BA", "IBM", "CSCO", "PYPL", "CRM", "ORCL",
-            "NVDA", "INTC", "ADBE", "GE", "KO", "PEP", "WMT", "HD", "MCD", "GS", "JPM",
-            "C", "BAC", "VZ", "T", "XOM", "CVX", "PFE", "MRK", "JNJ", "UNH", "ABT",
-            "MDT", "GILD", "AMGN", "BMY", "LLY", "HCA", "CVS", "WBA", "TGT", "LOW",
-            "CAT", "DE", "NKE", "LULU", "ADP", "TMO", "AMAT", "CSX", "UPS", "FDX",
-            "DHL", "SAP", "HPE", "QCOM", "MU", "SNPS", "INTU", "EXPE", "UBER", "LYFT",
-            "BABA", "JD", "TCEHY", "PDD", "BIDU", "DISH", "YUM", "DHR", "ISRG", "SYK",
-            "IDXX", "RMD", "MELI", "TEAM", "DOCU", "VEEV", "TWLO", "Z", "OKTA", "SHOP",
-            "ZM", "SQ", "RBLX", "ROKU", "PLTR", "NET", "CRWD", "MDB", "FSLY", "TTD"
-    };
-
-    @FXML
-    private void carregarDadosAtivo() {
-        ObservableList<AtivosFinanceiros> ativosList = FXCollections.observableArrayList();
-
-        for (String symbol : SYMBOLS) {
-            String apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="
-                    + symbol + "&interval=1min&apikey=" + API_KEY1;
-
-            try {
-                URL url = new URL(apiUrl);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-
-                int responseCode = connection.getResponseCode();
-                System.out.println("Requisitando " + symbol + " com código de resposta: " + responseCode);
-
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    StringBuilder response = new StringBuilder();
-
-                    String inputLine;
-                    while ((inputLine = in.readLine()) != null) {
-                        response.append(inputLine);
-                    }
-                    in.close();
-
-                    // Log da resposta da API
-                    System.out.println("Resposta da API para " + symbol + ": " + response.toString());
-
-                    // Parse JSON
-                    JsonObject jsonResponse = JsonParser.parseString(response.toString()).getAsJsonObject();
-
-                    // Verifique se a chave 'Time Series (1min)' existe
-                    JsonObject timeSeries = jsonResponse.getAsJsonObject("Time Series (1min)");
-
-                    if (timeSeries != null && timeSeries.size() > 0) {
-                        JsonElement firstEntry = timeSeries.entrySet().iterator().next().getValue();
-
-                        double precoAtual = firstEntry.getAsJsonObject().get("1. open").getAsDouble();
-                        double precoAbertura = firstEntry.getAsJsonObject().get("1. open").getAsDouble();
-                        double maiorPreco = firstEntry.getAsJsonObject().get("2. high").getAsDouble();
-                        double menorPreco = firstEntry.getAsJsonObject().get("3. low").getAsDouble();
-
-                        String moeda = getMoedaPorSigla(symbol);
-
-                        AtivosFinanceiros ativo = new AtivosFinanceiros(symbol, precoAtual, precoAbertura, maiorPreco, menorPreco, moeda);
-                        ativosList.add(ativo);
-
-                        // Logando o ativo que foi adicionado
-                        System.out.println("Ativo adicionado: " + ativo.getCodigo());
-                    } else {
-                        // Se não houver dados para esse símbolo, registre isso
-                        System.out.println("Sem dados para " + symbol + " - Time Series (1min) não encontrado ou vazio.");
-                    }
-                } else {
-                    System.out.println("Erro na requisição para " + symbol + ": " + responseCode);
-                }
-            } catch (Exception e) {
-                System.out.println("Erro ao processar a requisição para " + symbol);
-                e.printStackTrace();
-            }
-        }
-
-        // Verifique se a lista foi preenchida corretamente
-        System.out.println("Dados carregados: " + ativosList.size());
-
-        // Atribuindo dados à tabela
-        acoesDisponiveisTable.setItems(ativosList);
-    }
-
-
-    private String getMoedaPorSigla(String sigla) {
-        switch (sigla) {
-            default:
-                return "USD";
-        }
-    }
-
-     */
 }

@@ -81,7 +81,7 @@ public class Fachada {
 
     //Ativos
 
-    public static double converter(String moedaOrigem, String moedaDestino, double valor) throws Exception {
+    public double converter(String moedaOrigem, String moedaDestino, double valor) throws Exception {
         return ControladorAtivosFinanceiros.converter(moedaOrigem, moedaDestino, valor);
     }
 

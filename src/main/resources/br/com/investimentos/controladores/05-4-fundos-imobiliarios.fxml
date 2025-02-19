@@ -110,7 +110,7 @@
       <Pane prefHeight="67.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="botaoVoltar054" layoutX="859.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#voltarBotao054" prefHeight="35.0" prefWidth="121.0" stylesheets="@design.css" text="Voltar" textAlignment="CENTER" wrapText="true" />
-            <Button fx:id="botaoConfirmar054" layoutX="726.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#confirmarBotao054" prefHeight="35.0" prefWidth="121.0" stylesheets="@design.css" text="Confirmar" textAlignment="CENTER" wrapText="true" />
+            <Button fx:id="botaoConfirmar054" disable="true" layoutX="726.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#confirmarBotao054" prefHeight="35.0" prefWidth="121.0" stylesheets="@design.css" text="Confirmar" textAlignment="CENTER" wrapText="true" />
          </children>
       </Pane>
    </bottom>

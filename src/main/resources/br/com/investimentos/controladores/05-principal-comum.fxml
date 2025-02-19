@@ -55,7 +55,7 @@
       <Pane prefHeight="67.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="botaoVoltar05" layoutX="859.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#voltarBotao05" prefHeight="35.0" prefWidth="121.0" stylesheets="@design.css" text="Voltar" textAlignment="CENTER" wrapText="true" />
-            <Button fx:id="botaoConfirmar05" layoutX="726.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#confirmarBotao05" prefHeight="35.0" prefWidth="121.0" stylesheets="@design.css" text="Confirmar" textAlignment="CENTER" wrapText="true" />
+            <Button fx:id="botaoConfirmar05" disable="true" layoutX="726.0" layoutY="16.0" minHeight="27.0" mnemonicParsing="false" onAction="#confirmarBotao05" prefHeight="35.0" prefWidth="121.0" stylesheets="@design.css" text="Confirmar" textAlignment="CENTER" wrapText="true" />
          </children>
       </Pane>
    </bottom>

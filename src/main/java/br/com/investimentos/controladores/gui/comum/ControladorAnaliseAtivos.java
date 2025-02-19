@@ -51,18 +51,32 @@ public class ControladorAnaliseAtivos implements MudancaTela {
     private void carregarDadosAtivo() {
         ObservableList<XYChart.Series<String, Number>> dadosGrafico = FXCollections.observableArrayList();
         XYChart.Series<String, Number> seriePrecoAtual = new XYChart.Series<>();
-        seriePrecoAtual.setName("Preço Atual");
+        seriePrecoAtual.setName("Preço Atual - Exibição na moeda padrão dos ativos USD.");
 
         AtivosFinanceiros[] ativosFinanceirosDoArquivo = RepositorioAtivos.lerAtivos();
+        String[] cores = {"#ff5733", "#33ff57", "#3357ff", "#f3ff33", "#ff33f3", "#33f3ff", "#ff8c00", "#8c00ff", "#00ff8c"};
+        int corIndex = 0;
 
         for (AtivosFinanceiros ativo : ativosFinanceirosDoArquivo) {
             if (ativo != null) {
-                seriePrecoAtual.getData().add(new XYChart.Data<>(ativo.getCodigo(), ativo.getPrecoAtual()));
+                XYChart.Data<String, Number> dado = new XYChart.Data<>(ativo.getCodigo(), ativo.getPrecoAtual());
+                String cor = cores[corIndex % cores.length];
+                dado.getNode().styleProperty().set("-fx-bar-fill: " + cor + ";");
+                seriePrecoAtual.getData().add(dado);
+                corIndex++;
             }
         }
 
         analiseAtivosGrafico.getData().clear();
         analiseAtivosGrafico.getData().add(seriePrecoAtual);
+
+        xAxis.setTickLabelGap(10);
+        xAxis.setAutoRanging(false);
+        xAxis.setCategories(FXCollections.observableArrayList(seriePrecoAtual.getData().stream()
+                .map(XYChart.Data::getXValue)
+                .toList()));
     }
+
+
 
 }

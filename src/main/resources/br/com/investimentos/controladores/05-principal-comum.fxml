@@ -33,7 +33,7 @@
                         <Button fx:id="botaoProjecoesRentab" mnemonicParsing="false" onAction="#projecoesRentabBotao" prefHeight="52.0" prefWidth="269.0" styleClass="medio-button" stylesheets="@design.css" text="Metas de rentabilidade" GridPane.rowIndex="2" />
                         <Button fx:id="botaoMeuPerfil" mnemonicParsing="false" onAction="#meuPerfilBotao" prefHeight="52.0" prefWidth="269.0" styleClass="medio-button" stylesheets="@design.css" text="Acessar meu perfil" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Button fx:id="botaoFundosImobiliarios" mnemonicParsing="false" onAction="#fundosImobiliariosBotao" prefHeight="52.0" prefWidth="269.0" styleClass="medio-button" stylesheets="@design.css" text="Projeções financeiras" GridPane.columnIndex="1" />
-                        <Button fx:id="botaoRenda" mnemonicParsing="false" onAction="#rendaBotao" prefHeight="52.0" prefWidth="269.0" styleClass="medio-button" stylesheets="@design.css" text="Renda fixa e variável" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button fx:id="botaoRenda" mnemonicParsing="false" onAction="#rendaBotao" prefHeight="52.0" prefWidth="269.0" styleClass="medio-button" stylesheets="@design.css" text="Ativos financeiros" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children></Pane>

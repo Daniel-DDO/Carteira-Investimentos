@@ -6,6 +6,7 @@ import br.com.investimentos.controladores.gui.Programa;
 import br.com.investimentos.financas.AtivosFinanceiros;
 import br.com.investimentos.financas.EnumTempo;
 import br.com.investimentos.financas.EnumTipoMoeda;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -246,8 +247,8 @@ public class ControladorSimularInvestimentos implements MudancaTela {
 
         System.out.println("Iniciando simulação para o ativo: "+ativo.nomeAtivo());
         System.out.println("Moeda selecionada: "+moedaSelecionada);
-        System.out.println("Valor inicial: "+valorInicial+", Aporte Mensal: "+aporteMensal);
-        System.out.println("Preço Atual: "+precoAtual+", Preço Abertura: "+precoAbertura);
+        System.out.println("Valor inicial: "+valorInicial + ", Aporte Mensal: " + aporteMensal);
+        System.out.println("Preço Atual: "+precoAtual + ", Preço Abertura: " + precoAbertura);
 
         valorInicial = converterMoeda(valorInicial, moedaSelecionada, moedaSelecionada);
         aporteMensal = converterMoeda(aporteMensal, moedaSelecionada, moedaSelecionada);
@@ -264,25 +265,21 @@ public class ControladorSimularInvestimentos implements MudancaTela {
         for (int i = 1; i <= periodo; i++) {
             saldo += aporteMensal;
             saldo *= (1 + variacao);
-            series.getData().add(new XYChart.Data<>(String.valueOf(i), saldo));
+            XYChart.Data<String, Number> ponto = new XYChart.Data<>(String.valueOf(i), saldo);
+            series.getData().add(ponto);
         }
 
-        System.out.println("Total de pontos adicionados ao gráfico: " + series.getData().size());
+        System.out.println("Total de pontos adicionados ao gráfico: "+series.getData().size());
 
         graficoEvolucao.getData().add(series);
 
-        yAxis.setTickLabelFormatter(new StringConverter<Number>() {
-            @Override
-            public String toString(Number object) {
-                return String.format("%.2f", object.doubleValue());
-            }
-
-            @Override
-            public Number fromString(String string) {
-                return Double.parseDouble(string);
-            }
-        });
+        xAxis.setTickLabelGap(10);
+        xAxis.setAutoRanging(false);
+        xAxis.setCategories(FXCollections.observableArrayList(series.getData().stream()
+                .map(XYChart.Data::getXValue)
+                .toList()));
     }
+
 
     @FXML
     void confirmarBotao05(ActionEvent event) {

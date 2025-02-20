@@ -301,7 +301,7 @@ public class ControladorProjecoes implements MudancaTela {
     }
 
     private String obterIPCA() {
-        try {
+            try {
             String url = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados/ultimos/1?formato=json";
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("GET");

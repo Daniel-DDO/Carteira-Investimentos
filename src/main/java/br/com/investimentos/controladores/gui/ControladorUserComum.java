@@ -72,7 +72,11 @@ public class ControladorUserComum {
 
     @FXML
     void projecoesRentabBotao(ActionEvent event) {
-        Programa.trocarTela(9);
+        if (UsuarioLogado.getInstancia().getUsuarioComum().getQuantidadeCarteiras() == 0) {
+            ControladorGeral.alertaInformacao("Metas rentabilidade", "Para conseguir definir uma meta, é necessário ter uma carteira de investimentos. Crie uma carteira e tente novamente.");
+        } else {
+            Programa.trocarTela(9);
+        }
     }
 
     @FXML

@@ -17,6 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.util.Locale;
+
 public class ControladorGerenciarAtivosAdm implements MudancaTela {
 
     @Override
@@ -95,8 +97,11 @@ public class ControladorGerenciarAtivosAdm implements MudancaTela {
         usuarioAcoesAdq.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNomeAtivo()));
         codigoAcoesUsuarios.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo()));
         quantidadeAcoesUsuarios.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getQuantidade()).asObject());
-        precoMedioAcoesUsuarios.setCellValueFactory(cellData -> new SimpleDoubleProperty(Double.parseDouble(String.format("%.2f", cellData.getValue().getPrecoMedio()))).asObject());
-    }
+        precoMedioAcoesUsuarios.setCellValueFactory(cellData ->
+                new SimpleDoubleProperty(
+                        Double.parseDouble(String.format(Locale.US, "%.2f", cellData.getValue().getPrecoMedio()))
+                ).asObject()
+        );    }
 
     @FXML
     private TableView<AtivosFinanceiros> acoesUsuariosTable;
